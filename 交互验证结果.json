@@ -1,0 +1,65 @@
+{
+  "status": "passed",
+  "offline": true,
+  "summaries": [
+    {
+      "width": 1440,
+      "overflow": {
+        "client": 1440,
+        "scroll": 1440
+      },
+      "labels": 32,
+      "status": "PASS"
+    },
+    {
+      "width": 900,
+      "overflow": {
+        "client": 900,
+        "scroll": 900
+      },
+      "labels": 32,
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "overflow": {
+        "client": 390,
+        "scroll": 390
+      },
+      "labels": 32,
+      "status": "PASS"
+    }
+  ],
+  "modelVersion": "1.3",
+  "fitChecks": [
+    "default curves unchanged",
+    "target FIT changes only target curves",
+    "FIT to category MTBF conversion",
+    "automatic shares and reduction",
+    "negative reduction for increased FIT",
+    "zero baseline reduction undefined",
+    "negative FIT validation",
+    "tooltip and legend"
+  ],
+  "refreshWorkflow": {
+    "result": "passed",
+    "checks": [
+      {
+        "width": 1440,
+        "result": "passed"
+      },
+      {
+        "width": 390,
+        "result": "passed"
+      }
+    ],
+    "validated": [
+      "draft changes preserve results",
+      "view controls use applied parameters",
+      "refresh applies all fields and all results",
+      "invalid inputs preserve results",
+      "step preset requires refresh",
+      "key chart values match model"
+    ]
+  }
+}

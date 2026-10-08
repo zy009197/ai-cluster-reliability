@@ -1,0 +1,15 @@
+{
+  "name": "ai-cluster-reliability",
+  "version": "4.0.0",
+  "private": true,
+  "description": "AI training cluster reliability modeling, correct-output evaluation and Shapley attribution",
+  "scripts": {
+    "test": "node 验证Shapley贡献.cjs && node 验证V4模型.cjs && node 验证V4结果.cjs",
+    "build": "node 构建评估报告.cjs",
+    "simulate": "node 计算Shapley贡献.cjs",
+    "test:browser": "node 验证V4交互.cjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "status": "passed",
+  "offline": true,
+  "layouts": [
+    {
+      "width": 1440,
+      "client": 1440,
+      "scroll": 1440
+    },
+    {
+      "width": 1000,
+      "client": 1000,
+      "scroll": 1000
+    },
+    {
+      "width": 390,
+      "client": 390,
+      "scroll": 390
+    }
+  ],
+  "checks": [
+    "default metrics and 16 numerical scale labels",
+    "conditional rankings",
+    "coverage slider and two y-axis modes",
+    "linear and logarithmic size axes",
+    "draft inputs keep results unchanged",
+    "invalid values rejected",
+    "worker cancellation",
+    "full 4096-trial recomputation",
+    "FIT target no-change result",
+    "tooltip",
+    "PNG and SVG export"
+  ],
+  "errors": []
+}

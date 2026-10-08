@@ -1,0 +1,24 @@
+{
+  "version": "4.0-domain-ledger",
+  "status": "passed",
+  "checks": [
+    "no-fault checkpoint overhead matches renewal-cycle arithmetic",
+    "volatile step is not a durable checkpoint",
+    "a newer clean durable checkpoint wins over an older step snapshot",
+    "topology covers non-divisible card counts exactly",
+    "rack failure and placement actually change lost capacity",
+    "finite repair resources queue concurrent failures",
+    "repair queue uses detection order, not future reservations",
+    "minimum active capacity threshold stops and resumes job",
+    "local reconfiguration global pause is accounted once",
+    "localization failure falls back to origin; valid candidate preserves progress",
+    "failed silent restoration is not counted as clean delivery",
+    "monitoring overhead enters delivered work",
+    "full-up baseline calibration remains 30 hours hard MTBF at 10k",
+    "calendar shared faults continue during repair and create queue",
+    "input validation rejects non-finite values and invalid probabilities",
+    "randomized overlapping faults conserve every hour",
+    "calibration deduplicates root events and rejects conflicting evidence",
+    "scenario roundtrip and canonical key ordering"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "status": "passed",
+  "version": "4.0-domain-ledger",
+  "offline": true,
+  "codeSHA256": "a76e96f362fac76f02f21c0785777e46ad094717ddfcb458f8a9c957bfeb9b8c",
+  "checks": [
+    "four key scales match CLI and have conserved ledgers",
+    "twenty scale values are labeled",
+    "coalition explorer and sweep",
+    "draft isolation and invalid model inputs",
+    "export uses applied scenario, not draft",
+    "scenario import is validated and deferred",
+    "cancel retains complete result",
+    "worker and CLI match for edited model, ledger and zero-change Shapley",
+    "browser scenario and experiment hashes match Node",
+    "shared-fault/queue scenario browser and Node agree within 1e-9",
+    "responsive 1440/1000/390 layouts"
+  ],
+  "maxNumericDelta": 1.2709833185908792e-12,
+  "layouts": [
+    {
+      "client": 1440,
+      "scroll": 1440
+    },
+    {
+      "client": 1000,
+      "scroll": 1000
+    },
+    {
+      "client": 390,
+      "scroll": 390
+    }
+  ],
+  "errors": []
+}

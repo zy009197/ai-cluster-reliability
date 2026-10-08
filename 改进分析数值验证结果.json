@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "checks": [
+    "baseline equals V2 defaults",
+    "delivery zeros unresolved silent corruption",
+    "delivery remains zero during silent repair",
+    "verified recovery restores delivery",
+    "late 100% detection does not imply recovery by deadline",
+    "engine hash matches source",
+    "embedded code equals source",
+    "sweep endpoints include 100% and match scale scenarios",
+    "all shared points equal independent delivery audit",
+    "gain and interaction identities",
+    "ranking references and ordering",
+    "zero-change targets give zero gain and variance",
+    "invalid sample count rejected"
+  ],
+  "scenarios": 284,
+  "trials": 8192
+}

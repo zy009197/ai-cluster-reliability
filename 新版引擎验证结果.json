@@ -1,0 +1,61 @@
+{
+  "status": "passed",
+  "checks": [
+    "FIT and coverage",
+    "no-fault finite-window progress",
+    "step checkpoint batching",
+    "global rollback",
+    "local capacity loss",
+    "silent delayed detection and rollback",
+    "expired clean checkpoint fallback",
+    "undetected silent freeze",
+    "replay throughput",
+    "global silent propagation in local mode",
+    "checkpoint quadrature",
+    "hard-only renewal cross-check",
+    "bounded outputs and reproducibility"
+  ],
+  "hardOnly": {
+    "simulation": {
+      "mean": 0.4136635838743501,
+      "se": 0.00044720607053352825,
+      "low": 0.4127870599761044,
+      "high": 0.4145401077725958
+    },
+    "steadyState": 0.41336470546452186
+  },
+  "silentTimeline": [
+    {
+      "t": 11,
+      "kind": "silent",
+      "progress": 11,
+      "correct": 11,
+      "active": 1,
+      "corrupt": true
+    },
+    {
+      "t": 35,
+      "kind": "silent-detected-rollback",
+      "progress": 10,
+      "correct": 10,
+      "active": 1,
+      "corrupt": true
+    },
+    {
+      "t": 37,
+      "kind": "resume",
+      "progress": 10,
+      "correct": 10,
+      "active": 1,
+      "corrupt": false
+    },
+    {
+      "t": 62,
+      "kind": "end",
+      "progress": 35,
+      "correct": 35,
+      "active": 1,
+      "corrupt": false
+    }
+  ]
+}

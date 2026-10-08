@@ -1,0 +1,33 @@
+{
+  "status": "passed",
+  "offline": true,
+  "results": [
+    {
+      "width": 1512,
+      "client": 1512,
+      "scroll": 1512
+    },
+    {
+      "width": 1000,
+      "client": 1000,
+      "scroll": 1000
+    },
+    {
+      "width": 390,
+      "client": 390,
+      "scroll": 390
+    }
+  ],
+  "checks": [
+    "worker completion",
+    "manual apply",
+    "four annotated scales",
+    "automatic detection coverage",
+    "silent detection rollback branch",
+    "invalid mixture validation",
+    "single-parameter scenario",
+    "reproducible baseline",
+    "responsive layout",
+    "tooltip and legend"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "synthetic": true,
+  "description": "纯合成格式样例，不代表用户或业界故障率；全部 exposure 与 events 须覆盖同一个窗口。",
+  "exposures": [
+    {"componentClass": "gpu-card", "deviceHours": 7200000, "clock": "operating"},
+    {"componentClass": "rack-shared", "deviceHours": 7200, "clock": "calendar"}
+  ],
+  "events": [
+    {"eventId": "alarm-1", "rootEventId": "incident-1", "componentClass": "gpu-card", "manifestation": "hard"},
+    {"eventId": "alarm-2", "rootEventId": "incident-1", "componentClass": "gpu-card", "manifestation": "hard"},
+    {"eventId": "alarm-3", "rootEventId": "incident-2", "componentClass": "gpu-card", "manifestation": "silent"}
+  ]
+}

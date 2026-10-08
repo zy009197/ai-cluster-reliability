@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "version": "4.0-domain-ledger",
+  "scales": 13,
+  "combinations": 3328,
+  "totalJobs": 3480,
+  "trials": 2048,
+  "maxLedgerResidual": 2.223221606811876e-13,
+  "maxShapleyResidual": 1.4432899320127035e-15,
+  "codeSHA256": "a76e96f362fac76f02f21c0785777e46ad094717ddfcb458f8a9c957bfeb9b8c",
+  "checks": [
+    "source hash and experiment identity",
+    "all coalition ranges",
+    "Shapley efficiency",
+    "progress reconciliation",
+    "720 hour ledger conservation",
+    "quantile ordering",
+    "HTML and CLI embedded data match"
+  ]
+}

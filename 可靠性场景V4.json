@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "modelVersion": "4.0-domain-ledger",
+  "codeSHA256": "a76e96f362fac76f02f21c0785777e46ad094717ddfcb458f8a9c957bfeb9b8c",
+  "config": {
+    "trials": 2048,
+    "stepSeconds": 1,
+    "silentDetectSeconds": 1,
+    "silentRecoverySeconds": 1,
+    "silentFallbackDays": 5,
+    "fallbackDistribution": "fixed",
+    "silentTarget": 95,
+    "recoveryTarget": 15,
+    "intervalTarget": 600,
+    "saveTarget": 0.1,
+    "fitTarget": 1707.6502732240438,
+    "model": {
+      "fits": [
+        587.431694,
+        1028.005464,
+        286.885246,
+        1512.978142
+      ],
+      "slowPct": 2,
+      "silentPct": 0.4,
+      "hardDetect": 95,
+      "slowDetect": 95,
+      "hardSeconds": 10,
+      "fallbackMinutes": 1,
+      "slowMinutes": 5,
+      "globalMinutes": 120,
+      "localMinutes": 120,
+      "intervalSeconds": 7200,
+      "saveSeconds": 10,
+      "slowHours": 24,
+      "slowLoss": 5,
+      "replayRate": 1,
+      "cardsPerServer": 8,
+      "serversPerRack": 32,
+      "recoveryDomains": 50,
+      "placement": "compact",
+      "networkScope": "card",
+      "otherScope": "card",
+      "serverFIT": 0,
+      "rackFIT": 0,
+      "sharedFIT": 0,
+      "repairSlots": 0,
+      "minActiveFraction": 0,
+      "reconfigureSeconds": 0,
+      "silentLocatePct": 100,
+      "cleanVerifyPct": 100,
+      "silentRecoveryPct": 100,
+      "silentMonitorPct": 0
+    }
+  },
+  "evidence": [
+    {
+      "parameter": "万卡硬中断 MTBF、每机 8 卡、30 天窗口",
+      "status": "用户基线",
+      "source": "本任务用户确认；不是厂商规格或现场校准结果"
+    },
+    {
+      "parameter": "故障类型 2% / 0.4%、检测延迟、人工恢复、5 天兜底",
+      "status": "用户场景",
+      "source": "本任务逐项确认；静默漏检恢复保留污染前进度"
+    },
+    {
+      "parameter": "HBM / GPU / 网络 / 其他 FIT 分解",
+      "status": "情景分摊",
+      "source": "将万卡 MTBF 归一化后分摊；不是独立器件 FIT 实测值"
+    },
+    {
+      "parameter": "1 秒 step、定位/验证/恢复成功率、监测开销",
+      "status": "待校准假设",
+      "source": "无现场样本；100% 成功率代表理想能力"
+    },
+    {
+      "parameter": "每柜 32 台、恢复域部署、容量阈值、恢复并发",
+      "status": "拓扑与策略假设",
+      "source": "可计算模板；尚无实际资产/网络映射"
+    },
+    {
+      "parameter": "附加服务器 / 机柜 / 共享 FIT",
+      "status": "未纳入、未校准",
+      "source": "默认 0；与单卡等效 FIT 中已计事件不能重复累加"
+    },
+    {
+      "parameter": "Shapley 8 项目标",
+      "status": "评估方案",
+      "source": "目标组合决定贡献分配，不代表已经实施或已测得的收益"
+    }
+  ]
+}

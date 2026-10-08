@@ -1,0 +1,361 @@
+{
+  "version": "2.0",
+  "trials": 2048,
+  "hours": 720,
+  "baseline": {
+    "fits": [
+      587.431694,
+      1028.005464,
+      286.885246,
+      1512.978142
+    ],
+    "slowPct": 2,
+    "silentPct": 0.4,
+    "hardDetect": 95,
+    "slowDetect": 95,
+    "silentDetect": 0,
+    "hardSeconds": 10,
+    "fallbackMinutes": 30,
+    "slowMinutes": 5,
+    "silentHours": 24,
+    "mode": "global",
+    "globalMinutes": 120,
+    "localMinutes": 120,
+    "silentMinutes": 120,
+    "intervalSeconds": 7200,
+    "saveSeconds": 10,
+    "slowHours": 24,
+    "slowLoss": 5,
+    "retentionHours": 72,
+    "replayRate": 1
+  },
+  "scenario": {
+    "fits": [
+      587.431694,
+      1028.005464,
+      286.885246,
+      1512.978142
+    ],
+    "slowPct": 2,
+    "silentPct": 0.4,
+    "hardDetect": 95,
+    "slowDetect": 95,
+    "silentDetect": 0,
+    "hardSeconds": 10,
+    "fallbackMinutes": 30,
+    "slowMinutes": 5,
+    "silentHours": 24,
+    "mode": "local",
+    "globalMinutes": 120,
+    "localMinutes": 120,
+    "silentMinutes": 120,
+    "intervalSeconds": 7200,
+    "saveSeconds": 10,
+    "slowHours": 24,
+    "slowLoss": 5,
+    "retentionHours": 72,
+    "replayRate": 1
+  },
+  "results": [
+    {
+      "cards": 10000,
+      "baseline": {
+        "n": 10000,
+        "trials": 2048,
+        "stats": {
+          "hard": 46018,
+          "slow": 930,
+          "silent": 170,
+          "silentDetected": 0,
+          "silentRollbackHours": 0,
+          "silentRollbackWork": 0,
+          "silentRestarts": 0,
+          "hardRollbackWork": 45513.21538467276,
+          "slowRepairs": 896
+        },
+        "effective": {
+          "mean": 0.8639976215590146,
+          "se": 0.0034199498157561595,
+          "low": 0.8572945199201325,
+          "high": 0.8707007231978967
+        },
+        "uptime": {
+          "mean": 0.9356116292385452,
+          "se": 0.0002829122545237893,
+          "low": 0.9350571212196787,
+          "high": 0.9361661372574118
+        },
+        "capacity": {
+          "mean": 0.9356116292385452,
+          "se": 0.0002829122545237893,
+          "low": 0.9350571212196787,
+          "high": 0.9361661372574118
+        },
+        "silentRollbackHours": null,
+        "silentRollbackWork": null,
+        "silentRestartFraction": null
+      },
+      "scenario": {
+        "n": 10000,
+        "trials": 2048,
+        "stats": {
+          "hard": 48934,
+          "slow": 983,
+          "silent": 193,
+          "silentDetected": 0,
+          "silentRollbackHours": 0,
+          "silentRollbackWork": 0,
+          "silentRestarts": 0,
+          "hardRollbackWork": 0,
+          "slowRepairs": 931
+        },
+        "effective": {
+          "mean": 0.9499866931825187,
+          "se": 0.0038139465305501536,
+          "low": 0.9425113579826404,
+          "high": 0.957462028382397
+        },
+        "uptime": {
+          "mean": 1,
+          "se": 0,
+          "low": 1,
+          "high": 1
+        },
+        "capacity": {
+          "mean": 0.9986313061787349,
+          "se": 0.000006177879815797332,
+          "low": 0.9986191975342958,
+          "high": 0.9986434148231739
+        },
+        "silentRollbackHours": null,
+        "silentRollbackWork": null,
+        "silentRestartFraction": null
+      }
+    },
+    {
+      "cards": 100000,
+      "baseline": {
+        "n": 100000,
+        "trials": 2048,
+        "stats": {
+          "hard": 291334,
+          "slow": 6011,
+          "silent": 1206,
+          "silentDetected": 0,
+          "silentRollbackHours": 0,
+          "silentRollbackWork": 0,
+          "silentRestarts": 0,
+          "hardRollbackWork": 259012.54671849188,
+          "slowRepairs": 5711
+        },
+        "effective": {
+          "mean": 0.3116827378748799,
+          "se": 0.0030512847053716175,
+          "low": 0.3057022198523515,
+          "high": 0.31766325589740824
+        },
+        "uptime": {
+          "mean": 0.5923306136667928,
+          "se": 0.0004612286267342722,
+          "low": 0.5914266055583937,
+          "high": 0.593234621775192
+        },
+        "capacity": {
+          "mean": 0.5923306136667928,
+          "se": 0.0004612286267342722,
+          "low": 0.5914266055583937,
+          "high": 0.593234621775192
+        },
+        "silentRollbackHours": null,
+        "silentRollbackWork": null,
+        "silentRestartFraction": null
+      },
+      "scenario": {
+        "n": 100000,
+        "trials": 2048,
+        "stats": {
+          "hard": 484283,
+          "slow": 10141,
+          "silent": 2016,
+          "silentDetected": 0,
+          "silentRollbackHours": 0,
+          "silentRollbackWork": 0,
+          "silentRestarts": 0,
+          "hardRollbackWork": 0,
+          "slowRepairs": 9645
+        },
+        "effective": {
+          "mean": 0.6277894586013174,
+          "se": 0.007757048467410653,
+          "low": 0.6125856436051925,
+          "high": 0.6429932735974423
+        },
+        "uptime": {
+          "mean": 1,
+          "se": 0,
+          "low": 1,
+          "high": 1
+        },
+        "capacity": {
+          "mean": 0.9864403321866999,
+          "se": 0.000018843505461296312,
+          "low": 0.9864033989159958,
+          "high": 0.986477265457404
+        },
+        "silentRollbackHours": null,
+        "silentRollbackWork": null,
+        "silentRestartFraction": null
+      }
+    },
+    {
+      "cards": 200000,
+      "baseline": {
+        "n": 200000,
+        "trials": 2048,
+        "stats": {
+          "hard": 413989,
+          "slow": 8414,
+          "silent": 1682,
+          "silentDetected": 0,
+          "silentRollbackHours": 0,
+          "silentRollbackWork": 0,
+          "silentRestarts": 0,
+          "hardRollbackWork": 323130.51547291543,
+          "slowRepairs": 8019
+        },
+        "effective": {
+          "mean": 0.13554241144664356,
+          "se": 0.0015737469465179237,
+          "low": 0.13245786743146842,
+          "high": 0.1386269554618187
+        },
+        "uptime": {
+          "mean": 0.42128144906934556,
+          "se": 0.0003817304277959006,
+          "low": 0.4205332574308656,
+          "high": 0.4220296407078255
+        },
+        "capacity": {
+          "mean": 0.42128144906934556,
+          "se": 0.0003817304277959006,
+          "low": 0.4205332574308656,
+          "high": 0.4220296407078255
+        },
+        "silentRollbackHours": null,
+        "silentRollbackWork": null,
+        "silentRestartFraction": null
+      },
+      "scenario": {
+        "n": 200000,
+        "trials": 2048,
+        "stats": {
+          "hard": 955783,
+          "slow": 19846,
+          "silent": 3882,
+          "silentDetected": 0,
+          "silentRollbackHours": 0,
+          "silentRollbackWork": 0,
+          "silentRestarts": 0,
+          "hardRollbackWork": 0,
+          "slowRepairs": 18856
+        },
+        "effective": {
+          "mean": 0.4307497127002137,
+          "se": 0.007228268235262382,
+          "low": 0.4165823069590995,
+          "high": 0.444917118441328
+        },
+        "uptime": {
+          "mean": 1,
+          "se": 0,
+          "low": 1,
+          "high": 1
+        },
+        "capacity": {
+          "mean": 0.973239072514203,
+          "se": 0.000026077768768568367,
+          "low": 0.9731879600874167,
+          "high": 0.9732901849409894
+        },
+        "silentRollbackHours": null,
+        "silentRollbackWork": null,
+        "silentRestartFraction": null
+      }
+    },
+    {
+      "cards": 500000,
+      "baseline": {
+        "n": 500000,
+        "trials": 2048,
+        "stats": {
+          "hard": 554622,
+          "slow": 11407,
+          "silent": 2206,
+          "silentDetected": 0,
+          "silentRollbackHours": 0,
+          "silentRollbackWork": 0,
+          "silentRestarts": 0,
+          "hardRollbackWork": 287813.507007432,
+          "slowRepairs": 10851
+        },
+        "effective": {
+          "mean": 0.016255507711247636,
+          "se": 0.00025398609634356354,
+          "low": 0.01575769496241425,
+          "high": 0.01675332046008102
+        },
+        "uptime": {
+          "mean": 0.22566497270275604,
+          "se": 0.0002322104019401308,
+          "low": 0.2252098403149534,
+          "high": 0.2261201050905587
+        },
+        "capacity": {
+          "mean": 0.22566497270275604,
+          "se": 0.0002322104019401308,
+          "low": 0.2252098403149534,
+          "high": 0.2261201050905587
+        },
+        "silentRollbackHours": null,
+        "silentRollbackWork": null,
+        "silentRestartFraction": null
+      },
+      "scenario": {
+        "n": 500000,
+        "trials": 2048,
+        "stats": {
+          "hard": 2298034,
+          "slow": 47078,
+          "silent": 9634,
+          "silentDetected": 0,
+          "silentRollbackHours": 0,
+          "silentRollbackWork": 0,
+          "silentRestarts": 0,
+          "hardRollbackWork": 0,
+          "slowRepairs": 44647
+        },
+        "effective": {
+          "mean": 0.20347846129858732,
+          "se": 0.004239430947139493,
+          "low": 0.1951691766421939,
+          "high": 0.21178774595498073
+        },
+        "uptime": {
+          "mean": 1,
+          "se": 0,
+          "low": 1,
+          "high": 1
+        },
+        "capacity": {
+          "mean": 0.9356868119124349,
+          "se": 0.000038925544758961516,
+          "low": 0.9356105178447073,
+          "high": 0.9357631059801624
+        },
+        "silentRollbackHours": null,
+        "silentRollbackWork": null,
+        "silentRestartFraction": null
+      }
+    }
+  ]
+}

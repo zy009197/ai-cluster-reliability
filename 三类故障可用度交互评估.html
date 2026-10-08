@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI 集群可靠性 · 三类故障联合评估</title>
+<style>
+:root{--ink:#172e44;--muted:#576b7c;--blue:#2464a0;--teal:#087e74;--line:#d7e1e9;--wash:#f3f7fa;--warn:#90571b;--error:#ae3434}
+*{box-sizing:border-box}body{margin:0;background:#fff;color:var(--ink);font:16px/1.7 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}button,input,select{font:inherit}button,select{cursor:pointer}a{color:var(--blue);text-underline-offset:3px}button{padding:8px 12px;border:1px solid var(--line);border-radius:5px;background:#fff;color:var(--ink)}button:hover{background:var(--wash)}button:disabled{opacity:.55;cursor:wait}input,select{border:1px solid #b8c8d4;border-radius:4px;padding:7px 8px;background:#fff;color:var(--ink);min-width:0;max-width:100%;font-variant-numeric:tabular-nums}input:disabled{color:#72818d;background:#e9eef2}input[type=number]{width:100%}:focus-visible{outline:3px solid #73afd9;outline-offset:2px}
+header{position:sticky;top:0;z-index:12;background:#fffF;border-bottom:1px solid var(--line)}nav{max-width:1600px;margin:auto;padding:12px 24px;display:flex;align-items:center;gap:20px;font-size:14px}nav strong{margin-right:auto}nav a{text-decoration:none;color:var(--ink)}main{max-width:1600px;padding:0 24px;margin:auto}h1,h2,h3{line-height:1.4}h1{font-size:36px;letter-spacing:-.03em;margin:12px 0}h2{font-size:24px;margin:0 0 16px}h3{font-size:18px;margin:22px 0 12px}p{margin:10px 0}.hero{padding:38px 0 28px;border-bottom:1px solid var(--line)}.eyebrow{color:var(--blue);font-size:13px;letter-spacing:.1em}.lead{color:var(--muted);max-width:1050px}.meta{display:flex;gap:10px 22px;flex-wrap:wrap;color:var(--muted);font-size:13px}.notice{background:#fff7e9;border-left:3px solid #b6782f;padding:12px 16px;font-size:14px;color:#654c2d;margin:18px 0}.small{font-size:13px;line-height:1.65;color:var(--muted)}.section{padding:32px 0;border-bottom:1px solid var(--line);scroll-margin-top:70px}.layout{display:grid;grid-template-columns:370px minmax(0,1fr);gap:28px;align-items:start}.inputs,.results{min-width:0}.inputs{background:var(--wash);border:1px solid var(--line);padding:16px}.apply-strip{position:sticky;top:53px;background:var(--wash);padding:0 0 10px;z-index:5;border-bottom:1px solid var(--line);margin-bottom:12px}.apply-strip button:first-child{background:var(--blue);color:#fff;border:0;flex:1}.apply-actions{display:flex;gap:8px}.status{font-size:13px;margin:8px 0 0}.error{color:var(--error);font-size:13px}.progress{width:100%;height:5px;accent-color:var(--teal)}details.group{border-bottom:1px solid var(--line);padding:14px 0}details.group:last-child{border:0}summary{cursor:pointer;font-weight:600;font-size:15px}.group>summary::marker{color:var(--blue)}.input-table{width:100%;table-layout:fixed;border-collapse:collapse;margin:10px 0;font-size:13px}.input-table th,.input-table td{padding:6px 3px;border:0;vertical-align:middle}.input-table th:first-child{width:44%;text-align:left;font-weight:500}.input-table thead th{font-size:12px;color:var(--muted);text-align:center}.input-table input,.input-table select{font-size:14px;padding:6px;width:100%}.fit-pair{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}.fit-pair label{font-size:13px}.fit-pair input{margin-top:5px}.hardware-title{margin:14px 0 2px;font-size:13px;font-weight:600}.preview{background:#fff;padding:10px 12px;border:1px solid var(--line);font-size:12px;margin:10px 0}.preview table{margin:5px 0;width:100%;border-collapse:collapse}.preview td,.preview th{padding:4px 3px;text-align:right;font-variant-numeric:tabular-nums}.preview th:first-child,.preview td:first-child{text-align:left}.calc-note{font-size:12px;color:var(--muted);margin:4px 0}.field-note{font-size:12px;color:var(--warn);margin-top:4px}.toolbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:8px 0 16px}.toolbar label{font-size:13px}.toolbar select{font-size:13px;max-width:300px}.hero-numbers{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:18px 0 24px}.metric{border-top:2px solid var(--line);padding-top:10px}.metric b{display:block;font-size:30px;font-weight:600;font-variant-numeric:tabular-nums}.metric span{font-size:13px;color:var(--muted)}.metric.base{border-color:var(--blue)}.metric.target{border-color:var(--teal)}.legend{display:flex;gap:20px;flex-wrap:wrap;margin:8px 0}.legend button{border:0;background:none;padding:5px 0;font-size:14px}.swatch{display:inline-block;width:20px;border-top:3px solid;vertical-align:middle;margin-right:7px}.plot-scroll{overflow:auto;max-width:100%;border:1px solid var(--line);margin:12px 0}.plot{min-width:650px}.plot svg{width:100%;display:block}.plot text{font-family:inherit;fill:var(--ink)}.chart-tip{position:fixed;z-index:30;pointer-events:none;background:#172e44;color:white;padding:9px 12px;border-radius:4px;font-size:13px;line-height:1.7;max-width:300px}.table-scroll{overflow:auto;max-width:100%}table.data{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0}table.data th,table.data td{padding:10px 10px;border-bottom:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}table.data th:first-child,table.data td:first-child{text-align:left}table.data thead{background:var(--wash)}.empty{padding:80px 18px;text-align:center;color:var(--muted)}.equation{padding:14px 18px;background:var(--wash);border-left:3px solid var(--blue);overflow:auto;font-family:Georgia,"Times New Roman",serif;font-size:19px;margin:16px 0}.formula-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}.formula-grid>div{min-width:0}.label{display:inline-block;background:#edf4fa;color:var(--blue);padding:1px 7px;font-size:12px;border-radius:3px}.flow{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:14px}.flow span{padding:8px 12px;background:var(--wash);border:1px solid var(--line)}.assumptions{columns:2;column-gap:38px;padding-left:22px;font-size:14px}.assumptions li{break-inside:avoid;margin-bottom:10px}.muted{color:var(--muted)}.change-list{font-size:13px;margin:10px 0;padding:10px 14px;background:var(--wash)}footer{padding:30px 0 45px;color:var(--muted);font-size:13px}.diagram-scroll{overflow:auto;border:1px solid var(--line);background:var(--wash)}.diagram-scroll svg{width:100%;min-width:850px;display:block}.diagram-scroll text{font-family:inherit;font-size:16px;fill:var(--ink)}.diagram-scroll .sub{font-size:14px;fill:var(--muted)}.diagram-scroll .box{fill:white;stroke:#9fb5c5;stroke-width:1.3}.diagram-scroll .group{fill:#eaf1f7;stroke:#b5c9da;stroke-width:1.2}.diagram-scroll .edge{fill:none;stroke:#637f94;stroke-width:1.5}.diagram-scroll .hypothesis{stroke-dasharray:6 4}.figure{margin:20px 0}.figure figcaption,.source{font-size:13px;color:var(--muted)}.appendix table{width:100%;border-collapse:collapse;font-size:14px}.appendix td,.appendix th{padding:10px;border-bottom:1px solid var(--line);text-align:left}.appendix thead{background:var(--wash)}.appendix .table-scroll{overflow:auto}.appendix .table-scroll table{min-width:720px}.appendix .note{background:var(--wash);padding:12px 16px}.sources a{overflow-wrap:anywhere}.sources li{margin:10px 0}.print-only{display:none}
+@media(max-width:1100px){.layout{grid-template-columns:1fr}.inputs{max-width:none}.input-table th:first-child{width:48%}.apply-strip{top:53px}.formula-grid{grid-template-columns:1fr}.assumptions{columns:1}}
+@media(max-width:600px){main{padding:0 14px}nav{padding:10px 14px;gap:12px;overflow:auto;white-space:nowrap}nav strong{display:none}h1{font-size:28px}.hero{padding-top:24px}.hero-numbers{gap:10px}.metric b{font-size:24px}.metric span{font-size:12px}.inputs{padding:12px}.toolbar{gap:8px}.toolbar label{width:100%}.toolbar select{max-width:100%}.apply-strip{top:44px}.plot-scroll{margin-right:0}.meta{gap:4px 12px}.assumptions{padding-left:18px}}
+@media print{@page{size:A4;margin:14mm}header,.inputs,.toolbar,.legend,#stop,.chart-tip{display:none!important}body{font-size:10pt}.layout{display:block}main{padding:0}.hero{padding-top:0}.section{padding:18px 0}.plot{min-width:0}.plot-scroll,.table-scroll,.diagram-scroll{overflow:visible}.diagram-scroll svg{min-width:0}.figure,.plot-scroll,tr{break-inside:avoid}.assumptions{columns:1}.print-only{display:block}.formula-grid{display:block}a{color:inherit}h1{font-size:25pt}h2{font-size:18pt}.metric b{font-size:21pt}table.data{font-size:9pt}.appendix .table-scroll table{min-width:0}}
+</style></head><body>
+<header><nav><strong>AI 集群可靠性评估 · V2</strong><a href="#evaluation">交互评估</a><a href="#formulas">公式与事件过程</a><a href="#architecture">连接架构</a><a href="#industry">业界数据</a><a href="#assumptions">假设与边界</a></nav></header>
+<main>
+<section class="hero"><div class="eyebrow">AI CLUSTER RELIABILITY / 30-DAY JOINT SIMULATION</div><h1>从故障发生，到正确训练进度</h1><p class="lead">把中断、亚健康与静默错误放在同一条时间线上：按运行暴露产生故障，按真实恢复范围扣除容量，按干净检查点回退，最终计算 30 天保留的正确净进度。</p><div class="meta"><span>窗口：30 天 / 720 小时</span><span>单作业：1,000–500,000 卡</span><span>8 卡/服务器 · 局部模式 50 域</span><span>版本：2.0 · 2026-09-22</span></div>
+<div class="notice"><strong>当前情景假设：</strong>人工恢复 2 小时暂按“检测完成后”起算；中断兜底发现暂取 30 分钟；静默检出延迟暂取 24 小时、干净检查点保留 72 小时（均可调，当前检出率 0% 时不触发回退）。这些是待校准参数，不是实测结论。</div></section>
+<section class="section" id="evaluation"><h2>交互评估</h2><p class="small">修改参数后点击“刷新建模结果”。左侧 FIT / MTBF 为输入预览，右侧图表和表格始终对应上次已应用参数。初始对比方案仅将全局恢复改为局部容错。</p>
+<div class="layout">
+<aside class="inputs" aria-label="模型输入">
+<div class="apply-strip"><div class="apply-actions"><button type="button" id="refresh">刷新建模结果</button><button type="button" id="stop" hidden>停止</button></div><p id="status" class="status" role="status" aria-live="polite">准备计算默认情景…</p><progress class="progress" id="progress" max="26" value="0" hidden></progress><div id="error" class="error" role="alert"></div></div>
+<details class="group" open><summary>01 · 故障发生：总 FIT 与 MTBF</summary><div class="fit-pair"><label>基线 · 总 FIT<input id="b-total" type="number" min="0" max="1000000" step="any"></label><label>方案 · 总 FIT<input id="t-total" type="number" min="0" max="1000000" step="any"></label></div><p class="calc-note">次 / 10⁹ 卡运行小时。修改总 FIT 会按明细当前比例缩放；全部为 0 时使用初始来源比例。</p><div class="preview" id="fit-preview" aria-live="polite"></div><details><summary>展开硬件与其他来源 FIT</summary><div id="hardware-inputs"></div><p class="calc-note">HBM、GPU、网络为等效事件来源；“其他”含软件等非硬件事件。来源明细暂共用下方三类表现占比。</p></details></details>
+<details class="group" open><summary>02 · 三类故障与检测</summary><table class="input-table"><thead><tr><th>指标</th><th>基线</th><th>方案</th></tr></thead><tbody id="detection-inputs"></tbody></table><div class="preview" id="detection-preview"></div><p class="field-note">2% / 0.4% 按全部事件占比解释，中断比例自动补足。自动检出率不等于最终检出率，更不等于可用度。</p></details>
+<details class="group" open><summary>03 · 恢复模式与检查点</summary><table class="input-table"><thead><tr><th>指标</th><th>基线</th><th>方案</th></tr></thead><tbody id="recovery-inputs"></tbody></table><button id="step-preset" type="button">将方案检查点间隔设为 6 秒</button><p class="calc-note">6 秒是可修改的 step 参考；检查点当前按运行时钟触发，不随实际 step 性能自动调整。保存后才成为可恢复状态。</p><p class="field-note">局部容错：故障域恢复期间其余域继续训练，恢复域从健康域获取当前状态，无历史追赶。人工维修暂不排队。</p></details>
+<details class="group" open><summary>04 · 亚健康与静默回退</summary><table class="input-table"><thead><tr><th>指标</th><th>基线</th><th>方案</th></tr></thead><tbody id="impact-inputs"></tbody></table><p class="field-note">亚健康检出后按所选模式暂停并修复；静默错误按已传播到全作业处理，检出后始终全局回退。干净检查点过期则从初始化状态重训。</p><p class="calc-note">静默检出率为 0% 时，不触发检测或回退；错误后的计算不增加正确净进度。静默时延与保留窗口仅在启用检出后影响结果。</p></details>
+<details class="group"><summary>05 · 模拟设置与单项比较</summary><div class="toolbar"><label>每个规模的轨迹数 <select id="samples"><option value="512">512 · 快速探索</option><option value="2048" selected>2,048 · 默认</option><option value="8192">8,192 · 更低采样误差</option></select></label><label>对比实验 <select id="factor"><option value="all">应用全部方案参数</option></select></label></div><p class="calc-note">固定随机种子可复现。单项比较只把所选方案参数替换进基线，其他参数保持基线。阴影是均值的约 95% 采样区间，不含参数估计误差。</p></details>
+</aside>
+<div class="results">
+<div class="hero-numbers"><div class="metric base"><span>50 万卡 · 基线正确有效产出率</span><b id="headline-base">—</b><span id="headline-base-ci">等待模拟</span></div><div class="metric target"><span>50 万卡 · 方案正确有效产出率</span><b id="headline-target">—</b><span id="headline-target-ci">等待模拟</span></div><div class="metric"><span>30 天 · 正确训练净增益</span><b id="headline-gain">—</b><span>正常吞吐下的等价训练小时</span></div></div>
+<div class="toolbar"><label>横轴 <select id="xscale"><option value="linear">线性规模</option><option value="log">对数规模</option></select></label><label>细项查看 <select id="inspect"><option value="10000">1 万卡</option><option value="100000">10 万卡</option><option value="200000">20 万卡</option><option value="500000" selected>50 万卡</option></select></label></div>
+<div id="legend" class="legend"><button type="button" data-case="base" aria-pressed="true"><span class="swatch" style="border-color:var(--blue)"></span>基线</button><button type="button" data-case="target" aria-pressed="true"><span class="swatch" style="border-color:var(--teal)"></span>方案</button></div>
+<div class="plot-scroll"><div class="plot" id="effective-plot"><div class="empty">正在计算正确净进度…</div></div></div><p class="small">正确有效产出率 = 窗口末保留的正确净训练小时 / 720。静默检出后回到干净检查点，重算通过进度账本计入；没有把检测延迟、回退与重算损失重复相加。</p>
+<div class="plot-scroll"><div class="plot" id="uptime-plot"><div class="empty">正在计算运行状态…</div></div></div><p class="small">运行可用度只要求至少一个完整域可推进，保存检查点也算运行态。它不判断结果正确性；局部模式接近 100% 并不意味着正确有效产出接近 100%。</p>
+<div id="applied-summary" class="change-list">默认方案：50 域局部容错；其余参数与全局基线相同。</div>
+<h3>关键规模的整体结果</h3><div class="table-scroll"><table class="data"><thead><tr><th>作业规模</th><th>基线有效产出</th><th>方案有效产出</th><th>变化 / 百分点</th><th>30 天净增益 / h</th></tr></thead><tbody id="scale-results"></tbody></table></div><p class="small">数值后的 ± 为约 95% 采样半宽。有限样本可能产生轻微起伏；小于采样误差的差异不应直接认定为改进收益。</p>
+<h3 id="detail-title">恢复、回退与事件统计 · 50 万卡</h3><div class="table-scroll"><table class="data"><thead><tr><th>指标</th><th>基线</th><th>方案</th></tr></thead><tbody id="detail-results"></tbody></table></div>
+<p class="small">静默回退指标只对窗口内实际检出的事件取平均；“无检出”不是回退开销为零。回退跨度是墙钟距离，重算量是正常等价训练小时。事件数为每次 30 天任务的模拟均值。</p>
+<details><summary>本次已应用参数与计算口径</summary><div class="table-scroll"><table class="data"><thead><tr><th>参数</th><th>基线</th><th>实际对比方案</th></tr></thead><tbody id="snapshot"></tbody></table></div></details>
+</div></div></section>
+<section class="section" id="formulas"><h2>公式与事件过程</h2><div class="flow"><span>FIT / 运行暴露</span>→<span>中断 · 亚健康 · 静默</span>→<span>检测 / 人工兜底</span>→<span>修复与干净状态回退</span>→<span>正确净进度</span></div>
+<div class="formula-grid"><div><h3>从 FIT 到 MTBF</h3><div class="equation">λ<sub>k</sub>(N) = N · FIT<sub>总</sub> · p<sub>k</sub> / 10⁹<br>MTBF<sub>k</sub> = 1 / λ<sub>k</sub></div><p>λ 使用次/运行小时。初始总 FIT≈3415.30，中断占 97.6%，因此万卡中断 MTBF 仍为 30 小时。总 FIT 包含三类表现，万卡任意故障 MTBF 为 29.28 小时。各来源明细只是反推的初始情景，不是器件实测 FIT。</p><h3>检测覆盖与检测等待</h3><div class="equation">Q<sub>自动</sub> = Σ p<sub>k</sub> q<sub>k</sub> = 94.62%<br>Q<sub>最终</sub> = p<sub>h</sub> + p<sub>s</sub>q<sub>s</sub> + p<sub>c</sub>q<sub>c</sub> = 99.5%</div><p>最终覆盖指允许足够长等待的渠道覆盖，不保证窗口内发现。中断有人工/超时兜底；其余类型没有额外兜底。检测与恢复时间当前按给定值固定取样，覆盖判定按事件随机取样。</p></div>
+<div><h3>中断重试：解析校验基准</h3><div class="equation">A<sub>G</sub> = 1 / (1 + λ<sub>h</sub>d)<br>TOR<sub>G,hard</sub> = λ<sub>h</sub>τ / [(e<sup>λ<sub>h</sub>(τ+c)</sup> − 1)(1+λ<sub>h</sub>d)]</div><p>该式只校验无限期、单类可恢复中断的特例。新图表使用从健康状态开始的 30 天事件模拟，不把它与亚健康、静默系数直接相乘。检查点在每次成功保存后推进；保存失败也会丢失此前尚未保存的工作。</p><h3>30 天的统一结果</h3><div class="equation">A<sub>正确有效</sub> = E[P<sub>correct</sub>(720 h)] / 720 h</div><p>净进度计算时增长，回退时减少，修复期间停止。静默发生后正确进度冻结；检出后进一步回退至已验证干净的状态，再恢复推进。窗口末尚未保存但仍正确的进度也计入。</p></div></div>
+<h3>静默回退：不能只取半个检查点周期</h3><div class="equation">B<sub>silent,calendar</sub> = t<sub>检出</sub> − t<sub>干净检查点</sub> = D<sub>silent</sub> + U<sub>干净检查点年龄</sub><br>T<sub>无新故障重放</sub> = B<sub>work</sub> / ρ</div><p>静默后的检查点可能已被污染。当前保守设定：错误可传播到全作业；检出后能定位最早污染时刻并验证干净状态，修复加载完成后才清除污染。若保留窗口不足，则从始终保留的初始化状态重训。其他普通重启不被假定能治好潜在静默故障。</p><div class="table-scroll"><table class="data"><thead><tr><th>示例时刻</th><th>事件</th><th>正确净进度</th></tr></thead><tbody><tr><td>第 10 小时</td><td>保存最后一个干净检查点</td><td>10 h</td></tr><tr><td>第 11 小时</td><td>静默错误发生</td><td>冻结于 11 h</td></tr><tr><td>第 35 小时</td><td>24 小时后检出，回退</td><td>回到 10 h</td></tr><tr><td>第 37 小时</td><td>修复加载 2 小时后恢复</td><td>10 h</td></tr><tr><td>第 62 小时</td><td>重算 25 小时</td><td>达到 35 h 正确进度</td></tr></tbody></table></div><p class="small">检出后的恢复加重算为 27 小时，相对无故障的额外耗时也是 27 小时，不能再把 24 小时检测延迟重复加成 51 小时额外损失。示例忽略保存阻塞和其他故障。</p>
+<h3>亚健康：恢复动作决定收益</h3><p>每次亚健康使全作业当前吞吐乘以 (1−降幅)，多次可叠加。未检出的事件在持续时间结束后自然消退；检出的事件按所选全局或局部模式修复。所属域缺席时，该事件不再额外拖慢健康域；修复期间仍损失相应容量。全局修复从最近持久化检查点恢复，局部修复不做全局回退。</p><p>例如先降速 5% 持续 5 分钟，再全局暂停修复 2 小时，单次损失至少 120.25 等价分钟（未计回退）。如果不处理而持续降速一天，损失为 72 分钟。因此提高检出率并非总能提升产出，必须同时改善恢复策略。</p></section>
+<section class="section" id="assumptions"><h2>假设与可解释边界</h2><ul class="assumptions"><li>初始全部域健康，故障按独立恒定事件率发生；按当前活跃卡数缩放。全局停顿不产生新的运行期故障，恢复期间可能完成此前已经排定的检测与修复。</li><li>人工恢复 2 小时按检出后开始；兜底发现 30 分钟、静默检出延迟 24 小时及保留窗口 72 小时为演示假设。需用实际日志校准。</li><li>所有规模固定 50 个局部域，恢复期间正常域按剩余比例提供吞吐；没有组网停顿、状态传输争用、维修人员排队或备件限制。</li><li>静默错误检出后假设能验证正确的恢复点并完成修复；多个潜在错误按最早污染点回退。恢复等待时锁定选中的检查点；无保留副本时从初始化状态重训。</li><li>普通重启不会被假定自动清除潜在静默缺陷。静默发生后程序可能继续运行并保存错误检查点，正确进度不会因此增加。</li><li>检查点周期按“有域可运行时”的经过时间触发；全局停顿冻结时钟。保存阻塞期间仍有故障暴露。局部模式暂使用统一检查点保存阻塞。</li><li>图表均值与阴影来自固定种子的重复模拟。约 95% 区间只说明采样误差，不包括故障率、检测延迟、恢复分布和相关性的不确定性。</li><li>运行可用度 A、活跃容量比例、正确有效产出率各有不同含义。最后一项包含回退、降速和错误结果，不能据此直接承诺生产 SLA。</li></ul><p class="small">已验证：FIT/MTBF 换算、零故障极限、全局回退、局部容量损失、静默延迟回退、保留过期重训、重放吞吐、step 级检查点批量推进及单类中断解析特例。详见同目录《新版引擎验证结果.json》。</p></section>
+<section class="section appendix" id="architecture"><span class="section-number">03 / 物理连接与逻辑可靠性</span><h2>以昇腾 950 公开形态建立分层架构与 RBD</h2>
+<p>公开材料存在不同日期、不同规模配置，不能合并成一台已部署设备的规格。本报告使用下列证据层级：</p>
+<div class="table-scroll"><table><thead><tr><th>公开时间与来源</th><th>可核验事实</th><th>报告中的用途</th></tr></thead><tbody><tr><td>2025-09 · 华为主题演讲 <a href="#ref-huawei-2025">[6]</a></td><td>Atlas 950 最大 8,192 卡；128 计算柜+32 通信柜；全光互联</td><td>最大参考配置。32 通信柜不表示 32 条完全独立的冗余路径。</td></tr><tr><td>2026-03 · MWC 官方发布 <a href="#ref-huawei-mwc">[7]</a></td><td>UnifiedBus；每柜 64 NPU；可扩展至 8,192 NPU</td><td>计算柜层级与规模折算依据。</td></tr><tr><td>2026-07 · WAIC 官方报道 <a href="#ref-huawei-waic">[8]</a></td><td>公开展出 1,024 卡 Atlas 950 真机</td><td>实机规模参照，独立于此前公布的最大配置。</td></tr><tr><td>2026-09 · 华为主题演讲 <a href="#ref-huawei-2026">[9]</a></td><td>官方表示昇腾 950 超节点已规模商用</td><td>产品状态说明；没有由此推断全部部署都是 8,192 卡。</td></tr><tr><td>本项目配置</td><td>8 卡/服务器、单一作业、固定 50 个 DP 恢复域</td><td>是用户建模条件，不作为 Atlas 950 官方服务器 SKU 或调度策略。</td></tr></tbody></table></div>
+<figure class="figure"><div class="diagram-scroll"><svg viewBox="0 0 1120 615" role="img" aria-label="Atlas 950 公开层级参考系统连接图，包含卡、8卡服务器抽象、64卡计算柜、超节点和跨超节点网络">
+<defs><marker id="arrow-arch" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#637f94"/></marker></defs>
+<text x="30" y="35" font-weight="650">系统连接架构 · 层级参考图</text><text class="sub" x="30" y="61">连线表达依赖与通信关系；不声称还原未公开的交换拓扑、端口数或线缆 BOM。</text>
+<rect class="group" x="30" y="89" width="760" height="348" rx="6"/><text x="50" y="120" font-weight="650">Atlas 950 SuperPoD 参考边界</text><text class="sub" x="50" y="145">1,024 卡实机（2026.7） / 最大 8,192 卡公开配置（2025.9、2026.3）</text>
+<rect class="box" x="52" y="169" width="226" height="131" rx="4"/><text x="68" y="197">计算柜 1 · 64 NPU</text><rect class="box hypothesis" x="69" y="213" width="191" height="67" rx="3"/><text x="83" y="238">8 卡服务器 × 8（抽象）</text><text class="sub" x="83" y="262">每卡：NPU + HBM + 接口</text>
+<rect class="box" x="297" y="169" width="226" height="131" rx="4"/><text x="313" y="197">计算柜 2 · 64 NPU</text><rect class="box hypothesis" x="314" y="213" width="191" height="67" rx="3"/><text x="328" y="238">主机 / 驱动 / 供电依赖</text><text class="sub" x="328" y="262">服务器粒度为项目假设</text>
+<rect class="box" x="542" y="169" width="226" height="131" rx="4"/><text x="558" y="197">… 计算柜 128</text><text class="sub" x="558" y="229">仅对应公布的 8,192 卡</text><text class="sub" x="558" y="256">最大配置</text>
+<path class="edge" d="M165 300V341M410 300V341M655 300V341" marker-end="url(#arrow-arch)"/>
+<rect class="box" x="52" y="345" width="716" height="65" rx="4"/><text x="72" y="372">UnifiedBus / 灵衢互联 · 全光通信层</text><text class="sub" x="72" y="396">最大配置公布 32 个通信柜；路由冗余、共享故障域与交换层数需另行获取</text>
+<rect class="box hypothesis" x="835" y="170" width="250" height="88" rx="4"/><text x="852" y="201">控制与运维平面</text><text class="sub" x="852" y="227">调度 / 健康检测 / 隔离 / 恢复</text><path class="edge hypothesis" d="M835 214H790" marker-end="url(#arrow-arch)"/>
+<rect class="box hypothesis" x="835" y="320" width="250" height="90" rx="4"/><text x="852" y="351">数据与检查点存储</text><text class="sub" x="852" y="378">按读数据、保存、恢复阶段依赖</text><path class="edge hypothesis" d="M835 365H790" marker-end="url(#arrow-arch)"/>
+<path class="edge" d="M410 437V472" marker-end="url(#arrow-arch)"/><rect class="box" x="160" y="476" width="500" height="56" rx="4"/><text x="182" y="510">跨 SuperPoD 的 Scale-out 通信网络（抽象）</text>
+<path class="edge" d="M660 504H754" marker-end="url(#arrow-arch)"/><rect class="box" x="759" y="475" width="326" height="58" rx="4"/><text x="777" y="510">其他 SuperPoD / 作业扩展到 50 万卡</text>
+<rect class="box hypothesis" x="30" y="557" width="1055" height="36" rx="3"/><text class="sub" x="48" y="581">横跨各层的共同故障域：机柜供电、冷却、网络控制、软件版本。图中的系统依赖是建模抽象；目前没有独立实测参数。</text>
+</svg></div><figcaption>图 1：系统连接架构。实线为公开层级及抽象连接；虚线为本项目补充的服务器/服务依赖。NPU 与 HBM 不在芯片内被视作互不相关的实测独立部件。</figcaption></figure>
+<h3>3.1 RBD：先画出“必须同时成功”的依赖</h3>
+<p>RBD（可靠性框图）的连线表示<strong>任务成功所需的逻辑依赖</strong>，并不是物理电缆。无容错训练中，所有参与的模型分区必须可用，可抽象为串联；DP 弹性则将可独立恢复的域表达为 k-out-of-m 结构。共享网络、供电等共同依赖应保留在域结构之外，不能被误画成每个域都有独立副本。</p>
+<figure class="figure"><div class="diagram-scroll"><svg viewBox="0 0 1120 475" role="img" aria-label="全局串联和DP并联的RBD对比，公共依赖串联，检查点存储是阶段性依赖">
+<defs><marker id="arrow-rbd" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#637f94"/></marker></defs>
+<text x="28" y="36" font-weight="650">全局重启：所有参与域都必须正常</text><path class="edge" d="M30 91H1090" marker-end="url(#arrow-rbd)"/>
+<rect class="box hypothesis" x="70" y="61" width="210" height="60" rx="4"/><text x="86" y="87">共同依赖 C</text><text class="sub" x="86" y="109">网络 / 供电 / 必需服务</text>
+<rect class="box" x="332" y="61" width="150" height="60" rx="4"/><text x="354" y="98">训练域 D₁</text><rect class="box" x="535" y="61" width="150" height="60" rx="4"/><text x="557" y="98">训练域 D₂</text><text x="735" y="98">…</text><rect class="box" x="808" y="61" width="170" height="60" rx="4"/><text x="831" y="98">训练域 D₅₀</text>
+<text class="sub" x="71" y="151">无修复可靠度：R(t)=R꜀(t)·∏Rⱼ(t)；当前曲线按统一全局恢复时间 d 计算更新过程。</text>
+<text x="28" y="198" font-weight="650">DP 弹性：共同依赖正常且至少 k 个完整域能继续推进</text>
+<path class="edge" d="M30 306H331M331 246V366M331 246H445M331 306H445M331 366H445M675 246H793M675 306H793M675 366H793M793 246V366M793 306H1090" marker-end="url(#arrow-rbd)"/>
+<rect class="box hypothesis" x="70" y="276" width="210" height="60" rx="4"/><text x="86" y="302">共同依赖 C</text><text class="sub" x="86" y="324">并联不能消除共同故障</text>
+<rect class="box" x="445" y="222" width="230" height="48" rx="4"/><text x="477" y="253">DP 域 1 · N/50 卡</text><rect class="box" x="445" y="282" width="230" height="48" rx="4"/><text x="477" y="313">DP 域 2 · N/50 卡</text><rect class="box" x="445" y="342" width="230" height="48" rx="4"/><text x="477" y="373">… DP 域 50</text>
+<rect class="box" x="843" y="273" width="190" height="66" rx="4"/><text x="861" y="300">k / 50 继续运行</text><text class="sub" x="861" y="325">当前 k=1，理想上界</text>
+<rect class="box hypothesis" x="70" y="416" width="963" height="37" rx="3"/><text class="sub" x="86" y="441">检查点阶段另依赖持久存储；域内仍包含 TP / PP / CP 分区及通信依赖。50 个逻辑 DP 域不等于 50 个物理超节点。</text>
+</svg></div><figcaption>图 2：两种恢复语义的 RBD。域内结构、共享依赖与最小域数需要结合真实并行策略确定。当前 DP 数值在共同依赖持续可用的条件下计算。</figcaption></figure>
+<div class="equation"><span class="line">R<sub>series</sub>(t)=∏R<sub>i</sub>(t)；若 R<sub>i</sub>(t)=e<sup>−λᵢt</sup>，则 λ<sub>series</sub>=Σλ<sub>i</sub></span><span class="line">A<sub>series,independent repair</sub>=∏a<sub>i</sub></span><span class="eqno">(14)</span></div>
+<p>式 (14) 的稳态乘积要求部件状态独立且按各自维修机制恢复。它与本文 A=1/(1+λd) 的“全局统一恢复”模型<strong>不是可以互换的两个公式</strong>。RBD 提供结构，恢复策略决定采用哪一个随机过程。<a href="#ref-nist-series">[3]</a></p>
+<p>未来若有层级事件日志，可按 λ<sub>job</sub>=Nλ<sub>card</sub> + <wbr>n<sub>host</sub>λ<sub>host</sub> + <wbr>n<sub>rack</sub>λ<sub>rack</sub> + <wbr>n<sub>pod</sub>λ<sub>pod</sub> + <wbr>λ<sub>shared</sub> 建立不重叠的根因事件模型。<strong>当前等效 λ 已包含作业中断根因</strong>，不可在其上直接再加一遍服务器/网络风险；需要先重新分配和校准。</p>
+<h3>3.2 四个目标规模的资源与恢复域映射</h3>
+<div class="table-scroll"><table><thead><tr><th>作业规模</th><th class="num">8 卡服务器</th><th class="num">64 卡计算柜折算</th><th class="num">1,024 卡超节点容量块</th><th class="num">8,192 卡超节点容量块</th><th class="num">每 DP 域卡数</th></tr></thead><tbody><tr><td>1 万卡</td><td>1250</td><td>157</td><td>10</td><td>2</td><td>200</td></tr><tr><td>10 万卡</td><td>12500</td><td>1563</td><td>98</td><td>13</td><td>2000</td></tr><tr><td>20 万卡</td><td>25000</td><td>3125</td><td>196</td><td>25</td><td>4000</td></tr><tr><td>50 万卡</td><td>62500</td><td>7813</td><td>489</td><td>62</td><td>10000</td></tr></tbody></table></div>
+<p class="small">计算柜和超节点容量块均向上取整，最后一块可以部分使用；这是容量折算，不是已验证的工程 BOM。1,024 与 8,192 对应两个不同参考口径，未将 32 通信柜配置套到 1,024 卡实机。五十万卡大于一个 SuperPoD，跨域网络可能产生当前模型未覆盖的共同故障。</p>
+</section>
+<section class="section appendix" id="industry"><span class="section-number">04 / 外部证据与统计口径</span><h2>业界故障率：用相同单位比较，用不同标签保留边界</h2>
+<p>公开研究提供了三类不同证据：单次大模型训练的中断日志、多租户集群的节点暴露统计，以及容错系统的恢复效果。它们反映的硬件、软件、负载和统计窗口不同，不应合成一个“行业平均故障率”。</p>
+<div class="table-scroll"><table><thead><tr><th>数据集 / 性质</th><th>公开统计与分母</th><th>本报告换算</th><th>如何使用</th></tr></thead><tbody>
+<tr><th>本项目基线<br><span class="tag">用户参数</span></th><td>万卡每 30 运行小时一次硬中断；每节点 8 卡</td><td>3.333 次/百万卡小时；0.64 次/千节点日</td><td>模型主基线；不是从 Meta 自动拟合。</td></tr>
+<tr><th>Meta Llama 3 405B <a href="#ref-llama">[5]</a><br><span class="tag">观测计数</span></th><td>54 天墙钟窗口：466 次中断，其中 47 次计划、419 次意外；约 16K GPU 训练</td><td>意外中断墙钟间隔 1,296/419≈3.09 h；假设 16,384 卡全窗占用，则约 19.73 次/百万卡墙钟小时</td><td>只能作粗参考；运行暴露不等于墙钟，不能严格反推同口径 MTBF。</td></tr>
+<tr><th>Meta RSC-1 <a href="#ref-rsc">[10]</a><br><span class="tag">节点运行暴露</span></th><td>6.50 次/千节点运行日；节点为 8×A100</td><td>33.854 次/百万卡小时；按独立线性模型，万卡 MTBF≈2.95 h</td><td>多租户研究负载，故障归因与本项目不同。</td></tr>
+<tr><th>Meta RSC-2 <a href="#ref-rsc">[10]</a><br><span class="tag">节点运行暴露</span></th><td>2.34 次/千节点运行日；节点为 8×A100</td><td>12.188 次/百万卡小时；按同一换算，万卡 MTBF≈8.21 h</td><td>体现同机构不同负载/集群之间也有明显差异。</td></tr>
+<tr><th>ByteDance MegaScale <a href="#ref-megascale">[11]</a><br><span class="tag">恢复效果</span></th><td>万卡以上生产训练、数周内重启超过 100 次；超过 90% 异常自动处理；平均检测与诊断小于 10 分钟</td><td>该生产窗口描述没有足够精确的时长来计算同口径 MTBF，故不填数值</td><td>用于论证恢复工程的重要性，不作为裸硬件失效率。</td></tr>
+</tbody></table></div>
+<p>RSC 研究覆盖两个集群、11 个月、约 400 万个作业及超过 1.5 亿 A100 GPU 小时；其硬件归因失败影响约 0.2% 的作业，但这些作业占到约 18.7% 的 GPU 运行时间。后者是“受影响作业的运行资源”，不能解释为“实际全部损失了 18.7% 算力”。<a href="#ref-rsc">[10]</a></p>
+<div class="equation"><span class="line">λ<sub>card,h</sub> = <span class="frac"><span>r<sub>1000-node-days</sub></span><span>1,000 × 24 × 8</span></span>， MTBF<sub>10k,h</sub>=1/(10,000λ<sub>card,h</sub>)</span><span class="eqno">(15)</span></div>
+<div class="note warning"><strong>基线偏乐观，需要本地日志校准</strong><p>按上述统一节点暴露换算，RSC-1 / RSC-2 的等效事件率分别约为本项目的 10.16 倍 / 3.66 倍。这不证明本项目参数错误，但说明“万卡 30 小时”应被视作待核实的环境基线，不能被公开资料背书。Meta Llama 的墙钟粗换算到万卡约为 5.07 小时，口径仍有差异。</p></div>
+<h3>4.1 故障类别占比不是故障发生率</h3>
+<div class="table-scroll"><table><thead><tr><th>类别</th><th class="num">Meta 表 5 百分比</th><th>本模型映射</th><th>需要保留的限制</th></tr></thead><tbody><tr><td>GPU HBM3 Memory</td><td class="num">17.2%</td><td>HBM 类事件</td><td>不等于全部都是用户关心的 HBM ECC。</td></tr><tr><td>Faulty GPU</td><td class="num">30.1%</td><td>其他 Faulty GPU 类事件</td><td>不包含另列的全部 SRAM、GSP 等 GPU 故障。</td></tr><tr><td>Network Switch/Cable</td><td class="num">8.4%</td><td>交换机/线缆事件</td><td>不是纯网络闪断发生率。</td></tr><tr><td>其余</td><td class="num">44.3%</td><td>100% 减前三类</td><td>保留软件、维护、其他硬件和未知根因。</td></tr></tbody></table></div>
+<p>原文 Faulty GPU 同时列出 148 次和 30.1%，与正文 419 次的分母不一致。本报告使用<strong>百分比列作为可编辑的情景权重</strong>，不把计数混入归一化，也不将其当作昇腾的实测分布。来源：Llama 3 原文 §3.3.4、表 5。<a href="#ref-llama">[5]</a></p>
+<h3>4.2 从真实日志估计下一版参数</h3>
+<p>建议每条根因事件至少记录：唯一事件 ID、涉及设备和作业、首次失效时间、检出时间、恢复可训练时间、恢复前后吞吐、最近有效检查点、被撤销的 step、根因置信度。将同一次交换机故障引起的多条 rank 告警合并为一个根因事件，并记录影响域数。区分运行暴露与停机窗口，分别估计 λ、t<sub>d</sub>、t<sub>r</sub> 和亚健康持续时长；用独立时间段验证拟合结果。</p>
+</section>
+<section class="section appendix" id="sources"><span class="section-number">08 / 可追溯来源</span><h2>参考资料与审计说明</h2><p>以下均为官方资料或论文原文。网页与版本核验日期为 2026-09-21。硬件介绍按发表时间保留，不用旧版发布时间推断当前上市状态。</p>
+<ol class="sources">
+<li id="ref-nist-hpp"><a href="https://www.itl.nist.gov/div898/handbook/apr/section4/apr451.htm" target="_blank" rel="noreferrer">NIST：Constant repair rate (HPP/exponential) model</a>。λ、MTBF、运行暴露与统计估计。本报告使用其恒定率假设，不将 NIST 的计数过程“repair rate”术语当成硬件维修速度。</li>
+<li id="ref-aws"><a href="https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/availability.html" target="_blank" rel="noreferrer">AWS Well-Architected：Availability</a>。可用度定义和 MTBF/MTTR 关系。</li>
+<li id="ref-nist-series"><a href="https://www.itl.nist.gov/div898/handbook/apr/section1/apr182.htm" target="_blank" rel="noreferrer">NIST：Series model</a>。部件独立且任一故障即系统失败的串联结构。</li>
+<li id="ref-tor"><a href="https://arxiv.org/pdf/2408.07482" target="_blank" rel="noreferrer">Lu et al.：Training Overhead Ratio，arXiv:2408.07482v3，2024</a>。全文 3 页，§II 的定义与故障恢复模型；无完整大规模实证评估。</li>
+<li id="ref-llama"><a href="https://arxiv.org/html/2407.21783v3#S3.SS3.SSS4" target="_blank" rel="noreferrer">Meta：The Llama 3 Herd of Models，arXiv:2407.21783v3，§3.3.4 / 表 5</a>。54 天中断统计与故障类别；表 4 提供 step 粗估所用吞吐参数。Faulty GPU 计数与百分比不一致，未私自修订原文。</li>
+<li id="ref-huawei-2025"><a href="https://www.huawei.com/en/news/2025/9/hc-xu-keynote-speech" target="_blank" rel="noreferrer">Huawei，2025-09：Groundbreaking SuperPoD Interconnect</a>。Atlas 950 最大 8,192 卡、128 计算柜与 32 通信柜的公布口径。</li>
+<li id="ref-huawei-mwc"><a href="https://www.huawei.com/en/news/2026/3/mwc-superpod-ai" target="_blank" rel="noreferrer">Huawei，2026-03：MWC SuperPoD 发布</a>。64 NPU/计算柜、UnifiedBus 与最大 8,192 卡。</li>
+<li id="ref-huawei-waic"><a href="https://www.huawei.com/cn/news/2026/7/atlas-950-superpod" target="_blank" rel="noreferrer">华为，2026-07：昇腾 950 超节点真机亮相 WAIC</a>。1,024 卡实机规模。</li>
+<li id="ref-huawei-2026"><a href="https://www.huawei.com/cn/news/2026/9/hc-wang-keynote" target="_blank" rel="noreferrer">华为，2026-09：智启新未来，打造智能世界的硅基黑土地</a>。昇腾 950 规模商用的官方状态表述。</li>
+<li id="ref-rsc"><a href="https://arxiv.org/html/2410.21680v2" target="_blank" rel="noreferrer">Kokolis et al.：Revisiting Reliability in Large-Scale Machine Learning Research Clusters，arXiv:2410.21680v2，2025</a>。RSC-1/2 的样本、节点运行日故障率和统计边界。文中的大规模 MTTF 投影不能改称实测。</li>
+<li id="ref-megascale"><a href="https://arxiv.org/html/2402.15627v1#S6" target="_blank" rel="noreferrer">Jiang et al.：MegaScale，arXiv:2402.15627v1，2024，§6.2–6.3</a>。万卡生产训练的重启与恢复经验。原文恢复到故障前进度的时间包含特定追赶语义，不直接等于本项目的纯恢复参数。</li>
+<li id="ref-fit"><a href="https://www.ti.com/quality-reliability/reliability/terminology.html" target="_blank" rel="noreferrer">Texas Instruments：Reliability terminology</a>。FIT 定义为每十亿运行小时的失效数；恒定失效率及不含维修时间的 MTBF 定义。这里只引用单位和定义，不使用 TI 器件数值代表集群。</li>
+</ol></section>
+<footer>离线独立文件，无外部脚本与联网计算。更改参数只作用于本次打开；重新打开恢复默认值。打印输出对应当前已应用的模拟结果。硬件与业界来源附录为上一版已核验资料，数值不是昇腾硬件实测预测。</footer>
+</main><div id="tooltip" class="chart-tip" role="tooltip" hidden></div>
+<script id="model-core">
+function createReliabilityEngine() {
+  const weights = [.172, .301, .084, .443];
+  const initialFit = 1e9 / 300000 / .976;
+  const defaults = {
+    fits: weights.map(w => initialFit * w),
+    slowPct: 2, silentPct: .4, hardDetect: 95, slowDetect: 95, silentDetect: 0,
+    hardSeconds: 10, fallbackMinutes: 30, slowMinutes: 5, silentHours: 24,
+    mode: 'global', globalMinutes: 120, localMinutes: 120, silentMinutes: 120,
+    intervalSeconds: 7200, saveSeconds: 10, slowHours: 24, slowLoss: 5,
+    retentionHours: 72, replayRate: 1
+  };
+  const scales = [1000,5000,10000,25000,50000,75000,100000,150000,200000,250000,300000,400000,500000];
+  function random(seed) {
+    let x = seed >>> 0;
+    return () => { x = (Math.imul(x,1664525)+1013904223)>>>0; return (x+.5)/4294967296; };
+  }
+  function summary(p,n) {
+    const fit=p.fits.reduce((a,b)=>a+b,0), ph=1-(p.slowPct+p.silentPct)/100;
+    return {fit, mtbf:fit?1e9/(n*fit):Infinity, hardMtbf:fit*ph?1e9/(n*fit*ph):Infinity,
+      auto:ph*p.hardDetect/100+p.slowPct*p.slowDetect/10000+p.silentPct*p.silentDetect/10000,
+      eventual:ph+p.slowPct*p.slowDetect/10000+p.silentPct*p.silentDetect/10000};
+  }
+  function cycleTraining(x,tau,save) {
+    const L=tau+save, cycles=Math.floor(x/L);
+    return cycles*tau+Math.min(x-cycles*L,tau);
+  }
+  // Arithmetic checkpoint batching: independent of checkpoint frequency.
+  function advance(phase,dt,tau,save) {
+    const L=tau+save, end=phase+dt, count=Math.floor(end/L+1e-11);
+    let next=end-count*L;
+    if(next<0 && next>-1e-9)next=0;
+    const work=Math.max(0,cycleTraining(end,tau,save)-cycleTraining(phase,tau,save));
+    return {work, phase:Math.max(0,next), commits:count,
+      commitElapsed:count?count*L-phase:0,
+      commitWork:count?count*tau-Math.min(phase,tau):0};
+  }
+  function timeForWork(phase,work,tau,save) {
+    if(work<=1e-12)return 0;
+    let elapsed=0;
+    if(phase>=tau){elapsed=tau+save-phase;phase=0;}
+    const available=tau-phase;
+    if(work<=available)return elapsed+work;
+    work-=available;elapsed+=available+save;
+    const full=Math.max(0,Math.ceil(work/tau)-1);
+    return elapsed+full*(tau+save)+(work-full*tau);
+  }
+  class Queue {
+    constructor(){this.items=[];this.serial=0;}
+    add(event){event.serial=this.serial++;const a=this.items;a.push(event);let i=a.length-1;while(i){const j=(i-1)>>1;if(!this.before(a[i],a[j]))break;[a[i],a[j]]=[a[j],a[i]];i=j;}}
+    before(a,b){return a.at<b.at || (a.at===b.at && a.serial<b.serial);}
+    peek(){return this.items[0];}
+    pop(){const a=this.items, first=a[0],end=a.pop();if(a.length){a[0]=end;let i=0;while(true){let j=2*i+1;if(j>=a.length)break;if(j+1<a.length&&this.before(a[j+1],a[j]))j++;if(!this.before(a[j],a[i]))break;[a[i],a[j]]=[a[j],a[i]];i=j;}}return first;}
+  }
+  function simulate(n,p,seed=1,options={}) {
+    const T=options.hours ?? 720, rng=random(seed), queue=new Queue();
+    const tau=p.intervalSeconds/3600, save=p.saveSeconds/3600, m=p.mode==='local'?50:1;
+    const lambda=n*p.fits.reduce((a,b)=>a+b,0)/1e9;
+    const ph=1-(p.slowPct+p.silentPct)/100, ps=p.slowPct/100;
+    const up=new Array(m).fill(true), downUntil=new Array(m).fill(0);
+    let active=m,t=0,progress=0,correct=0,phase=0,uptime=0,capacityHours=0,saveHours=0;
+    let cp={position:0,at:0,clean:true},cleanCp={...cp},epoch=null,epochSerial=0;
+    let paused=false,pauseUntil=Infinity,repairingSilent=false,replayUntil=0;
+    let slowSerial=0,events=0,slowFactor=1;const slows=new Map();
+    const stats={hard:0,slow:0,silent:0,silentDetected:0,silentRollbackHours:0,
+      silentRollbackWork:0,silentRestarts:0,hardRollbackWork:0,slowRepairs:0};
+    const trace=options.trace?[]:null;
+    const record=kind=>{if(trace)trace.push({t,kind,progress,correct,active,corrupt:!!epoch});};
+    function recalcSlow(){slowFactor=1;for(const s of slows.values())if(up[s.domain])slowFactor*=1-p.slowLoss/100;}
+    function chooseDomain(){if(m===1)return 0;let d;do{d=Math.floor(rng()*m);}while(!up[d]);return d;}
+    function localRepair(domain,until){
+      if(up[domain]){up[domain]=false;active--;}
+      downUntil[domain]=Math.max(downUntil[domain],until);
+      queue.add({at:downUntil[domain],type:'up',domain});recalcSlow();
+    }
+    function ordinaryGlobalPause(duration,reason){
+      const lost=Math.max(0,progress-cp.position);
+      if(reason==='hard')stats.hardRollbackWork+=lost;
+      progress=cp.position;correct=epoch?Math.min(correct,progress):progress;phase=0;
+      paused=true;pauseUntil=Math.max(Number.isFinite(pauseUntil)?pauseUntil:0,t+duration);
+    }
+    function silentDetection(id) {
+      if(!epoch || epoch.id!==id || epoch.repairing)return;
+      epoch.repairing=true;
+      const retained=t-epoch.clean.at<=p.retentionHours+1e-10;
+      const chosen=retained?epoch.clean:{position:0,at:0,clean:true};
+      stats.silentDetected++;
+      stats.silentRollbackHours+=t-chosen.at;
+      stats.silentRollbackWork+=Math.max(0,progress-chosen.position);
+      if(!retained)stats.silentRestarts++;
+      replayUntil=Math.max(replayUntil,progress);
+      progress=chosen.position;correct=progress;cp={...chosen};phase=0;
+      paused=true;repairingSilent=true;
+      pauseUntil=Math.max(Number.isFinite(pauseUntil)?pauseUntil:0,t+p.silentMinutes/60);
+      record('silent-detected-rollback');
+    }
+    const scripted=options.events || [];
+    for(const e of scripted)queue.add({...e,type:'forced'});
+    while(t<T-1e-10) {
+      if(++events>200000)throw new Error('事件数超过计算上限，请降低 FIT 或缩短评估窗口。');
+      const running=!paused && active>0, fraction=active/m;
+      const hazard=running && !options.disableRandom?lambda*fraction:0;
+      const faultAt=hazard?t-Math.log(rng())/hazard:Infinity;
+      const pending=queue.peek()?.at ?? Infinity;
+      const replay=progress<replayUntil-1e-10 && !epoch;
+      const speed=fraction*slowFactor*(replay?p.replayRate:1);
+      const replayAt=running && replay && speed>0?t+timeForWork(phase,(replayUntil-progress)/speed,tau,save):Infinity;
+      const next=Math.min(T,faultAt,pending,paused?pauseUntil:Infinity,replayAt);
+      if(next<t-1e-8)throw new Error('事件时间顺序错误。');
+      const dt=Math.max(0,next-t);
+      if(running){
+        const step=advance(phase,dt,tau,save),old=progress;
+        progress+=step.work*speed;
+        if(!epoch)correct=progress;
+        if(step.commits){
+          cp={position:old+step.commitWork*speed,at:t+step.commitElapsed,clean:!epoch};
+          if(cp.clean)cleanCp={...cp};
+        }
+        phase=step.phase;uptime+=dt;capacityHours+=dt*fraction;saveHours+=dt-step.work;
+      }
+      t=next;
+      if(t>=T-1e-10)break;
+      if(paused && t>=pauseUntil-1e-10) {
+        paused=false;pauseUntil=Infinity;
+        if(repairingSilent){
+          epoch=null;repairingSilent=false;correct=progress;
+          cp={position:progress,at:t,clean:true};cleanCp={...cp};
+        }
+        record('resume');
+        continue;
+      }
+      if(pending<=t+1e-10){
+        const e=queue.pop();
+        if(e.type==='up'){
+          if(downUntil[e.domain]<=t+1e-10 && !up[e.domain]){
+            up[e.domain]=true;active++;recalcSlow();
+          }
+        }else if(e.type==='slow-expire'){
+          slows.delete(e.id);recalcSlow();
+        }else if(e.type==='slow-detect'){
+          const s=slows.get(e.id);
+          if(s){
+            slows.delete(e.id);recalcSlow();stats.slowRepairs++;
+            if(p.mode==='global')ordinaryGlobalPause(p.globalMinutes/60,'slow');
+            else localRepair(s.domain,t+p.localMinutes/60);
+          }
+        }else if(e.type==='silent-detect'){
+          silentDetection(e.id);
+        }else if(e.type==='forced'){
+          if(e.kind==='silent')triggerSilent(e.detectAfter);
+          if(e.kind==='hard')triggerHard(0);
+        }
+        continue;
+      }
+      if(replayAt<=t+1e-10){replayUntil=0;continue;}
+      const type=rng();
+      if(type<ph)triggerHard();
+      else if(type<ph+ps)triggerSlow();
+      else triggerSilent();
+    }
+    function triggerHard(forcedDelay) {
+      stats.hard++;
+      const detection=forcedDelay ?? (rng()<p.hardDetect/100?p.hardSeconds/3600:p.fallbackMinutes/60);
+      if(p.mode==='global')ordinaryGlobalPause(detection+p.globalMinutes/60,'hard');
+      else localRepair(chooseDomain(),t+detection+p.localMinutes/60);
+      record('hard');
+    }
+    function triggerSlow() {
+      stats.slow++;
+      const id=++slowSerial,domain=chooseDomain();
+      slows.set(id,{domain});recalcSlow();
+      queue.add({at:t+p.slowHours,type:'slow-expire',id});
+      if(rng()<p.slowDetect/100)queue.add({at:t+p.slowMinutes/60,type:'slow-detect',id});
+    }
+    function triggerSilent(forcedDelay) {
+      stats.silent++;
+      if(!epoch){epoch={id:++epochSerial,onset:t,clean:{...cleanCp},repairing:false};correct=progress;}
+      if(forcedDelay!==undefined || rng()<p.silentDetect/100){
+        queue.add({at:t+(forcedDelay??p.silentHours),type:'silent-detect',id:epoch.id});
+      }
+      record('silent');
+    }
+    record('end');
+    return {effective:Math.max(0,correct/T),uptime:uptime/T,capacity:capacityHours/T,
+      progress,correct,saveHours,stats,trace};
+  }
+  function estimate(n,p,trials,seed=9137,hours=720) {
+    if(!Number.isInteger(trials)||trials<2)throw new Error('请选择有效的模拟轨迹数。');
+    const sums={effective:0,uptime:0,capacity:0},sq={effective:0,uptime:0,capacity:0};
+    let stats=null;
+    for(let i=0;i<trials;i++){
+      const r=simulate(n,p,(seed+Math.imul(i+1,2654435761)+n)>>>0,{hours});
+      for(const k of Object.keys(sums)){sums[k]+=r[k];sq[k]+=r[k]*r[k];}
+      if(!stats)stats=Object.fromEntries(Object.keys(r.stats).map(k=>[k,0]));
+      for(const k of Object.keys(stats))stats[k]+=r.stats[k];
+    }
+    const result={n,trials,stats};
+    for(const k of Object.keys(sums)){
+      const mean=sums[k]/trials,variance=Math.max(0,(sq[k]-sums[k]*sums[k]/trials)/(trials-1));
+      const se=Math.sqrt(variance/trials);
+      result[k]={mean,se,low:Math.max(0,mean-1.96*se),high:Math.min(1,mean+1.96*se)};
+    }
+    result.silentRollbackHours=stats.silentDetected?stats.silentRollbackHours/stats.silentDetected:null;
+    result.silentRollbackWork=stats.silentDetected?stats.silentRollbackWork/stats.silentDetected:null;
+    result.silentRestartFraction=stats.silentDetected?stats.silentRestarts/stats.silentDetected:null;
+    return result;
+  }
+  return {defaults,weights,scales,summary,advance,timeForWork,simulate,estimate};
+}
+if(typeof module!=='undefined')module.exports=createReliabilityEngine;
+
+</script>
+<script id="ui">
+(()=>{
+const E=createReliabilityEngine(),$=s=>document.querySelector(s),colors={base:'#2464a0',target:'#087e74'};
+const clone=x=>JSON.parse(JSON.stringify(x)),fmt=(x,d=2)=>Number.isFinite(x)?x.toLocaleString('zh-CN',{maximumFractionDigits:d}):'∞',pct=x=>(100*x).toFixed(2)+'%';
+const modes={global:'全局同步',local:'局部容错'};
+const hardware=['HBM 类','Faulty GPU','网络交换机/线缆','其他来源'];
+const fields=[
+['slowPct','亚健康占比','%',0,100,'detection'],['silentPct','静默占比','%',0,100,'detection'],
+['hardDetect','中断自动检出率','%',0,100,'detection'],['slowDetect','亚健康检出率','%',0,100,'detection'],['silentDetect','静默检出率','%',0,100,'detection'],
+['hardSeconds','中断自动发现','秒',0,86400,'detection'],['fallbackMinutes','中断兜底发现','分钟',0,43200,'detection'],['slowMinutes','亚健康发现','分钟',0,43200,'detection'],['silentHours','静默检出延迟','小时',0,720,'detection'],
+['mode','恢复模式','',0,0,'recovery'],['globalMinutes','全局修复/加载','分钟',0,43200,'recovery'],['localMinutes','局部修复/加入','分钟',0,43200,'recovery'],
+['intervalSeconds','检查点运行间隔','秒',.001,7200,'recovery'],['saveSeconds','保存阻塞','秒',0,10,'recovery'],
+['slowHours','未检出亚健康持续','小时',0,720,'impact'],['slowLoss','单次吞吐降幅','%',0,99,'impact'],
+['silentMinutes','静默修复/加载','分钟',0,43200,'impact'],['retentionHours','干净检查点保留','小时',0,2160,'impact'],['replayRate','静默重放吞吐','倍',.05,1,'impact']
+];
+let worker=null,data=null,applied=null,appliedInputs='',runToken=0;
+const hidden=new Set();
+for(const f of fields){
+ const tr=document.createElement('tr'),th=document.createElement('th');th.scope='row';th.textContent=f[1]+(f[2]?'（'+f[2]+'）':'');tr.append(th);
+ for(const side of ['b','t']){
+  const td=document.createElement('td'),input=document.createElement(f[0]==='mode'?'select':'input');
+  input.id=side+'-'+f[0];input.setAttribute('aria-label',(side==='b'?'基线':'方案')+f[1]);
+  if(f[0]==='mode'){for(const k of Object.keys(modes)){const o=document.createElement('option');o.value=k;o.textContent=modes[k];input.append(o);}input.value=side==='b'?'global':'local';}
+  else{input.type='number';input.min=f[3];input.max=f[4];input.step='any';input.value=E.defaults[f[0]];}
+  td.append(input);tr.append(td);
+ }$('#'+f[5]+'-inputs').append(tr);
+}
+hardware.forEach((name,i)=>{
+ const title=document.createElement('p');title.className='hardware-title';title.textContent=name;$('#hardware-inputs').append(title);
+ const pair=document.createElement('div');pair.className='fit-pair';
+ for(const side of ['b','t']){const label=document.createElement('label');label.textContent=side==='b'?'基线 FIT':'方案 FIT';const input=document.createElement('input');input.type='number';input.min=0;input.max=1000000;input.step='any';input.id=side+'-fit-'+i;input.value=Number(E.defaults.fits[i].toFixed(6));input.setAttribute('aria-label',label.textContent+' '+name);label.append(input);pair.append(label);}
+ $('#hardware-inputs').append(pair);
+});
+for(const side of ['b','t'])$('#'+side+'-total').value=Number(E.defaults.fits.reduce((a,b)=>a+b,0).toFixed(6));
+for(const [value,label]of [['fits','全部来源 FIT'],...hardware.map((h,i)=>['fit'+i,h+' FIT']),...fields.map(f=>[f[0],f[1]])]){const option=document.createElement('option');option.value=value;option.textContent='仅改 · '+label;$('#factor').append(option);}
+const draftSnapshot=()=>JSON.stringify([...document.querySelectorAll('.inputs input,.inputs select')].map(e=>[e.id,e.value]));
+function readSide(side){const p={fits:hardware.map((_,i)=>+$('#'+side+'-fit-'+i).value)};for(const f of fields)p[f[0]]=f[0]==='mode'?$('#'+side+'-'+f[0]).value:+$('#'+side+'-'+f[0]).value;return p;}
+function setDependentInputs(){
+ for(const side of ['b','t']){const mode=$('#'+side+'-mode').value,q=+$('#'+side+'-silentDetect').value;
+ $('#'+side+'-globalMinutes').disabled=mode==='local';$('#'+side+'-localMinutes').disabled=mode==='global';
+ for(const k of ['silentHours','silentMinutes','retentionHours','replayRate'])$('#'+side+'-'+k).disabled=q===0;
+ }
+}
+function previews(){
+ setDependentInputs();
+ const b=readSide('b'),t=readSide('t'),rows=[10000,100000,500000].map(n=>'<tr><td>'+fmt(n/10000)+' 万卡</td><td>'+fmt(E.summary(b,n).mtbf,3)+'</td><td>'+fmt(E.summary(t,n).mtbf,3)+'</td></tr>').join('');
+ $('#fit-preview').innerHTML='<strong>输入预览 · 任意故障 MTBF / h</strong><table><tr><th>规模</th><th>基线</th><th>方案</th></tr>'+rows+'</table><div>万卡中断 MTBF：'+fmt(E.summary(b,10000).hardMtbf,3)+' → '+fmt(E.summary(t,10000).hardMtbf,3)+' h</div>';
+ const bs=E.summary(b,10000),ts=E.summary(t,10000);
+ $('#detection-preview').innerHTML='<strong>输入预览 · 基线 → 方案</strong><div>中断占比：'+fmt(100-b.slowPct-b.silentPct)+'% → '+fmt(100-t.slowPct-t.silentPct)+'%</div><div>自动检出率：'+pct(bs.auto)+' → '+pct(ts.auto)+'</div><div>最终渠道覆盖：'+pct(bs.eventual)+' → '+pct(ts.eventual)+'</div>';
+}
+function markDirty(){
+ previews();$('#error').textContent='';
+ $('#status').textContent=worker?'正在计算已提交参数；新输入需完成后再次刷新。':draftSnapshot()===appliedInputs?'当前结果已应用全部参数。':'参数已修改，点击“刷新建模结果”后更新右侧结果。';
+}
+document.querySelectorAll('.inputs input,.inputs select').forEach(el=>el.addEventListener('input',()=>{
+ const total=el.id.match(/^([bt])-total$/),fit=el.id.match(/^([bt])-fit-/);
+ if(total && el.value!=='' && Number.isFinite(+el.value) && +el.value>=0){
+  const side=total[1],old=hardware.map((_,i)=>+$('#'+side+'-fit-'+i).value),sum=old.reduce((a,b)=>a+b,0);
+  old.forEach((v,i)=>$('#'+side+'-fit-'+i).value=Number((+el.value*(sum?v/sum:E.weights[i])).toFixed(6)));
+ }
+ if(fit)$('#'+fit[1]+'-total').value=Number(readSide(fit[1]).fits.reduce((a,b)=>a+b,0).toFixed(6));
+ markDirty();
+}));
+$('#step-preset').addEventListener('click',()=>{$('#t-intervalSeconds').value=6;markDirty();});
+function validate(){
+ for(const el of document.querySelectorAll('.inputs input[type=number]'))if(el.value.trim()===''||!Number.isFinite(+el.value)||!el.checkValidity())return '请输入允许范围内的数值：'+(el.getAttribute('aria-label')||el.id);
+ for(const side of ['b','t']){const p=readSide(side);if(p.slowPct+p.silentPct>100)return '亚健康与静默占比之和不能超过 100%。';if(p.fits.reduce((a,b)=>a+b,0)>1000000)return '总 FIT 不能超过 1,000,000。';}
+ return '';
+}
+function experiment(){
+ const base=readSide('b'),draft=readSide('t'),key=$('#factor').value;let target=clone(draft);
+ if(key!=='all'){target=clone(base);if(key==='fits')target.fits=clone(draft.fits);else if(/^fit\d$/.test(key))target.fits[+key.slice(3)]=draft.fits[+key.slice(3)];else target[key]=draft[key];}
+ return {base,target,trials:+$('#samples').value,factor:key,label:$('#factor').selectedOptions[0].textContent};
+}
+function refresh(){
+ const problem=validate();if(problem){$('#error').textContent=problem;$('#status').textContent='未刷新，原结果保持不变。';return;}
+ if(worker)worker.terminate();
+ const request=experiment();if(request.target.slowPct+request.target.silentPct>100 || request.target.fits.reduce((a,b)=>a+b,0)>1000000){$('#error').textContent='当前单项组合超出占比或总 FIT 限制，请调整参数。';return;}const snapshot=draftSnapshot(),token=++runToken;$('#error').textContent='';
+ $('#refresh').disabled=true;$('#stop').hidden=false;$('#progress').hidden=false;$('#progress').value=0;
+ $('#status').textContent='按 30 天事件过程计算，共 '+(E.scales.length*2)+' 组…';
+ const script='const E=('+createReliabilityEngine.toString()+')();self.onmessage=function(e){try{const p=e.data,out={base:[],target:[]};let done=0;for(const n of E.scales){for(const side of [\"base\",\"target\"]){out[side].push(E.estimate(n,p[side],p.trials));self.postMessage({type:\"progress\",done:++done,n:n});}}self.postMessage({type:\"done\",out:out});}catch(error){self.postMessage({type:\"error\",message:error.message});}};';
+ const url=URL.createObjectURL(new Blob([script],{type:'text/javascript'}));worker=new Worker(url);URL.revokeObjectURL(url);
+ function finish(){if(worker)worker.terminate();worker=null;$('#refresh').disabled=false;$('#stop').hidden=true;$('#progress').hidden=true;}
+ worker.onmessage=e=>{
+  if(token!==runToken)return;const msg=e.data;
+  if(msg.type==='progress'){$('#progress').value=msg.done;$('#status').textContent='计算 '+msg.done+'/26 组 · '+fmt(msg.n)+' 卡';return;}
+  if(msg.type==='error'){finish();$('#error').textContent=msg.message;$('#status').textContent='计算未完成，原结果保持不变。';return;}
+  if(msg.type==='done'){data=msg.out;applied=request;appliedInputs=snapshot;finish();render();$('#status').textContent=draftSnapshot()===snapshot?'建模结果已刷新 · 每规模 '+fmt(request.trials)+' 次模拟。':'已刷新提交时的参数；还有新修改未应用。';document.body.dataset.ready='true';}
+ };
+ worker.onerror=e=>{finish();$('#error').textContent='模拟工作线程无法运行：'+e.message;};
+ worker.postMessage(request);
+}
+$('#refresh').addEventListener('click',refresh);
+$('#stop').addEventListener('click',()=>{if(worker)worker.terminate();worker=null;runToken++;$('#refresh').disabled=false;$('#stop').hidden=true;$('#progress').hidden=true;$('#status').textContent='已停止，保留上次完整结果。';});
+const keyScales=[10000,100000,200000,500000];
+const at=(side,n)=>data[side].find(r=>r.n===n);
+function cellRow(values){const tr=document.createElement('tr');values.forEach((value,i)=>{const td=document.createElement(i?'td':'th');td.textContent=value;tr.append(td);});return tr;}
+function fillTable(id,rows){const el=$(id);el.replaceChildren();for(const row of rows)el.append(cellRow(row));}
+function estimateLabel(r){return pct(r.mean)+' ± '+(196*r.se).toFixed(2)+' pp';}
+function render(){
+ if(!data)return;
+ const b=at('base',500000),t=at('target',500000);
+ $('#headline-base').textContent=pct(b.effective.mean);$('#headline-target').textContent=pct(t.effective.mean);
+ $('#headline-base-ci').textContent='95%采样区间 '+pct(b.effective.low)+'–'+pct(b.effective.high);
+ $('#headline-target-ci').textContent='95%采样区间 '+pct(t.effective.low)+'–'+pct(t.effective.high);
+ $('#headline-gain').textContent=((t.effective.mean-b.effective.mean)*720>=0?'+':'')+fmt((t.effective.mean-b.effective.mean)*720,1)+' h';
+ fillTable('#scale-results',keyScales.map(n=>{const b=at('base',n).effective,t=at('target',n).effective;return [fmt(n)+' 卡',estimateLabel(b),estimateLabel(t),((t.mean-b.mean)*100>=0?'+':'')+fmt((t.mean-b.mean)*100,2),fmt((t.mean-b.mean)*720,1)];}));
+ const differences=[];
+ hardware.forEach((h,i)=>{if(Math.abs(applied.base.fits[i]-applied.target.fits[i])>1e-7)differences.push(h+' FIT '+fmt(applied.base.fits[i],3)+' → '+fmt(applied.target.fits[i],3));});
+ fields.forEach(f=>{if(applied.base[f[0]]!==applied.target[f[0]])differences.push(f[1]+' '+(f[0]==='mode'?modes[applied.base.mode]:fmt(applied.base[f[0]]))+' → '+(f[0]==='mode'?modes[applied.target.mode]:fmt(applied.target[f[0]]))+(f[2]?' '+f[2]:''));});
+ $('#applied-summary').textContent='已应用实验：'+applied.label+'。'+(differences.length?'实际差异：'+differences.join('；'):'基线与方案完全相同，结果应一致。');
+ fillTable('#snapshot',[
+ ['轨迹数 / 每规模',fmt(applied.trials),fmt(applied.trials)],
+ ...hardware.map((h,i)=>[h+' FIT',fmt(applied.base.fits[i],6),fmt(applied.target.fits[i],6)]),
+ ...fields.map(f=>[f[1]+(f[2]?' / '+f[2]:''),f[0]==='mode'?modes[applied.base.mode]:fmt(applied.base[f[0]],6),f[0]==='mode'?modes[applied.target.mode]:fmt(applied.target[f[0]],6)])
+ ]);
+ renderDetails();draw();
+}
+function renderDetails(){
+ if(!data)return;const n=+$('#inspect').value,b=at('base',n),t=at('target',n);$('#detail-title').textContent='恢复、回退与事件统计 · '+fmt(n)+' 卡';
+ const metrics=[
+ ['运行可用度',r=>pct(r.uptime.mean)],['平均活跃容量比例',r=>pct(r.capacity.mean)],['30 天正确净训练小时',r=>fmt(r.effective.mean*720,2)+' h'],['30 天等价训练损失',r=>fmt((1-r.effective.mean)*720,2)+' h'],
+ ['中断事件 / 每任务',r=>fmt(r.stats.hard/r.trials)],['亚健康事件 / 每任务',r=>fmt(r.stats.slow/r.trials)],['静默事件 / 每任务',r=>fmt(r.stats.silent/r.trials)],
+ ['静默检出并回退 / 每任务',r=>fmt(r.stats.silentDetected/r.trials,3)],['中断平均回退工作量',r=>r.stats.hard?fmt(r.stats.hardRollbackWork/r.stats.hard,3)+' h':'无事件'],
+ ['静默平均回退跨度',r=>r.silentRollbackHours===null?'无检出':fmt(r.silentRollbackHours,2)+' h'],
+ ['静默平均需重算工作量',r=>r.silentRollbackWork===null?'无检出':fmt(r.silentRollbackWork,2)+' h'],
+ ['静默回退中从头重训比例',r=>r.silentRestartFraction===null?'无检出':pct(r.silentRestartFraction)]
+ ];fillTable('#detail-results',metrics.map(([name,f])=>[name,f(b),f(t)]));
+}
+const NS='http://www.w3.org/2000/svg';
+function svg(tag,attrs,text){const el=document.createElementNS(NS,tag);for(const k in attrs)el.setAttribute(k,attrs[k]);if(text!==undefined)el.textContent=text;return el;}
+function drawPlot(id,metric,title){
+ const root=$(id);if(!data)return;root.replaceChildren();
+ const W=Math.max(650,Math.floor(root.getBoundingClientRect().width)),H=430,left=62,right=20,top=44,bottom=275;
+ const log=$('#xscale').value==='log',x=n=>left+(W-left-right)*(log?Math.log(n/1000)/Math.log(500):(n-1000)/499000),y=a=>bottom-(bottom-top)*a;
+ const chart=svg('svg',{viewBox:'0 0 '+W+' '+H,role:'img','aria-label':title});root.append(chart);
+ chart.append(svg('text',{x:left,y:25,'font-size':16,'font-weight':600},title));
+ for(const v of [0,.25,.5,.75,1]){chart.append(svg('line',{x1:left,x2:W-right,y1:y(v),y2:y(v),stroke:'#dde6ec'}));chart.append(svg('text',{x:left-9,y:y(v)+4,'text-anchor':'end','font-size':12},(v*100)+'%'));}
+ const ticks=log?[1000,10000,100000,500000]:[1000,100000,200000,300000,400000,500000];
+ for(const n of ticks){chart.append(svg('text',{x:x(n),y:bottom+24,'text-anchor':n===1000?'start':n===500000?'end':'middle','font-size':12},n===1000?'1千':fmt(n/10000)+'万'));}
+ chart.append(svg('text',{x:(left+W-right)/2,y:bottom+47,'text-anchor':'middle','font-size':13},'单一作业规模 N（卡）'));
+ chart.append(svg('text',{transform:'translate(17 '+((top+bottom)/2)+') rotate(-90)','text-anchor':'middle','font-size':12},metric==='effective'?'正确有效产出率（%）':'运行可用度（%）'));
+ for(const n of keyScales)chart.append(svg('line',{x1:x(n),x2:x(n),y1:top,y2:bottom,stroke:'#cbd8e2','stroke-dasharray':'3 4'}));
+ for(const side of ['base','target']){
+  if(hidden.has(side))continue;const rows=data[side],color=colors[side];
+  const upper=rows.map((r,i)=>(i?'L':'M')+x(r.n)+','+y(r[metric].high)).join(' ');
+  const lower=[...rows].reverse().map(r=>'L'+x(r.n)+','+y(r[metric].low)).join(' ');
+  chart.append(svg('path',{d:upper+' '+lower+' Z',fill:color,opacity:.10}));
+  const path=rows.map((r,i)=>(i?'L':'M')+x(r.n)+','+y(r[metric].mean)).join(' ');
+  chart.append(svg('path',{d:path,fill:'none',stroke:color,'stroke-width':2.2,'stroke-dasharray':side==='target'?'7 3':'','data-series':side}));
+  for(const n of keyScales){const value=at(side,n)[metric].mean;chart.append(svg('circle',{cx:x(n),cy:y(value),r:3.4,fill:'#fff',stroke:color,'stroke-width':2,'data-marker':n}));}
+ }
+ const band=bottom+73,labelW=74,col=(W-left-right-labelW)/4;
+ chart.append(svg('rect',{x:left,y:band-16,width:W-left-right,height:85,fill:'#f3f7fa'}));
+ keyScales.forEach((n,i)=>chart.append(svg('text',{x:left+labelW+(i+.5)*col,y:band,'text-anchor':'middle','font-size':13},fmt(n/10000)+' 万卡')));
+ ['base','target'].filter(s=>!hidden.has(s)).forEach((side,i)=>{
+  chart.append(svg('text',{x:left+8,y:band+27+i*25,'font-size':13,style:'fill:'+colors[side]},side==='base'?'基线':'方案'));
+  keyScales.forEach((n,j)=>{const value=at(side,n)[metric].mean;chart.append(svg('text',{x:left+labelW+(j+.5)*col,y:band+27+i*25,'text-anchor':'middle','font-size':14,style:'fill:'+colors[side],'data-key-label':n,'data-label-series':side,'data-value':value},pct(value)));});
+ });
+ const overlay=svg('rect',{x:left,y:top,width:W-left-right,height:bottom-top,fill:'transparent','data-hover':'true'});
+ chart.append(overlay);
+ overlay.addEventListener('pointermove',event=>{
+  const rect=chart.getBoundingClientRect(),px=(event.clientX-rect.left)*W/rect.width;
+  const n=E.scales.reduce((best,v)=>Math.abs(x(v)-px)<Math.abs(x(best)-px)?v:best,E.scales[0]);
+  const tip=$('#tooltip');tip.replaceChildren();const heading=document.createElement('b');heading.textContent='模拟规模 '+fmt(n)+' 卡';tip.append(heading);
+  for(const side of ['base','target'])if(!hidden.has(side)){const line=document.createElement('div');line.textContent=(side==='base'?'基线：':'方案：')+estimateLabel(at(side,n)[metric]);tip.append(line);}
+  tip.hidden=false;tip.style.left=Math.max(8,Math.min(event.clientX+15,window.innerWidth-tip.offsetWidth-10))+'px';tip.style.top=Math.max(8,Math.min(event.clientY+15,window.innerHeight-tip.offsetHeight-10))+'px';
+ });
+ overlay.addEventListener('pointerleave',()=>$('#tooltip').hidden=true);
+}
+function draw(){drawPlot('#effective-plot','effective','图 1 · 规模与正确有效产出率');drawPlot('#uptime-plot','uptime','图 2 · 规模与运行可用度');}
+$('#xscale').addEventListener('input',draw);$('#inspect').addEventListener('input',renderDetails);
+document.querySelectorAll('#legend button').forEach(button=>button.addEventListener('click',()=>{const key=button.dataset.case;if(hidden.has(key))hidden.delete(key);else hidden.add(key);button.setAttribute('aria-pressed',String(!hidden.has(key)));button.style.opacity=hidden.has(key)?.4:1;$('#tooltip').hidden=true;draw();}));
+let width=0;new ResizeObserver(()=>{const w=$('.results').clientWidth;if(w!==width){width=w;draw();}}).observe($('.results'));
+window.addEventListener('scroll',()=>$('#tooltip').hidden=true,{passive:true});
+window.addEventListener('beforeprint',()=>{document.querySelectorAll('details').forEach(d=>{d.dataset.wasOpen=d.open?'1':'0';d.open=true;});});
+window.addEventListener('afterprint',()=>document.querySelectorAll('details').forEach(d=>d.open=d.dataset.wasOpen==='1'));
+previews();refresh();
+})();
+</script></body></html>

@@ -1,0 +1,21 @@
+const fs=require('fs'),path=require('path'),crypto=require('crypto');
+const R=require('./场景与证据.js')();
+const E=require('./月度训练仿真引擎.js')(),A=require('./Shapley贡献计算.js')(E);
+const codeSHA256=crypto.createHash('sha256').update(['月度训练仿真引擎.js','Shapley贡献计算.js','场景与证据.js'].map(f=>fs.readFileSync(path.join(__dirname,f),'utf8')).join('\n')).digest('hex');
+const args=process.argv.slice(2),options={};
+for(let i=0;i<args.length;i+=2){if(!['--config','--trials','--scales','--output'].includes(args[i])||!args[i+1])throw new Error('用法：node 计算Shapley贡献.cjs [--trials 2048] [--scales 10000,100000,200000,500000] [--config 参数.json] [--output 结果.json]');options[args[i]]=args[i+1];}
+const supplied=options['--config']?JSON.parse(fs.readFileSync(options['--config'],'utf8')):{};
+const config=supplied.schemaVersion?R.parseScenario(supplied,A,E.version):supplied;
+if(options['--trials'])config.trials=Number(options['--trials']);
+const scales=options['--scales']?options['--scales'].split(',').map(Number):E.scales;
+const out=A.run(config,p=>{if(p.done%64===0||p.done===p.total)console.log(p.done+'/'+p.total+' · '+p.n+' 卡');},scales);
+out.engineSHA256=crypto.createHash('sha256').update(fs.readFileSync(path.join(__dirname,'月度训练仿真引擎.js'))).digest('hex');
+out.codeSHA256=codeSHA256;
+out.scenario=R.scenario(out.config,E.version,out.codeSHA256);
+out.scenarioSHA256=crypto.createHash('sha256').update(R.canonical(out.scenario)).digest('hex');
+out.experiment={scenarioSHA256:out.scenarioSHA256,scales,seedPolicy:out.seedPolicy,trials:out.config.trials,hours:out.hours,codeSHA256};
+out.experimentSHA256=crypto.createHash('sha256').update(R.canonical(out.experiment)).digest('hex');
+out.createdAt=new Date().toISOString();
+const destination=options['--output']||path.join(__dirname,'Shapley贡献结果.json');fs.writeFileSync(destination,JSON.stringify(out,null,2));
+for(const r of out.scale)if(A.keyScales.includes(r.n))console.log(r.n+' 卡：基线 '+(r.base.mean*100).toFixed(2)+'%，全部改进 '+(r.all.mean*100).toFixed(2)+'%，加和残差 '+r.residual);
+console.log('已保存：'+destination);

@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "offline": true,
+  "layouts": [
+    {
+      "client": 1360,
+      "scroll": 1360
+    },
+    {
+      "client": 390,
+      "scroll": 390
+    }
+  ],
+  "errors": []
+}

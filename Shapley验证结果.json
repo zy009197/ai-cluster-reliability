@@ -1,0 +1,62 @@
+{
+  "status": "passed",
+  "checks": [
+    "hard timeout fallback is one minute",
+    "silent immediate branch loses at most detection + preparation + one step",
+    "missed silent fallback occurs after 120 hours and preserves clean progress",
+    "exponential fallback mean matches 120 hours",
+    "clean checkpoint never expires",
+    "unresolved corruption zeros delivery",
+    "later alarm does not erase earlier missed corruption",
+    "additive Shapley game",
+    "pure interaction equally allocated",
+    "dummy contribution is zero",
+    "negative contribution preserved",
+    "model no-change targets have zero Shapley and variance",
+    "Shapley efficiency identity"
+  ],
+  "exponentialFallbackMeanHours": 119.1138303457493,
+  "silentFallbackTrace": [
+    {
+      "t": 10.0001,
+      "kind": "silent",
+      "progress": 10.0001,
+      "correct": 10.0001,
+      "activeCards": 10000,
+      "corrupt": true,
+      "durableCheckpoint": 10
+    },
+    {
+      "t": 130.0001,
+      "kind": "silent-detected-rollback",
+      "progress": 10,
+      "correct": 10,
+      "activeCards": 10000,
+      "corrupt": true,
+      "durableCheckpoint": 10,
+      "channel": "fallback",
+      "candidateKind": "durable",
+      "located": true,
+      "verified": true,
+      "recoverySuccess": true
+    },
+    {
+      "t": 130.00037777777777,
+      "kind": "resume",
+      "progress": 10,
+      "correct": 10,
+      "activeCards": 10000,
+      "corrupt": false,
+      "durableCheckpoint": 10
+    },
+    {
+      "t": 200,
+      "kind": "end",
+      "progress": 79.99962222222223,
+      "correct": 79.99962222222223,
+      "activeCards": 10000,
+      "corrupt": false,
+      "durableCheckpoint": 78
+    }
+  ]
+}

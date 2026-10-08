@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 集群可用度建模与改进评估报告</title>
+<style>
+:root{color-scheme:light;--ink:#152c40;--muted:#526678;--line:#d8e3eb;--paper:#fff;--wash:#f3f7fa;--blue:#1364b0;--green:#04766a;--purple:#8054ad;--orange:#b75119;--cyan:#147f99;--red:#b13650;--s0:#2768b2;--s1:#0a7968;--s2:#9164b5;--s3:#b6571c;--s4:#188aa4;--s5:#bc4360}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:76px}body{margin:0;background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;font-size:16px;line-height:1.8}a{color:var(--blue);text-underline-offset:3px}button,input,select{font:inherit}button,select{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid #52a3e3;outline-offset:3px}button{padding:7px 14px;border:1px solid var(--line);border-radius:6px;background:white;color:var(--ink)}button:hover{background:var(--wash)}input,select{max-width:100%;padding:6px 9px;border:1px solid #afc1d0;border-radius:5px;background:white;color:var(--ink);font-variant-numeric:tabular-nums}input[type=number]{width:100%;min-width:0}input[type=checkbox]{width:18px;height:18px;vertical-align:middle}h1,h2,h3{line-height:1.4;letter-spacing:-.015em}h1{font-size:clamp(28px,4vw,46px);margin:14px 0 18px;font-weight:650}h2{font-size:28px;margin:0 0 22px}h3{font-size:20px;margin:30px 0 12px}p{margin:12px 0}strong{font-weight:650}code{font-family:ui-monospace,monospace;background:var(--wash);padding:2px 5px;border-radius:3px}small,.small{font-size:14px;line-height:1.65;color:var(--muted)}.topbar{position:sticky;top:0;background:rgba(255,255,255,.97);border-bottom:1px solid var(--line);z-index:10}.topbar nav{max-width:1320px;margin:auto;padding:12px 28px;display:flex;gap:18px;align-items:center;flex-wrap:wrap;font-size:14px}.topbar a{text-decoration:none;color:var(--ink)}.topbar .brand{font-weight:650;margin-right:auto}.wrap{max-width:1320px;margin:auto;padding:0 28px}.cover{padding:56px 0 40px;border-bottom:2px solid var(--ink)}.eyebrow{font-size:14px;letter-spacing:.12em;color:var(--blue);font-weight:650}.lead{max-width:960px;font-size:18px}.meta{display:flex;gap:8px 22px;flex-wrap:wrap;color:var(--muted);font-size:14px}.section{padding:44px 0;border-bottom:1px solid var(--line)}.section-number{display:inline-block;font-size:14px;color:var(--blue);margin-bottom:8px;letter-spacing:.08em}.cols{display:grid;grid-template-columns:1fr 1fr;gap:26px}.note{padding:16px 20px;border-left:3px solid var(--blue);background:var(--wash);margin:20px 0}.note.warning{border-left-color:var(--orange)}.note p:first-child{margin-top:0}.note p:last-child{margin-bottom:0}.tag{display:inline-block;padding:1px 7px;font-size:12px;line-height:1.7;border:1px solid var(--line);border-radius:3px;color:var(--muted);white-space:nowrap}.table-scroll{max-width:100%;overflow-x:auto}table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14px;line-height:1.7}th,td{padding:11px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}thead th{background:var(--wash);font-weight:650}tbody th{font-weight:500}.num{font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right}.equation{position:relative;padding:18px 54px 18px 20px;margin:18px 0;background:var(--wash);border:1px solid var(--line);overflow-x:auto;font-family:"Times New Roman","STIX Two Math",serif;font-size:21px;line-height:1.8}.equation .eqno{position:absolute;right:16px;top:20px;font-family:inherit;font-size:15px;color:var(--muted)}.equation .line{display:block;white-space:nowrap}.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;line-height:1.35;margin:0 5px}.frac>span:first-child{border-bottom:1px solid currentColor;padding:0 5px 3px}.frac>span:last-child{padding:3px 5px 0}.source{font-size:13px;color:var(--muted);margin-top:8px}.result-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin:30px 0 20px}.result-item{padding-top:12px;border-top:2px solid var(--blue)}.result-value{display:block;font-size:30px;line-height:1.5;font-variant-numeric:tabular-nums}.result-item .caption{font-size:14px;color:var(--muted)}.figure{margin:24px 0}.diagram-scroll{overflow-x:auto;border:1px solid var(--line);background:var(--wash)}.diagram-scroll svg{display:block;width:100%;min-width:850px;height:auto}.diagram-scroll text{font-family:inherit;font-size:16px;fill:var(--ink)}.diagram-scroll .sub{font-size:14px;fill:var(--muted)}.diagram-scroll .box{fill:white;stroke:#9fb5c5;stroke-width:1.3}.diagram-scroll .group{fill:#eaf1f7;stroke:#b5c9da;stroke-width:1.2}.diagram-scroll .edge{fill:none;stroke:#637f94;stroke-width:1.5}.diagram-scroll .hypothesis{stroke-dasharray:6 4}.figure figcaption{font-size:14px;color:var(--muted);padding-top:8px}.controls-layout{display:grid;grid-template-columns:minmax(290px,340px) minmax(0,1fr);gap:26px;align-items:start}.parameter-panel{background:var(--wash);padding:18px;border:1px solid var(--line)}.parameter-panel h3{margin:0 0 12px}.parameter-panel table{table-layout:fixed;margin:12px 0}.parameter-panel th,.parameter-panel td{padding:8px 4px}.parameter-panel th:first-child{width:44%}.parameter-panel .fit-input-table th{width:auto}.fit-input-table td{width:50%}.fit-input-table input{font-size:14px}.fit-mtbf{overflow-wrap:anywhere;font-size:12px;margin-top:5px;line-height:1.5}.parameter-panel thead th{font-size:13px}.parameter-panel label{display:block;font-size:14px}.parameter-panel details{margin:18px 0}.parameter-panel summary{font-size:15px;cursor:pointer;font-weight:600}.control-row{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin:12px 0}.control-row label{font-size:14px}.control-row select{font-size:14px}.plot-scroll{overflow-x:auto;max-width:100%}.plot{width:100%;min-width:660px}.plot svg{display:block;width:100%;height:auto}.legend{display:flex;gap:6px 16px;flex-wrap:wrap;margin:10px 0;font-size:14px}.legend button{border:0;background:transparent;padding:5px 0;font-size:14px;white-space:nowrap}.legend .swatch{display:inline-block;width:18px;border-top:3px solid;margin-right:6px;vertical-align:middle}.live-caption{font-size:14px;color:var(--muted);margin:8px 0}.error{color:var(--red);font-size:14px}.interactive-result{padding:14px 18px;background:var(--wash);margin:14px 0;font-size:15px}.chart-tooltip{position:fixed;pointer-events:none;z-index:20;background:#152c40;color:white;padding:10px 14px;border-radius:5px;font-size:13px;line-height:1.7;box-shadow:0 4px 16px #0003}.chart-tooltip .row{display:flex;gap:18px;justify-content:space-between}.sources li{margin:14px 0}.sources a{overflow-wrap:anywhere}.status-good{color:var(--green)}.status-bad{color:var(--red)}footer{padding:30px 0 50px;color:var(--muted);font-size:14px}.nowrap{white-space:nowrap}.architecture-key{display:flex;gap:20px;flex-wrap:wrap;font-size:14px;color:var(--muted)}.architecture-key span::before{content:"";display:inline-block;width:20px;border-top:2px solid var(--blue);vertical-align:middle;margin-right:7px}.architecture-key .assumed::before{border-top-style:dashed}.breakdown-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.breakdown-grid>div{border-top:1px solid var(--line);padding-top:10px}.breakdown-grid b{display:block;font-size:21px;font-variant-numeric:tabular-nums}.print-note{display:none}@media(max-width:950px){.controls-layout{grid-template-columns:1fr}.parameter-panel{max-width:none}.cols{grid-template-columns:1fr}.topbar .brand{width:100%}.topbar nav{gap:8px 16px}.result-strip{gap:16px}.equation{font-size:18px}.wrap{padding:0 20px}}@media(max-width:600px){body{font-size:16px}.wrap{padding:0 16px}.topbar nav{padding:9px 16px;font-size:13px;gap:7px 14px}.topbar .brand{display:none}.cover{padding:32px 0 26px}h2{font-size:25px}.section{padding:32px 0}.result-strip{grid-template-columns:1fr}.result-value{font-size:28px}.result-item{padding-top:8px}.lead{font-size:17px}.breakdown-grid{grid-template-columns:1fr 1fr}.equation{font-size:18px;padding-left:12px}.note{padding:14px 16px}.plot-scroll{border:1px solid var(--line)}th,td{padding:9px 8px}.table-scroll>table{min-width:660px}.parameter-panel table{min-width:0}.meta{gap:6px 12px}}@media print{@page{size:A4;margin:15mm}body{font-size:10pt;line-height:1.65}.topbar,.parameter-panel,.chart-controls,.legend button,.chart-tooltip{display:none!important}.wrap{max-width:none;padding:0}.cover{padding-top:0}.section{padding:20px 0}.cols,.controls-layout{display:block}.plot,.diagram-scroll svg{min-width:0}.plot-scroll,.diagram-scroll,.table-scroll{overflow:visible}table{font-size:9pt}.table-scroll>table{min-width:0}h1{font-size:28pt}h2{font-size:19pt}h3{font-size:13pt}.equation{font-size:14pt}.figure,.equation,tr{break-inside:avoid}.print-note{display:block}.result-value{font-size:22pt}a{color:inherit;text-decoration:none}.note,.equation,thead th{-webkit-print-color-adjust:exact;print-color-adjust:exact}.sources{font-size:9pt}.sources a::after{content:" [" attr(href) "]";font-size:8pt;overflow-wrap:anywhere}}
+.results-panel,.parameter-panel{min-width:0}
+.refresh-button{width:100%;background:var(--blue);border-color:var(--blue);color:white}.refresh-button:hover{background:#10558f}.refresh-status{margin:8px 0 14px}
+</style>
+</head>
+<body>
+<header class="topbar"><nav aria-label="报告目录"><a class="brand" href="#top">AI 集群可靠性研究</a><a href="#metrics">指标与来源</a><a href="#formulas">模型推导</a><a href="#architecture">架构与 RBD</a><a href="#industry">业界统计</a><a href="#improvements">改进分析</a><a href="#interactive">交互评估</a><a href="#limits">边界与验证</a></nav></header>
+<main class="wrap">
+<section class="cover" id="top">
+<div class="eyebrow">RELIABILITY MODELING / TECHNICAL REPORT</div>
+<h1>AI 集群可用度建模<br>与容错改进评估</h1>
+<p class="lead">把单卡故障、系统恢复、检查点和亚健康，连接到一个持续训练作业的有效产出。以千卡至五十万卡为规模轴，对比全局重启与 50 域 DP 弹性，量化每一项改进的独立效果及组合效果。</p>
+<div class="meta"><span>报告日期：2026-09-21</span><span>模型版本：1.3</span><span>分析窗口：30 天稳态折算</span><span>硬件参照：Atlas 950 公开形态</span></div>
+<div class="result-strip" aria-live="polite"><div class="result-item"><span class="caption">50 万卡 · 全局重启 · 基线 TOR</span><strong class="result-value" id="hero-base">8.30%</strong><span class="caption">默认检查点：2 小时 / 阻塞 10 秒</span></div><div class="result-item"><span class="caption">50 万卡 · 全局重启 · 改进方案 TOR</span><strong class="result-value" id="hero-target">81.72%</strong><span class="caption">随下方方案参数实时重算</span></div><div class="result-item"><span class="caption">50 万卡 · DP 改进 · 理想隔离上界</span><strong class="result-value" id="hero-dp">99.38%</strong><span class="caption">条件：无全局停顿或回滚、线性保留吞吐</span></div></div>
+<p id="executive-summary">在默认情景下，检查点间隔大于故障间隔时，反复回滚会成为主要损失来源。局部容错通过缩小故障影响范围，改变了故障到有效产出的传导路径。</p>
+<div class="note"><strong>如何阅读本报告</strong><p>前半部分给出指标、公式和证据；后半部分给出改进路径和可调计算。所有曲线都是当前假设下的模型结果。报告以 Atlas 950 的公开硬件层级绘制架构，但没有把 NVIDIA 集群故障统计当成昇腾 950 的实测故障率。点击 <a href="#interactive">交互评估</a> 可直接修改参数。</p></div>
+</section>
+
+<section class="section" id="metrics"><span class="section-number">01 / 从基础指标开始</span><h2>MTBF、MTTR 与“可用”的三个层次</h2>
+<p>本报告的评估对象是<strong>一个占用 N 张加速卡的持续训练作业</strong>，而不是一个运行许多小作业的资源池。N 从 1,000 增长到 500,000；每台服务器按用户配置为 8 卡。除硬件参考章节外，“卡”统一表示模型中的一个 GPU/NPU 等效故障单元。</p>
+<div class="table-scroll"><table><thead><tr><th>指标</th><th>本报告采用的口径</th><th>时间单位与易混点</th></tr></thead><tbody>
+<tr><th>MTBF：平均故障间运行时间</th><td>累计处于运行态的暴露时间 ÷ 硬中断次数</td><td>不含检测和恢复停机；它不保证每隔固定时间发生一次故障。</td></tr>
+<tr><th>MTTR：平均恢复时间</th><td>本文参数 t<sub>r</sub> 指“已检出故障后，到重新能够训练”的时间</td><td>已包含检查点加载、进程重启等恢复步骤；不等于更换损坏器件的维修工时。</td></tr>
+<tr><th>MTTD：平均检测时间</th><td>从故障导致不可推进到检出的时间 t<sub>d</sub></td><td>用户基线为 10 秒；若日志 MTTR 已从故障开始计时，就不能再次相加。</td></tr>
+<tr><th>MDT：平均停顿时间</th><td>d=t<sub>d</sub>+t<sub>r</sub></td><td>用户基线为 910 秒，即 15 分 10 秒。</td></tr>
+<tr><th>可靠度 R(t)</th><td>从健康状态开始，在任务时间 t 内一次故障也不发生的概率</td><td>不包含修复收益，不等于可用度。</td></tr>
+<tr><th>运行可用度 A</th><td>长期处于运行态的时间占比</td><td>本文包含保存检查点、重算和低速运行时间，仅排除故障停顿。</td></tr>
+<tr><th>有效训练可用度 TOR</th><td>最终保留的训练工作折算成正常训练时间，再除以墙钟时间</td><td>扣除停顿、保存开销、回滚和亚健康损失。越大越好。</td></tr>
+</tbody></table></div>
+<p>采用恒定故障率 / 指数运行寿命假设时，λ 为每秒故障率，MTBF=1/λ。若故障发生率随老化、软件版本或温度变化，这个常数模型只是某个观测窗口的近似。<a href="#ref-nist-hpp">[1]</a></p>
+<div class="equation"><span class="line">λ̂ = F / T<sub>up</sub>， MTBF̂ = T<sub>up</sub> / F， R(t) = e<sup>−λt</sup></span><span class="eqno">(1)</span></div>
+<p>F 是统计窗口内硬中断次数，T<sub>up</sub> 是匹配这些事件的运行暴露时间。对多节点数据，曝光单位必须明确为节点小时或卡小时。零故障不能直接宣称无限 MTBF；需要基于观测时长给置信界。</p>
+<p>在“正常运行—停顿恢复”交替的更新过程里，长期可用度等于平均正常时间除以平均周期时间。这里不要求维修时间本身服从指数分布，只需要有限均值和相应更新假设。传统可用度关系及 MTBF/MTTR 解释可参见 AWS 可靠性框架；下式按本报告的检测边界展开。<a href="#ref-aws">[2]</a></p>
+<div class="equation"><span class="line">A = <span class="frac"><span>MTBF</span><span>MTBF + MDT</span></span> = <span class="frac"><span>1</span><span>1 + λ(t<sub>d</sub> + t<sub>r</sub>)</span></span></span><span class="eqno">(2)</span></div>
+<p><strong>特别注意 MTBF 的计时约定。</strong>如果某份资料的“故障间隔”按墙钟计时，包含上次修复时间，则应先拆开正常与停顿时间，不能再把停顿重复加到分母。本报告的 30 小时基线按正常运行暴露解释；公开数据中的墙钟间隔会单独标注。</p>
+<h3>指标来源与本报告推导的边界</h3>
+<div class="table-scroll"><table><thead><tr><th>模型内容</th><th>来源</th><th>本报告如何使用</th></tr></thead><tbody><tr><td>指数模型、λ=1/MTBF</td><td>NIST 可靠性手册 <a href="#ref-nist-hpp">[1]</a></td><td>解释从事件计数估计故障率的条件。</td></tr><tr><td>A=正常时间/(正常+停顿)</td><td>可用度工程通用关系；AWS <a href="#ref-aws">[2]</a></td><td>显式拆分检测与恢复，避免重复计时。</td></tr><tr><td>串联系统可靠度</td><td>NIST 串联模型 <a href="#ref-nist-series">[3]</a></td><td>说明“任一依赖失败导致作业中断”的结构假设。</td></tr><tr><td>TOR 定义、性能保持率及停机/降速分类</td><td>Training Overhead Ratio 论文 <a href="#ref-tor">[4]</a></td><td>作为有效进度指标基础；不是整套实现公式的唯一来源。</td></tr><tr><td>反复检查点重试、DP 容量模型、亚健康叠加</td><td>本报告自行推导与建模</td><td>均在下文给出假设和推导。没有将其标为原论文已经验证的公式。</td></tr></tbody></table></div>
+</section>
+
+<section class="section" id="formulas"><span class="section-number">02 / 从单卡到有效训练进度</span><h2>当前计算模型的完整公式链</h2>
+<h3>2.1 规模与故障率：MTBF 按规模反比下降</h3>
+<p>你的基线是万卡作业正常运行 30 小时发生一次硬中断，并假设单卡等效故障率不变。相应地，原始单卡等效率为 1/(10,000×30)=3.333×10<sup>−6</sup> 次/卡小时。这是从作业中断倒算的<strong>等效风险</strong>，不是某个裸芯片的物理失效率。</p>
+<div class="equation"><span class="line">λ<sub>0</sub>(N) = <span class="frac"><span>N</span><span>10,000 × 30 × 3,600</span></span> s<sup>−1</sup></span><span class="line">MTBF<sub>0</sub>(N) = 30 × 10,000 / N 小时</span><span class="eqno">(3)</span></div>
+<p>各类硬中断现在直接输入<strong>基线 FIT 与方案 FIT</strong>。1 FIT 表示每十亿单位运行小时发生一次故障；本报告统一以“卡”为暴露单位，即每 10⁹ 卡运行小时的等效中断次数。恒定率下，FIT 与 MTBF 互为倒数换算。<a href="#ref-fit">[12]</a></p>
+<div class="equation"><span class="line">FITᵢ = Fᵢ / T<sub>card,up</sub> × 10⁹</span><span class="line">MTBFᵢ(1) = 10⁹ / FITᵢ 小时</span><span class="line">λᵢ(N) = N·FITᵢ / (10⁹ × 3,600) 秒⁻¹</span><span class="line">MTBFᵢ(N) = 10⁹ / (N·FITᵢ) 小时</span><span class="line">FIT<sub>total</sub> = Σᵢ FITᵢ， λ(N) = Σᵢ λᵢ(N)</span><span class="line">1 / MTBF<sub>total</sub>(N) = Σᵢ 1 / MTBFᵢ(N)</span><span class="line">wᵢ = FITᵢ / FIT<sub>total</sub>， rᵢ = 1 − FITᵢ,方案 / FITᵢ,基线</span><span class="eqno">(4)</span></div>
+<p>“各类独立 MTBF”表示仅考虑该类中断的原因别间隔，不是多个 MTBF 的算术平均，也不意味着 HBM 和 GPU 在物理上已证实独立。故障类别必须互斥，每次中断只归因一次；当前合并模型假设恒定率、独立事件流，无额外共同原因事件。基线和方案各自的占比自动归一化，下降比例自动比较两者 FIT，允许负值表示故障率升高。</p>
+<p>初始总 FIT=10⁹/(10,000×30)=3,333.333。用原先的 17.2%、30.1%、8.4%、44.3% 拆分，得到 HBM 573.333、Faulty GPU 1,003.333、网络 280、其余 1,476.667 FIT；初始方案依次为 286.667、501.667、140、1,476.667 FIT。这些是<strong>基线反推及示例方案</strong>，不是器件厂商公布的 FIT。默认结果保持不变，用户可直接用同口径测量值替换。</p>
+<p>FIT=0 时，模型中的该类 MTBF 显示 ∞；这表示情景中关闭该类事件，不能由零观测故障证明无限寿命。基线 FIT=0 时，下降百分比显示“—（基线为 0）”；总 FIT=0 时，故障占比无定义。改变基线 FIT 会重算基线及亚健康的参考事件率；仅改变方案硬故障 FIT 不会自动降低亚健康率。</p>
+<div class="note warning"><strong>等效事件 FIT 与器件 FIT 的边界</strong><p>HBM 字段涵盖每卡全部 HBM 引起的作业中断，不能直接填入单个 HBM 堆栈的厂商 FIT。若只有部件 FIT，需要先结合每卡数量、故障导致作业中断的条件概率、冗余和共同故障折算。网络同样按等效卡小时输入，不能直接填单台交换机 FIT；真实网络数量或拓扑随规模变化时，需另行建立部件数量模型。当前仍沿用单卡等效率不随规模变化的假设。</p></div>
+<h3>2.2 TOR：从“设备在运行”到“进度被保留”</h3>
+<p>TOR 论文定义正常无故障、无额外容错开销的训练时间 T<sub>opt</sub> 与实际训练时间 T<sub>obs</sub> 的比值，并用性能保持率 r(t) 描述有效工作速度。这里的基准速度是同一配置下的正常速度，不是硬件理论峰值。<a href="#ref-tor">[4]</a></p>
+<div class="equation"><span class="line">TOR = T<sub>opt</sub> / T<sub>obs</sub> = <span class="frac"><span>∫<sub>0</sub><sup>Tobs</sup> r(t) dt</span><span>T<sub>obs</sub></span></span></span><span class="eqno">(5)</span></div>
+<p>回滚前执行过、但最终作废的计算不算有效进度。因此 r(t) 是最终进度的记账口径，不能直接用 GPU 利用率或当时执行的 FLOP/s 替代。在线系统应分别维护当前进度、已持久化进度与作废进度。</p>
+<p>原文停机型故障公式也可写为 (T<sub>sr</sub>R<sub>sr</sub>+T<sub>h</sub>)/(T<sub>sr</sub>+T<sub>h</sub>+N<sub>ckpt</sub>T<sub>ckpt</sub>+T<sub>rb</sub>+T<sub>r</sub>)；它把一次周期内的恢复降速、健康运行、保存、回滚与修复分开。我们进一步显式计算“一个检查点周期内反复失败”的期望，以适应五十万卡时的高故障频率。</p>
+<h3>2.3 全局重启：允许同一周期反复失败</h3>
+<p>定义 τ 为两次检查点之间的<strong>训练运行时间</strong>，c 为保存时真正阻塞训练的时间，L=τ+c。当前模型把 c 看作完整可恢复检查点的完成窗口：异步写入若仍有尚未持久化的尾部，需要另加耐久化时延模型，不能仅把 c 改成很小就宣称已经可恢复。</p>
+<p>假设运行期和保存期都可能按 λ 发生硬故障；恢复期间不再计入新的硬故障；失败后停顿 d，并从上一个成功检查点重新尝试。一次尝试成功概率为 e<sup>−λL</sup>。令 E 为获得一个成功检查点的期望墙钟时间：</p>
+<div class="equation"><span class="line">E = e<sup>−λL</sup>L + ∫<sub>0</sub><sup>L</sup> λe<sup>−λt</sup>(t + d + E) dt</span><span class="line">⇒ E = (e<sup>λL</sup> − 1)(1/λ + d)</span><span class="eqno">(6)</span></div>
+<p>一个成功周期保留 τ 秒正常等价工作，得到不含亚健康时的精确更新周期结果：</p>
+<div class="equation"><span class="line">TOR<sub>G,hard</sub> = <span class="frac"><span>λτ</span><span>(e<sup>λ(τ+c)</sup> − 1)(1 + λd)</span></span></span><span class="line">= A<sub>G</sub> · <span class="frac"><span>τ</span><span>τ+c</span></span> · <span class="frac"><span>z</span><span>e<sup>z</sup>−1</span></span>，z=λ(τ+c)</span><span class="eqno">(7)</span></div>
+<p>三个因子分别对应运行态占比、保存开销后的占比、以及故障回滚后的保留比例。λ→0 时，最后一个因子趋近 1，TOR 趋近 τ/(τ+c)。代码使用 <code>expm1(z)</code> 与小量展开保证数值稳定。</p>
+<div class="note warning"><strong>为什么不能始终使用“平均回滚半个周期”</strong><p>仅在 λτ 很小时，回滚损失才能近似按 λτ/2 估算。本基线到 50 万卡时 MTBF=36 分钟，而初始检查点间隔为 120 分钟，λτ≈3.33；失败会反复打断同一个周期。式 (7) 对该重试过程计算期望，不会产生负 TOR，也不会遗漏多次回滚。</p></div>
+<h3>2.4 DP 弹性：50 个恢复域与线性吞吐上界</h3>
+<p>固定 m=50 个逻辑恢复域，每域平均 N/50 卡，事件率为 λ/m。发生故障时，仅该域经过检测和恢复，其他域继续推进，不需要全局回滚。假设域间独立、可从健康域取得当前训练状态，且吞吐随健康域数量线性变化。</p>
+<div class="equation"><span class="line">a<sub>d</sub> = <span class="frac"><span>1</span><span>1 + λd/m</span></span>，J ∼ Binomial(m,a<sub>d</sub>)</span><span class="line">A<sub>DP,k</sub> = P(J ≥ k) = Σ<sub>j=k</sub><sup>m</sup> C(m,j)a<sub>d</sub><sup>j</sup>(1−a<sub>d</sub>)<sup>m−j</sup></span><span class="eqno">(8)</span></div>
+<p>当前运行可用度采用最宽松的 k=1：存在一个完整、可独立推进的模型副本即算“仍可运行”，因此 A<sub>DP</sub>=1−(1−a<sub>d</sub>)<sup>50</sup> 会非常接近 100%。这<strong>不意味着满额吞吐接近 100%</strong>。实际若至少需要 k 个域才能满足训练语义或性能目标，应改用相应 k。</p>
+<div class="equation"><span class="line">E[J/m] = a<sub>d</sub>， TOR<sub>DP,hard</sub> = a<sub>d</sub> · τ/(τ+c)</span><span class="eqno">(9)</span></div>
+<p>式 (9) 不扣全局历史进度，但仍扣缺失域容量和保存阻塞。它属于理想隔离近似：重新组网停顿、状态传输争用、梯度重加权、局部追赶、共同网络故障及最小 batch 约束均未计入。固定 50 域意味着五十万卡时一个域有 1 万卡，恢复域本身仍会随规模变大。</p>
+<h3>2.5 亚健康：发生比例与检出率分开</h3>
+<p>p<sub>s</sub> 是亚健康额外事件率与<strong>原始硬中断基线率</strong>之比，默认 2%，并不表示“某一天发生至少一次的概率”或“2% 的运行时间”。q 为独立的检出覆盖率，H 为未检出时持续时长，ℓ 为一次亚健康造成的吞吐降幅。基线 H=24 小时、ℓ=5%。</p>
+<div class="equation"><span class="line">λ<sub>s</sub>(N) = p<sub>s</sub>λ<sub>0</sub>(N)， H̄ = (1−q)H + q·min(δ,H)</span><span class="line">K ∼ Poisson(λ<sub>s</sub>H̄)， S=E[(1−ℓ)<sup>K</sup>]=exp(−λ<sub>s</sub>H̄ℓ)</span><span class="eqno">(10)</span></div>
+<p>推导使用独立泊松事件的稳态覆盖数 K，以及多个亚健康事件的乘法降速。δ 暂沿用检测秒数。检出后立即无额外代价地隔离问题，这是<strong>亚健康治理收益上界</strong>；若检出触发全局重启，应同时计入新停顿，而不能只增加 q。</p>
+<div class="equation"><span class="line">TOR<sub>G</sub> ≈ TOR<sub>G,hard</sub>·S， TOR<sub>DP</sub> ≈ TOR<sub>DP,hard</sub>·S</span><span class="eqno">(11)</span></div>
+<p>将 S 与硬中断模型相乘是独立过程近似；亚健康按墙钟发生并持续，普通硬重启不自动治好其他亚健康事件。DP 也暂不自动缩小慢节点的吞吐影响范围。实际若慢节点只损失所在域，或多次降速不叠加，必须更换这部分模型。</p>
+<h3>2.6 30 天折算、单项收益与组合收益</h3>
+<div class="equation"><span class="line">H<sub>loss</sub> = 720(1−TOR) 小时</span><span class="line">ΔTOR<sub>i</sub>(N) = TOR(N;仅改第 i 项) − TOR(N;基线)</span><span class="line">ΔTOR<sub>all</sub> = TOR(N;全部改进) − TOR(N;基线)</span><span class="eqno">(12)</span></div>
+<p>折算损失是相对正常吞吐的等价训练小时，包含低速运行损失，不是维修工时总和。组合效果必须重新计算；单项增益有交互，不能直接相加。若把硬中断率按运行暴露定义，30 天实际中断次数的稳态期望为 720λ<sub>h</sub>/(1+λ<sub>h</sub>d<sub>h</sub>)，不能一律按 720/MTBF 计算包含停机的窗口。</p>
+<h3>2.7 Step 级检查点的时间换算</h3>
+<div class="equation"><span class="line">t<sub>step</sub> ≈ 6PB / (N·F<sub>effective</sub>)</span><span class="eqno">(13)</span></div>
+<p>这是稠密 Transformer 主导计算量近似：P 是模型参数量，B 是一个优化器 step 的全局 token 数，F<sub>effective</sub> 是单卡有效模型 FLOP/s。它忽略长上下文额外 attention 开销，不能直接套用 MoE。Meta 表 4 的 405B、16M tokens、16,384 卡、400 TFLOP/s/卡，对应约 5.93 秒/step；因此界面提供可改的 6 秒参考值。这个估算不是昇腾 950 实测，也不自动随 N 保持不变。<a href="#ref-llama">[5]</a></p>
+<p>若每 6 秒保存一次且阻塞 10 秒，无故障时保存因子也只有 37.5%；阻塞 1 毫秒时则约 99.983%。step 级容错需要同时评估<strong>保存时延和持久化语义</strong>。</p>
+</section>
+
+<section class="section" id="architecture"><span class="section-number">03 / 物理连接与逻辑可靠性</span><h2>以昇腾 950 公开形态建立分层架构与 RBD</h2>
+<p>公开材料存在不同日期、不同规模配置，不能合并成一台已部署设备的规格。本报告使用下列证据层级：</p>
+<div class="table-scroll"><table><thead><tr><th>公开时间与来源</th><th>可核验事实</th><th>报告中的用途</th></tr></thead><tbody><tr><td>2025-09 · 华为主题演讲 <a href="#ref-huawei-2025">[6]</a></td><td>Atlas 950 最大 8,192 卡；128 计算柜+32 通信柜；全光互联</td><td>最大参考配置。32 通信柜不表示 32 条完全独立的冗余路径。</td></tr><tr><td>2026-03 · MWC 官方发布 <a href="#ref-huawei-mwc">[7]</a></td><td>UnifiedBus；每柜 64 NPU；可扩展至 8,192 NPU</td><td>计算柜层级与规模折算依据。</td></tr><tr><td>2026-07 · WAIC 官方报道 <a href="#ref-huawei-waic">[8]</a></td><td>公开展出 1,024 卡 Atlas 950 真机</td><td>实机规模参照，独立于此前公布的最大配置。</td></tr><tr><td>2026-09 · 华为主题演讲 <a href="#ref-huawei-2026">[9]</a></td><td>官方表示昇腾 950 超节点已规模商用</td><td>产品状态说明；没有由此推断全部部署都是 8,192 卡。</td></tr><tr><td>本项目配置</td><td>8 卡/服务器、单一作业、固定 50 个 DP 恢复域</td><td>是用户建模条件，不作为 Atlas 950 官方服务器 SKU 或调度策略。</td></tr></tbody></table></div>
+<figure class="figure"><div class="diagram-scroll"><svg viewBox="0 0 1120 615" role="img" aria-label="Atlas 950 公开层级参考系统连接图，包含卡、8卡服务器抽象、64卡计算柜、超节点和跨超节点网络">
+<defs><marker id="arrow-arch" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#637f94"/></marker></defs>
+<text x="30" y="35" font-weight="650">系统连接架构 · 层级参考图</text><text class="sub" x="30" y="61">连线表达依赖与通信关系；不声称还原未公开的交换拓扑、端口数或线缆 BOM。</text>
+<rect class="group" x="30" y="89" width="760" height="348" rx="6"/><text x="50" y="120" font-weight="650">Atlas 950 SuperPoD 参考边界</text><text class="sub" x="50" y="145">1,024 卡实机（2026.7） / 最大 8,192 卡公开配置（2025.9、2026.3）</text>
+<rect class="box" x="52" y="169" width="226" height="131" rx="4"/><text x="68" y="197">计算柜 1 · 64 NPU</text><rect class="box hypothesis" x="69" y="213" width="191" height="67" rx="3"/><text x="83" y="238">8 卡服务器 × 8（抽象）</text><text class="sub" x="83" y="262">每卡：NPU + HBM + 接口</text>
+<rect class="box" x="297" y="169" width="226" height="131" rx="4"/><text x="313" y="197">计算柜 2 · 64 NPU</text><rect class="box hypothesis" x="314" y="213" width="191" height="67" rx="3"/><text x="328" y="238">主机 / 驱动 / 供电依赖</text><text class="sub" x="328" y="262">服务器粒度为项目假设</text>
+<rect class="box" x="542" y="169" width="226" height="131" rx="4"/><text x="558" y="197">… 计算柜 128</text><text class="sub" x="558" y="229">仅对应公布的 8,192 卡</text><text class="sub" x="558" y="256">最大配置</text>
+<path class="edge" d="M165 300V341M410 300V341M655 300V341" marker-end="url(#arrow-arch)"/>
+<rect class="box" x="52" y="345" width="716" height="65" rx="4"/><text x="72" y="372">UnifiedBus / 灵衢互联 · 全光通信层</text><text class="sub" x="72" y="396">最大配置公布 32 个通信柜；路由冗余、共享故障域与交换层数需另行获取</text>
+<rect class="box hypothesis" x="835" y="170" width="250" height="88" rx="4"/><text x="852" y="201">控制与运维平面</text><text class="sub" x="852" y="227">调度 / 健康检测 / 隔离 / 恢复</text><path class="edge hypothesis" d="M835 214H790" marker-end="url(#arrow-arch)"/>
+<rect class="box hypothesis" x="835" y="320" width="250" height="90" rx="4"/><text x="852" y="351">数据与检查点存储</text><text class="sub" x="852" y="378">按读数据、保存、恢复阶段依赖</text><path class="edge hypothesis" d="M835 365H790" marker-end="url(#arrow-arch)"/>
+<path class="edge" d="M410 437V472" marker-end="url(#arrow-arch)"/><rect class="box" x="160" y="476" width="500" height="56" rx="4"/><text x="182" y="510">跨 SuperPoD 的 Scale-out 通信网络（抽象）</text>
+<path class="edge" d="M660 504H754" marker-end="url(#arrow-arch)"/><rect class="box" x="759" y="475" width="326" height="58" rx="4"/><text x="777" y="510">其他 SuperPoD / 作业扩展到 50 万卡</text>
+<rect class="box hypothesis" x="30" y="557" width="1055" height="36" rx="3"/><text class="sub" x="48" y="581">横跨各层的共同故障域：机柜供电、冷却、网络控制、软件版本。图中的系统依赖是建模抽象；目前没有独立实测参数。</text>
+</svg></div><figcaption>图 1：系统连接架构。实线为公开层级及抽象连接；虚线为本项目补充的服务器/服务依赖。NPU 与 HBM 不在芯片内被视作互不相关的实测独立部件。</figcaption></figure>
+<h3>3.1 RBD：先画出“必须同时成功”的依赖</h3>
+<p>RBD（可靠性框图）的连线表示<strong>任务成功所需的逻辑依赖</strong>，并不是物理电缆。无容错训练中，所有参与的模型分区必须可用，可抽象为串联；DP 弹性则将可独立恢复的域表达为 k-out-of-m 结构。共享网络、供电等共同依赖应保留在域结构之外，不能被误画成每个域都有独立副本。</p>
+<figure class="figure"><div class="diagram-scroll"><svg viewBox="0 0 1120 475" role="img" aria-label="全局串联和DP并联的RBD对比，公共依赖串联，检查点存储是阶段性依赖">
+<defs><marker id="arrow-rbd" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#637f94"/></marker></defs>
+<text x="28" y="36" font-weight="650">全局重启：所有参与域都必须正常</text><path class="edge" d="M30 91H1090" marker-end="url(#arrow-rbd)"/>
+<rect class="box hypothesis" x="70" y="61" width="210" height="60" rx="4"/><text x="86" y="87">共同依赖 C</text><text class="sub" x="86" y="109">网络 / 供电 / 必需服务</text>
+<rect class="box" x="332" y="61" width="150" height="60" rx="4"/><text x="354" y="98">训练域 D₁</text><rect class="box" x="535" y="61" width="150" height="60" rx="4"/><text x="557" y="98">训练域 D₂</text><text x="735" y="98">…</text><rect class="box" x="808" y="61" width="170" height="60" rx="4"/><text x="831" y="98">训练域 D₅₀</text>
+<text class="sub" x="71" y="151">无修复可靠度：R(t)=R꜀(t)·∏Rⱼ(t)；当前曲线按统一全局恢复时间 d 计算更新过程。</text>
+<text x="28" y="198" font-weight="650">DP 弹性：共同依赖正常且至少 k 个完整域能继续推进</text>
+<path class="edge" d="M30 306H331M331 246V366M331 246H445M331 306H445M331 366H445M675 246H793M675 306H793M675 366H793M793 246V366M793 306H1090" marker-end="url(#arrow-rbd)"/>
+<rect class="box hypothesis" x="70" y="276" width="210" height="60" rx="4"/><text x="86" y="302">共同依赖 C</text><text class="sub" x="86" y="324">并联不能消除共同故障</text>
+<rect class="box" x="445" y="222" width="230" height="48" rx="4"/><text x="477" y="253">DP 域 1 · N/50 卡</text><rect class="box" x="445" y="282" width="230" height="48" rx="4"/><text x="477" y="313">DP 域 2 · N/50 卡</text><rect class="box" x="445" y="342" width="230" height="48" rx="4"/><text x="477" y="373">… DP 域 50</text>
+<rect class="box" x="843" y="273" width="190" height="66" rx="4"/><text x="861" y="300">k / 50 继续运行</text><text class="sub" x="861" y="325">当前 k=1，理想上界</text>
+<rect class="box hypothesis" x="70" y="416" width="963" height="37" rx="3"/><text class="sub" x="86" y="441">检查点阶段另依赖持久存储；域内仍包含 TP / PP / CP 分区及通信依赖。50 个逻辑 DP 域不等于 50 个物理超节点。</text>
+</svg></div><figcaption>图 2：两种恢复语义的 RBD。域内结构、共享依赖与最小域数需要结合真实并行策略确定。当前 DP 数值在共同依赖持续可用的条件下计算。</figcaption></figure>
+<div class="equation"><span class="line">R<sub>series</sub>(t)=∏R<sub>i</sub>(t)；若 R<sub>i</sub>(t)=e<sup>−λᵢt</sup>，则 λ<sub>series</sub>=Σλ<sub>i</sub></span><span class="line">A<sub>series,independent repair</sub>=∏a<sub>i</sub></span><span class="eqno">(14)</span></div>
+<p>式 (14) 的稳态乘积要求部件状态独立且按各自维修机制恢复。它与本文 A=1/(1+λd) 的“全局统一恢复”模型<strong>不是可以互换的两个公式</strong>。RBD 提供结构，恢复策略决定采用哪一个随机过程。<a href="#ref-nist-series">[3]</a></p>
+<p>未来若有层级事件日志，可按 λ<sub>job</sub>=Nλ<sub>card</sub> + <wbr>n<sub>host</sub>λ<sub>host</sub> + <wbr>n<sub>rack</sub>λ<sub>rack</sub> + <wbr>n<sub>pod</sub>λ<sub>pod</sub> + <wbr>λ<sub>shared</sub> 建立不重叠的根因事件模型。<strong>当前等效 λ 已包含作业中断根因</strong>，不可在其上直接再加一遍服务器/网络风险；需要先重新分配和校准。</p>
+<h3>3.2 四个目标规模的资源与恢复域映射</h3>
+<div class="table-scroll"><table><thead><tr><th>作业规模</th><th class="num">8 卡服务器</th><th class="num">64 卡计算柜折算</th><th class="num">1,024 卡超节点容量块</th><th class="num">8,192 卡超节点容量块</th><th class="num">每 DP 域卡数</th></tr></thead><tbody id="topology-table"></tbody></table></div>
+<p class="small">计算柜和超节点容量块均向上取整，最后一块可以部分使用；这是容量折算，不是已验证的工程 BOM。1,024 与 8,192 对应两个不同参考口径，未将 32 通信柜配置套到 1,024 卡实机。五十万卡大于一个 SuperPoD，跨域网络可能产生当前模型未覆盖的共同故障。</p>
+</section>
+
+<section class="section" id="industry"><span class="section-number">04 / 外部证据与统计口径</span><h2>业界故障率：用相同单位比较，用不同标签保留边界</h2>
+<p>公开研究提供了三类不同证据：单次大模型训练的中断日志、多租户集群的节点暴露统计，以及容错系统的恢复效果。它们反映的硬件、软件、负载和统计窗口不同，不应合成一个“行业平均故障率”。</p>
+<div class="table-scroll"><table><thead><tr><th>数据集 / 性质</th><th>公开统计与分母</th><th>本报告换算</th><th>如何使用</th></tr></thead><tbody>
+<tr><th>本项目基线<br><span class="tag">用户参数</span></th><td>万卡每 30 运行小时一次硬中断；每节点 8 卡</td><td>3.333 次/百万卡小时；0.64 次/千节点日</td><td>模型主基线；不是从 Meta 自动拟合。</td></tr>
+<tr><th>Meta Llama 3 405B <a href="#ref-llama">[5]</a><br><span class="tag">观测计数</span></th><td>54 天墙钟窗口：466 次中断，其中 47 次计划、419 次意外；约 16K GPU 训练</td><td>意外中断墙钟间隔 1,296/419≈3.09 h；假设 16,384 卡全窗占用，则约 19.73 次/百万卡墙钟小时</td><td>只能作粗参考；运行暴露不等于墙钟，不能严格反推同口径 MTBF。</td></tr>
+<tr><th>Meta RSC-1 <a href="#ref-rsc">[10]</a><br><span class="tag">节点运行暴露</span></th><td>6.50 次/千节点运行日；节点为 8×A100</td><td>33.854 次/百万卡小时；按独立线性模型，万卡 MTBF≈2.95 h</td><td>多租户研究负载，故障归因与本项目不同。</td></tr>
+<tr><th>Meta RSC-2 <a href="#ref-rsc">[10]</a><br><span class="tag">节点运行暴露</span></th><td>2.34 次/千节点运行日；节点为 8×A100</td><td>12.188 次/百万卡小时；按同一换算，万卡 MTBF≈8.21 h</td><td>体现同机构不同负载/集群之间也有明显差异。</td></tr>
+<tr><th>ByteDance MegaScale <a href="#ref-megascale">[11]</a><br><span class="tag">恢复效果</span></th><td>万卡以上生产训练、数周内重启超过 100 次；超过 90% 异常自动处理；平均检测与诊断小于 10 分钟</td><td>该生产窗口描述没有足够精确的时长来计算同口径 MTBF，故不填数值</td><td>用于论证恢复工程的重要性，不作为裸硬件失效率。</td></tr>
+</tbody></table></div>
+<p>RSC 研究覆盖两个集群、11 个月、约 400 万个作业及超过 1.5 亿 A100 GPU 小时；其硬件归因失败影响约 0.2% 的作业，但这些作业占到约 18.7% 的 GPU 运行时间。后者是“受影响作业的运行资源”，不能解释为“实际全部损失了 18.7% 算力”。<a href="#ref-rsc">[10]</a></p>
+<div class="equation"><span class="line">λ<sub>card,h</sub> = <span class="frac"><span>r<sub>1000-node-days</sub></span><span>1,000 × 24 × 8</span></span>， MTBF<sub>10k,h</sub>=1/(10,000λ<sub>card,h</sub>)</span><span class="eqno">(15)</span></div>
+<div class="note warning"><strong>基线偏乐观，需要本地日志校准</strong><p>按上述统一节点暴露换算，RSC-1 / RSC-2 的等效事件率分别约为本项目的 10.16 倍 / 3.66 倍。这不证明本项目参数错误，但说明“万卡 30 小时”应被视作待核实的环境基线，不能被公开资料背书。Meta Llama 的墙钟粗换算到万卡约为 5.07 小时，口径仍有差异。</p></div>
+<h3>4.1 故障类别占比不是故障发生率</h3>
+<div class="table-scroll"><table><thead><tr><th>类别</th><th class="num">Meta 表 5 百分比</th><th>本模型映射</th><th>需要保留的限制</th></tr></thead><tbody><tr><td>GPU HBM3 Memory</td><td class="num">17.2%</td><td>HBM 类事件</td><td>不等于全部都是用户关心的 HBM ECC。</td></tr><tr><td>Faulty GPU</td><td class="num">30.1%</td><td>其他 Faulty GPU 类事件</td><td>不包含另列的全部 SRAM、GSP 等 GPU 故障。</td></tr><tr><td>Network Switch/Cable</td><td class="num">8.4%</td><td>交换机/线缆事件</td><td>不是纯网络闪断发生率。</td></tr><tr><td>其余</td><td class="num">44.3%</td><td>100% 减前三类</td><td>保留软件、维护、其他硬件和未知根因。</td></tr></tbody></table></div>
+<p>原文 Faulty GPU 同时列出 148 次和 30.1%，与正文 419 次的分母不一致。本报告使用<strong>百分比列作为可编辑的情景权重</strong>，不把计数混入归一化，也不将其当作昇腾的实测分布。来源：Llama 3 原文 §3.3.4、表 5。<a href="#ref-llama">[5]</a></p>
+<h3>4.2 从真实日志估计下一版参数</h3>
+<p>建议每条根因事件至少记录：唯一事件 ID、涉及设备和作业、首次失效时间、检出时间、恢复可训练时间、恢复前后吞吐、最近有效检查点、被撤销的 step、根因置信度。将同一次交换机故障引起的多条 rank 告警合并为一个根因事件，并记录影响域数。区分运行暴露与停机窗口，分别估计 λ、t<sub>d</sub>、t<sub>r</sub> 和亚健康持续时长；用独立时间段验证拟合结果。</p>
+</section>
+
+<section class="section" id="improvements"><span class="section-number">05 / 从单项到整体</span><h2>改进路径：先减少浪费，再缩小故障影响范围</h2>
+<p>改进方案初始值是用于比较的<strong>工程情景</strong>，不是已经实现的收益承诺：前三类硬中断的方案 FIT 暂取基线的一半（降幅自动计算为 50%）；检测从 10 秒到 1 秒；恢复从 900 秒到 300 秒；检查点从 7,200 秒/10 秒阻塞调整为 600 秒/0.1 秒阻塞；亚健康发生比例暂保持 2%，检出率从 0% 到 90%。所有默认值都在下一节开放调整。</p>
+<div class="table-scroll"><table><thead><tr><th>改进动作</th><th>作用于哪个公式因子</th><th>如何解释收益与限制</th></tr></thead><tbody><tr><td>降低各类硬故障率</td><td>λ 同时影响 A 与回滚因子</td><td>不仅减少停机，还减少反复丢失进度；各类 FIT 直接相加，故障占比与降幅由输入反算。</td></tr><tr><td>缩短故障检测</td><td>d=t<sub>d</sub>+t<sub>r</sub></td><td>若恢复仍需 15 分钟，单改 10 秒检测的总体空间有限；若亚健康检出率大于零，也影响假设的暴露时长。</td></tr><tr><td>缩短恢复</td><td>A 和 a<sub>d</sub></td><td>需包含状态加载与重新加入作业；仅机器重新上电不算完成恢复。</td></tr><tr><td>缩短检查点间隔</td><td>z=λ(τ+c)</td><td>降低全局回滚损失；但保存更频繁会增加阻塞。DP 无全局回滚情景中可能反而降低 TOR。</td></tr><tr><td>降低保存阻塞</td><td>τ/(τ+c) 与检查点失败窗口</td><td>使高频检查点可行；不能忽略异步副本的持久化延迟。</td></tr><tr><td>降低亚健康发生比例 / 提升检出率</td><td>S 的 λ<sub>s</sub> / H̄</td><td>两种控制独立；默认不改变二值运行 A，但改善有效训练 TOR。</td></tr><tr><td>全局重启 → 50 域 DP 弹性</td><td>作业停顿变为局部容量缺失；移除全局回滚</td><td>理想上界依赖训练语义、故障隔离和持续推进机制；共同依赖仍可能导致全局中断。</td></tr></tbody></table></div>
+<h3>5.1 逐步叠加改进：每一步都重新计算</h3>
+<p class="small">下表与参数联动，显示 TOR。行与行的差值是按此顺序的增量贡献；顺序变化会重新分配交互收益。末行是改变恢复机制后的条件上界。</p>
+<div class="table-scroll"><table><thead><tr><th>累计方案</th><th class="num">1 万卡</th><th class="num">10 万卡</th><th class="num">20 万卡</th><th class="num">50 万卡</th></tr></thead><tbody id="stages-table"></tbody></table></div>
+<h3>5.2 默认基线损失如何组成</h3><p class="small">为避免同一秒被重复计费，按“故障停顿 → 检查点阻塞 → 回滚 → 亚健康”的固定顺序拆分，四项与 TOR 加总为 100%。这是记账分解，不是与顺序无关的因果归因。以下取当前基线、50 万卡。</p>
+<div class="breakdown-grid" id="loss-breakdown"></div>
+<p id="improvement-commentary" class="note"></p>
+</section>
+
+<section class="section" id="interactive"><span class="section-number">06 / 开放参数与实时结果</span><h2>交互评估：四个关键规模常驻数值标注</h2>
+<p>修改左侧参数后，点击“刷新建模结果”，统一更新两张曲线、图内数值、改进路径与独立收益。刷新前保留上次已应用参数的结果；切换查看规模、横轴和对比项不会应用待刷新参数。每张图在曲线上标记 <strong>1 万、10 万、20 万、50 万卡</strong>，并在图内下方按相同系列显示精确值；不需要悬停。窄屏可横向查看完整图表。</p>
+<div class="controls-layout">
+<aside class="parameter-panel" aria-label="模型输入参数">
+<h3>模型输入</h3><button id="refresh-results" class="refresh-button" type="button">刷新建模结果</button><p id="refresh-status" class="small refresh-status" role="status" aria-live="polite"></p><div id="input-error" class="error" role="alert"></div><p class="small" id="fit-total" aria-live="polite"></p>
+<p class="small">固定：8 卡/服务器；50 个 DP 恢复域；30 天。总 FIT、万卡 MTBF 和故障占比由下方各类 FIT 自动计算。</p>
+<table><thead><tr><th>参数</th><th>基线</th><th>方案</th></tr></thead><tbody id="parameter-rows"></tbody></table>
+<details open><summary>硬故障 FIT 输入</summary><p class="small">单位：次 / 10⁹ 卡运行小时。每格下方显示单卡等效 MTBF（小时）；当前规模的各类 MTBF、占比和降幅见右侧结果表。初始值为原基线反推。</p><table class="fit-input-table"><tbody id="failure-rows"></tbody></table></details>
+<div class="note small">亚健康发生比例为相对硬中断基线的额外事件率；检出率为覆盖概率。检出后的处置按无额外损失隔离计算。</div>
+<label>参考 optimizer step（秒）<input id="step" type="number" min="0.001" max="7200" step="any" value="6"></label><div class="control-row"><button id="use-step" type="button">将方案间隔设为每 step</button></div><p class="small">6 秒是公开 405B 配置的粗估参考，不是跨规模性能保证。</p>
+</aside>
+<div class="results-panel">
+<div class="control-row chart-controls"><label>单项改进对比 <select id="factor"><option value="all">仅展示整体方案</option></select></label><label>横轴 <select id="xscale"><option value="linear">线性</option><option value="log">对数</option></select></label></div>
+<div id="legend" class="legend" aria-label="曲线图例"></div>
+<div class="plot-scroll"><div id="chart-A" class="plot"></div></div>
+<p class="live-caption">运行 A：保存检查点和重算仍属于运行态；DP 的 A 采用至少一个完整域可推进（k=1），因此显示接近 100% 的上界。</p>
+<div class="plot-scroll"><div id="chart-TOR" class="plot"></div></div>
+<p class="live-caption">TOR：正常吞吐基准下被保留的有效训练进度，扣除停顿、阻塞、回滚与亚健康。虚线为当前所选单项改善；DP 曲线为理想隔离上界。</p>
+<div id="live-summary" class="interactive-result" aria-live="polite"></div>
+<div class="control-row"><label>独立收益与损失查看 <select id="inspect-scale"><option value="10000">1 万卡</option><option value="100000">10 万卡</option><option value="200000">20 万卡</option><option value="500000" selected>50 万卡</option></select></label></div>
+<h3>各类 FIT → MTBF → 自动百分比</h3><p class="small" id="fit-scale-caption"></p><div class="table-scroll"><table><thead><tr><th>类别</th><th class="num">基线 → 方案 FIT</th><th class="num">该类 MTBF（h）<br>基线 → 方案</th><th class="num">故障占比<br>基线 → 方案</th><th class="num">FIT 下降比例</th></tr></thead><tbody id="fit-derived"></tbody></table></div>
+<h3>单项参数对可用度的影响</h3>
+<div class="table-scroll"><table><thead><tr><th>仅改变一项</th><th class="num">全局 ΔA<br>百分点</th><th class="num">全局 ΔTOR<br>百分点</th><th class="num">DP ΔTOR<br>百分点</th></tr></thead><tbody id="effects-table"></tbody></table></div>
+<div class="table-scroll"><table><thead><tr><th>当前查看规模</th><th class="num">运行 A</th><th class="num">TOR</th><th class="num">30 天等价损失 h</th></tr></thead><tbody id="selected-table"></tbody></table></div>
+</div></div>
+<p class="print-note">打印中的图表及结果对应打印时的当前参数。输入快照见下表。</p>
+<details><summary>查看当前计算参数快照（打印时展开）</summary><div class="table-scroll"><table><thead><tr><th>参数</th><th>基线</th><th>方案</th><th>口径</th></tr></thead><tbody id="snapshot-table"></tbody></table></div></details>
+</section>
+
+<section class="section" id="limits"><span class="section-number">07 / 解释边界与验证</span><h2>哪些结论可用，哪些需要后续校准</h2>
+<div class="cols"><div><h3>可直接用于情景决策</h3><ul><li>在给定基线下，比较不同规模对停顿、回滚和亚健康的放大。</li><li>比较检测、恢复、检查点与故障治理的独立改进空间。</li><li>检查高频保存的开销是否抵消回滚收益。</li><li>量化全局恢复与理想局部恢复之间的潜在差距。</li></ul></div><div><h3>不能由当前结果直接推断</h3><ul><li>昇腾 950 的真实器件故障率、实际 SLA 或部署保证。</li><li>DP 策略在实际同步训练下必然能达到图中吞吐。</li><li>30 天单次运行的 P95 结果或统计置信区间。</li><li>不存在备件不足、维修排队或共同网络/供电事件。</li><li>容错后的训练收敛和最终模型质量完全不变。</li></ul></div></div>
+<h3>已执行的数学与交互验证</h3><ol><li>零故障极限：全局与 DP 的 TOR 都退化为保存因子乘亚健康因子；零开销、零故障、零亚健康时 TOR=1。</li><li>规模换算：千卡 MTBF=300 小时，五十万卡=0.6 小时；所有可用度位于 [0,1]，TOR 不超过对应运行 A。</li><li>独立随机事件检验：固定种子模拟 500,000 次检查点尝试，对高故障全局重启公式作交叉核对，结果记录随报告校验脚本保存。</li><li>参数独立性：单改亚健康发生比例不修改硬中断率和二值运行 A；降低其比例应提高 TOR，除非对应损失已为零。</li><li>四个关键规模标注与表格均调用同一计算函数，避免图表和文字使用不同计算口径。</li></ol>
+<p>本模型不需要将硬件全部恢复完好才继续训练，恢复时间由所采用的软件策略决定。硬故障率可能随温度、老化、健康检查规则和软件版本变化，不能因为某条曲线平滑就把外推误差视为零。下一版建议用真实事件日志重放、按故障域建模的离散事件仿真和置信区间，逐步替代独立与稳态假设。</p>
+<h3>更细粒度弹性容错的接入条件</h3><p>需要明确恢复单元（单卡、服务器、TP/PP 分区）、可覆盖哪些故障、影响多少卡、是否短暂停顿全作业、是否追赶或重放消息、状态来源和持久化保障，以及剩余资源的真实吞吐函数。缺少这些参数时，本报告不绘制一个没有依据的“更优曲线”。可以从 50 域 DP 上界与全局重启之间的恢复语义开始校准。</p>
+</section>
+
+<section class="section" id="sources"><span class="section-number">08 / 可追溯来源</span><h2>参考资料与审计说明</h2><p>以下均为官方资料或论文原文。网页与版本核验日期为 2026-09-21。硬件介绍按发表时间保留，不用旧版发布时间推断当前上市状态。</p>
+<ol class="sources">
+<li id="ref-nist-hpp"><a href="https://www.itl.nist.gov/div898/handbook/apr/section4/apr451.htm" target="_blank" rel="noreferrer">NIST：Constant repair rate (HPP/exponential) model</a>。λ、MTBF、运行暴露与统计估计。本报告使用其恒定率假设，不将 NIST 的计数过程“repair rate”术语当成硬件维修速度。</li>
+<li id="ref-aws"><a href="https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/availability.html" target="_blank" rel="noreferrer">AWS Well-Architected：Availability</a>。可用度定义和 MTBF/MTTR 关系。</li>
+<li id="ref-nist-series"><a href="https://www.itl.nist.gov/div898/handbook/apr/section1/apr182.htm" target="_blank" rel="noreferrer">NIST：Series model</a>。部件独立且任一故障即系统失败的串联结构。</li>
+<li id="ref-tor"><a href="https://arxiv.org/pdf/2408.07482" target="_blank" rel="noreferrer">Lu et al.：Training Overhead Ratio，arXiv:2408.07482v3，2024</a>。全文 3 页，§II 的定义与故障恢复模型；无完整大规模实证评估。</li>
+<li id="ref-llama"><a href="https://arxiv.org/html/2407.21783v3#S3.SS3.SSS4" target="_blank" rel="noreferrer">Meta：The Llama 3 Herd of Models，arXiv:2407.21783v3，§3.3.4 / 表 5</a>。54 天中断统计与故障类别；表 4 提供 step 粗估所用吞吐参数。Faulty GPU 计数与百分比不一致，未私自修订原文。</li>
+<li id="ref-huawei-2025"><a href="https://www.huawei.com/en/news/2025/9/hc-xu-keynote-speech" target="_blank" rel="noreferrer">Huawei，2025-09：Groundbreaking SuperPoD Interconnect</a>。Atlas 950 最大 8,192 卡、128 计算柜与 32 通信柜的公布口径。</li>
+<li id="ref-huawei-mwc"><a href="https://www.huawei.com/en/news/2026/3/mwc-superpod-ai" target="_blank" rel="noreferrer">Huawei，2026-03：MWC SuperPoD 发布</a>。64 NPU/计算柜、UnifiedBus 与最大 8,192 卡。</li>
+<li id="ref-huawei-waic"><a href="https://www.huawei.com/cn/news/2026/7/atlas-950-superpod" target="_blank" rel="noreferrer">华为，2026-07：昇腾 950 超节点真机亮相 WAIC</a>。1,024 卡实机规模。</li>
+<li id="ref-huawei-2026"><a href="https://www.huawei.com/cn/news/2026/9/hc-wang-keynote" target="_blank" rel="noreferrer">华为，2026-09：智启新未来，打造智能世界的硅基黑土地</a>。昇腾 950 规模商用的官方状态表述。</li>
+<li id="ref-rsc"><a href="https://arxiv.org/html/2410.21680v2" target="_blank" rel="noreferrer">Kokolis et al.：Revisiting Reliability in Large-Scale Machine Learning Research Clusters，arXiv:2410.21680v2，2025</a>。RSC-1/2 的样本、节点运行日故障率和统计边界。文中的大规模 MTTF 投影不能改称实测。</li>
+<li id="ref-megascale"><a href="https://arxiv.org/html/2402.15627v1#S6" target="_blank" rel="noreferrer">Jiang et al.：MegaScale，arXiv:2402.15627v1，2024，§6.2–6.3</a>。万卡生产训练的重启与恢复经验。原文恢复到故障前进度的时间包含特定追赶语义，不直接等于本项目的纯恢复参数。</li>
+<li id="ref-fit"><a href="https://www.ti.com/quality-reliability/reliability/terminology.html" target="_blank" rel="noreferrer">Texas Instruments：Reliability terminology</a>。FIT 定义为每十亿运行小时的失效数；恒定失效率及不含维修时间的 MTBF 定义。这里只引用单位和定义，不使用 TI 器件数值代表集群。</li>
+</ol></section>
+<footer>本报告的全部公式、参数和图表在本地计算，无外部脚本依赖。浏览器直接打开即可交互，打印可保存当前参数下的静态报告。界面参数修改作用于本次打开的报告；关闭后重新打开恢复报告默认值。</footer>
+</main><div id="tooltip" class="chart-tooltip" role="tooltip" hidden></div>
+<script id="model-core">
+const Reliability = (()=>{
+  const initialFit=1e9/(10000*30);
+  const base={baselineFit:initialFit,detect:10,recover:900,interval:7200,save:10,slowRate:2,slowHours:24,slowLoss:5,slowDetect:0,hbm:initialFit*.172,gpu:initialFit*.301,net:initialFit*.084,other:initialFit*.443};
+  const target={...base,detect:1,recover:300,interval:600,save:.1,slowDetect:90,hbm:base.hbm/2,gpu:base.gpu/2,net:base.net/2};
+  const fields=[{key:'detect',label:'检测时间',unit:'秒',min:0,max:86400},{key:'recover',label:'恢复时间（含加载）',unit:'秒',min:0,max:86400},{key:'interval',label:'检查点运行间隔',unit:'秒',min:.001,max:7200},{key:'save',label:'保存阻塞',unit:'秒',min:0,max:10},{key:'slowRate',label:'亚健康发生比例',unit:'%',min:0,max:100},{key:'slowHours',label:'亚健康持续时间',unit:'小时',min:0,max:720},{key:'slowLoss',label:'亚健康吞吐降幅',unit:'%',min:0,max:99},{key:'slowDetect',label:'亚健康检出率',unit:'%',min:0,max:100}];
+  const categories=[{key:'hbm',label:'HBM 类'},{key:'gpu',label:'Faulty GPU'},{key:'net',label:'交换机/线缆'},{key:'other',label:'其余中断'}];
+  const totalFit=p=>categories.reduce((sum,{key})=>sum+p[key],0);
+  const fitMtbf=(fit,n=1)=>fit===0?Infinity:1e9/(n*fit);
+  const reduction=(baseline,target)=>baseline===0?null:1-target/baseline;
+  function evaluate(n,p,mode='global'){
+    const lambda0=n*p.baselineFit/(1e9*3600);
+    const lambda=n*totalFit(p)/(1e9*3600),d=p.detect+p.recover,L=p.interval+p.save,z=lambda*L;
+    const capacity=1/(1+lambda*d/(mode==='dp'?50:1));
+    const uptime=mode==='dp'?1-Math.pow(1-capacity,50):capacity;
+    const checkpoint=p.interval/L;
+    const rollback=mode==='dp'?1:z<1e-7?1-z/2+z*z/12:z>700?0:z/Math.expm1(z);
+    const exposure=(1-p.slowDetect/100)*p.slowHours*3600+p.slowDetect/100*Math.min(p.detect,p.slowHours*3600);
+    const slowFactor=Math.exp(-lambda0*p.slowRate/100*exposure*p.slowLoss/100);
+    const tor=capacity*checkpoint*rollback*slowFactor;
+    return {uptime,tor,capacity,checkpoint,rollback,slowFactor,lambda,lambda0,mtbf:lambda?1/lambda/3600:Infinity,lossHours:720*(1-tor),losses:[1-capacity,capacity*(1-checkpoint),capacity*checkpoint*(1-rollback),capacity*checkpoint*rollback*(1-slowFactor)]};
+  }
+  function stages(b,t){
+    let p={...b};const rows=[{label:'全局重启 · 基线',p:{...p},mode:'global'}];
+    const groups=[['调整各类硬故障 FIT',['hbm','gpu','net','other']],['再缩短检测',['detect']],['再缩短恢复',['recover']],['再调整检查点间隔',['interval']],['再降低保存阻塞',['save']],['再治理亚健康发生与损失',['slowRate','slowHours','slowLoss']],['再提升亚健康检出',['slowDetect']]];
+    for(const [label,keys] of groups){for(const k of keys)p[k]=t[k];rows.push({label,p:{...p},mode:'global'});}
+    rows.push({label:'再采用 50 域 DP · 上界',p:{...t},mode:'dp'});return rows;
+  }
+  return {base,target,fields,categories,totalFit,fitMtbf,reduction,evaluate,stages};
+})();
+</script>
+<script id="report-ui">
+(()=>{
+  const $=s=>document.querySelector(s),NS='http://www.w3.org/2000/svg';
+  const scales=[10000,100000,200000,500000],scaleNames=['1 万卡','10 万卡','20 万卡','50 万卡'];
+  const labels=Object.fromEntries([...Reliability.fields,...Reliability.categories].map(f=>[f.key,f.label]));
+  const keys=[...Reliability.categories.map(f=>f.key),...Reliability.fields.map(f=>f.key)];
+  const seriesDefs=[{id:'gb',name:'全局·基线',color:'#2768b2',mode:'global',which:'base'},{id:'gt',name:'全局·方案',color:'#0a7968',mode:'global',which:'target'},{id:'db',name:'DP·基线上界',color:'#9164b5',mode:'dp',which:'base'},{id:'dt',name:'DP·方案上界',color:'#b6571c',mode:'dp',which:'target'},{id:'gs',name:'全局·单项',color:'#188aa4',mode:'global',which:'single'},{id:'ds',name:'DP·单项上界',color:'#bc4360',mode:'dp',which:'single'}];
+  let state={base:{...Reliability.base},target:{...Reliability.target},single:{...Reliability.base}},hidden=new Set(),lastWidths={},drawQueued=false;
+  const pct=v=>(100*v).toFixed(2)+'%',change=v=>(v>=0?'+':'')+(100*v).toFixed(3),fmt=v=>Number.isFinite(v)?v.toLocaleString('zh-CN',{maximumFractionDigits:3}):'∞';
+  function addInput(id,value,min,max,label){const input=document.createElement('input');input.id=id;input.type='number';input.min=min;input.max=max;input.step='any';input.value=value;input.setAttribute('aria-label',label);return input;}
+  for(const f of Reliability.fields){const row=document.createElement('tr'),th=document.createElement('th');th.scope='row';th.textContent=f.label+'（'+f.unit+'）';row.append(th);for(const [prefix,data]of [['b',Reliability.base],['t',Reliability.target]]){const td=document.createElement('td');td.append(addInput(prefix+'-'+f.key,data[f.key],f.min,f.max,(prefix==='b'?'基线':'方案')+th.textContent));row.append(td);}$('#parameter-rows').append(row);}
+  for(const f of Reliability.categories){const heading=document.createElement('tr'),th=document.createElement('th'),row=document.createElement('tr');th.colSpan=2;th.scope='colgroup';th.textContent=f.label;heading.append(th);for(const [prefix,data]of [['b',Reliability.base],['t',Reliability.target]]){const td=document.createElement('td'),label=document.createElement('label'),out=document.createElement('div');label.textContent=(prefix==='b'?'基线':'方案')+' FIT';label.htmlFor=prefix+'-'+f.key;out.id=prefix+'-mtbf-'+f.key;out.className='small fit-mtbf';td.append(label,addInput(prefix+'-'+f.key,Number(data[f.key].toPrecision(12)),0,1e9,(prefix==='b'?'基线':'方案')+f.label+' FIT'),out);row.append(td);}$('#failure-rows').append(heading,row);}
+
+  for(const k of keys){const op=document.createElement('option');op.value=k;op.textContent=labels[k];$('#factor').append(op);}
+  function activeSeries(){return seriesDefs.filter(s=>($('#factor').value!=='all'||!s.id.endsWith('s'))&&!hidden.has(s.id));}
+  function rebuildLegend(){const root=$('#legend');root.replaceChildren();for(const s of seriesDefs){if($('#factor').value==='all'&&s.id.endsWith('s'))continue;const b=document.createElement('button');b.type='button';b.setAttribute('aria-pressed',String(!hidden.has(s.id)));b.style.opacity=hidden.has(s.id)?'.45':'1';const sw=document.createElement('span');sw.className='swatch';sw.style.borderColor=s.color;if(s.id.endsWith('s'))sw.style.borderTopStyle='dashed';b.append(sw,document.createTextNode(s.name));b.addEventListener('click',()=>{hidden.has(s.id)?hidden.delete(s.id):hidden.add(s.id);rebuildLegend();drawCharts();});root.append(b);}}
+  function read(){const invalid=[...document.querySelectorAll('input[type=number]')].find(e=>e.value.trim()===''||!Number.isFinite(+e.value)||!e.checkValidity());if(invalid){$('#input-error').textContent='请输入允许范围内的有效数值。结果保留上次有效输入。';return false;}const b={...Reliability.base},t={...Reliability.target};for(const f of [...Reliability.fields,...Reliability.categories]){b[f.key]=+$('#b-'+f.key).value;t[f.key]=+$('#t-'+f.key).value;}b.baselineFit=t.baselineFit=Reliability.totalFit(b);const single={...b},key=$('#factor').value;if(key!=='all')single[key]=t[key];state={base:b,target:t,single};$('#input-error').textContent='';return true;}
+  const result=(n,which,mode)=>Reliability.evaluate(n,state[which],mode);
+  function cellRow(values,header=false){const tr=document.createElement('tr');values.forEach((v,i)=>{const td=document.createElement(i===0&&header?'th':'td');if(i===0&&header)td.scope='row';if(i>0)td.classList.add('num');td.textContent=v;tr.append(td);});return tr;}
+  function updateText(){
+    const b=result(500000,'base','global'),t=result(500000,'target','global'),d=result(500000,'target','dp');$('#hero-base').textContent=pct(b.tor);$('#hero-target').textContent=pct(t.tor);$('#hero-dp').textContent=pct(d.tor);
+    $('#executive-summary').textContent=`按当前参数，50 万卡全局重启 TOR 从 ${pct(b.tor)} 变为 ${pct(t.tor)}，变化 ${change(t.tor-b.tor)} 个百分点；30 天等价训练损失从 ${b.lossHours.toFixed(1)} 小时变为 ${t.lossHours.toFixed(1)} 小时。DP 方案的理想隔离上界为 ${pct(d.tor)}。`;
+    const st=$('#stages-table');st.replaceChildren();for(const step of Reliability.stages(state.base,state.target))st.append(cellRow([step.label,...scales.map(n=>pct(Reliability.evaluate(n,step.p,step.mode).tor))],true));
+    $('#loss-breakdown').replaceChildren();['故障停顿','检查点阻塞','回滚作废','亚健康降速'].forEach((name,i)=>{const box=document.createElement('div'),label=document.createElement('span'),value=document.createElement('b'),time=document.createElement('span');label.textContent=name;label.className='small';value.textContent=pct(b.losses[i]);time.textContent=(720*b.losses[i]).toFixed(1)+' 等价小时';time.className='small';box.append(label,value,time);$('#loss-breakdown').append(box);});
+    const best=keys.map(k=>({key:k,gain:Reliability.evaluate(500000,{...state.base,[k]:state.target[k]},'global').tor-b.tor})).sort((a,b)=>b.gain-a.gain)[0];
+    $('#improvement-commentary').textContent=best.gain>1e-10?`当前方案在 50 万卡处，独立收益最大的参数是“${labels[best.key]}”，单独变化贡献 ${change(best.gain)} 个百分点 TOR。全部改进的总收益为 ${change(t.tor-b.tor)} 个百分点；两者对应不同的比较实验。`:'当前设定的单项变化没有带来正向 TOR 改进；请检查目标参数与基线的关系。';
+    const n=+$('#inspect-scale').value,bn=result(n,'base','global'),tn=result(n,'target','global'),bd=result(n,'base','dp');
+    $('#live-summary').textContent=`${n.toLocaleString()} 卡：基线硬中断 MTBF ${fmt(bn.mtbf)} h → 方案 ${fmt(tn.mtbf)} h；全局 TOR ${pct(bn.tor)} → ${pct(tn.tor)}；当前检查点基线 ${fmt(state.base.interval)} s / ${fmt(state.base.save)} s，方案 ${fmt(state.target.interval)} s / ${fmt(state.target.save)} s。`;
+    const bf=Reliability.totalFit(state.base),tf=Reliability.totalFit(state.target);
+    $('#fit-total').textContent=`总 FIT：${fmt(bf)} → ${fmt(tf)}；万卡 MTBF：${fmt(Reliability.fitMtbf(bf,10000))} → ${fmt(Reliability.fitMtbf(tf,10000))} h（基线 → 方案）。`;
+    $('#fit-scale-caption').textContent=`当前规模 ${n.toLocaleString()} 卡；MTBF 仅计该类中断，单位为运行小时。占比在基线与方案内分别归一化，不能用 MTBF 相加求总值。`;
+    $('#fit-derived').replaceChildren();
+    const share=(v,total)=>total?pct(v/total):'—';
+    const drop=(b,t)=>b===0?'—（基线为 0）':pct(Reliability.reduction(b,t));
+    for(const f of Reliability.categories){const b=state.base[f.key],t=state.target[f.key];for(const [prefix,v]of [['b',b],['t',t]])$('#'+prefix+'-mtbf-'+f.key).textContent='MTBF '+fmt(Reliability.fitMtbf(v))+' h';const row=cellRow([f.label,fmt(b)+' → '+fmt(t),fmt(Reliability.fitMtbf(b,n))+' → '+fmt(Reliability.fitMtbf(t,n)),share(b,bf)+' → '+share(t,tf),drop(b,t)],true);row.dataset.fitCategory=f.key;$('#fit-derived').append(row);}
+    $('#fit-derived').append(cellRow(['合计',fmt(bf)+' → '+fmt(tf),fmt(Reliability.fitMtbf(bf,n))+' → '+fmt(Reliability.fitMtbf(tf,n)),share(bf,bf)+' → '+share(tf,tf),drop(bf,tf)],true));
+    $('#effects-table').replaceChildren();for(const k of keys){const p={...state.base,[k]:state.target[k]},g=Reliability.evaluate(n,p,'global'),d=Reliability.evaluate(n,p,'dp');const row=cellRow([labels[k],change(g.uptime-bn.uptime),change(g.tor-bn.tor),change(d.tor-bd.tor)],true);row.dataset.factor=k;$('#effects-table').append(row);}
+    $('#selected-table').replaceChildren();for(const s of seriesDefs.slice(0,4)){const r=result(n,s.which,s.mode);$('#selected-table').append(cellRow([s.name,(s.mode==='dp'&&r.uptime>.999999?'≈':'')+pct(r.uptime),pct(r.tor),r.lossHours.toFixed(2)],true));}
+    $('#snapshot-table').replaceChildren();$('#snapshot-table').append(cellRow(['万卡硬中断 MTBF',fmt(Reliability.fitMtbf(Reliability.totalFit(state.base),10000))+' h',fmt(Reliability.fitMtbf(Reliability.totalFit(state.target),10000))+' h','由各类 FIT 自动合并'],true));for(const f of Reliability.fields)$('#snapshot-table').append(cellRow([f.label,state.base[f.key]+' '+f.unit,state.target[f.key]+' '+f.unit,f.key==='slowRate'?'额外事件率 / 原始硬中断率':f.key==='recover'?'已含检查点加载':'见公式章节'],true));for(const f of Reliability.categories)$('#snapshot-table').append(cellRow([f.label,fmt(state.base[f.key])+' FIT',fmt(state.target[f.key])+' FIT','等效中断次数 / 10⁹ 卡运行小时'],true));
+  }
+  function svgNode(tag,attrs={},text){const e=document.createElementNS(NS,tag);for(const[k,v]of Object.entries(attrs))e.setAttribute(k,v);if(text!==undefined)e.textContent=text;return e;}
+  function drawChart(id,metric,title){
+    const container=$(id),W=Math.max(660,Math.floor(container.getBoundingClientRect().width)),visible=activeSeries(),left=64,right=22,top=42,plotH=230,plotW=W-left-right,axisY=top+plotH,bandTop=axisY+80,rowH=27,H=bandTop+36+visible.length*rowH+14;
+    container.replaceChildren();const svg=svgNode('svg',{viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':title+'；1万、10万、20万、50万卡数值在图内标注'});container.append(svg);svg.append(svgNode('title',{},title));
+    const log=$('#xscale').value==='log',x=n=>left+(log?Math.log(n/1000)/Math.log(500):(n-1000)/499000)*plotW,y=v=>top+(1-v)*plotH;
+    svg.append(svgNode('text',{x:left,y:24,'font-size':17,'font-weight':600,fill:'#152c40'},title));
+    svg.append(svgNode('rect',{x:left,y:top,width:plotW,height:plotH,fill:'white',stroke:'#d8e3eb','data-chart-frame':''}));
+    for(const value of [0,.25,.5,.75,1]){svg.append(svgNode('line',{x1:left,y1:y(value),x2:W-right,y2:y(value),stroke:'#e4ebf1','stroke-width':1}));svg.append(svgNode('text',{x:left-10,y:y(value)+4,'text-anchor':'end','font-size':13,fill:'#526678'},Math.round(value*100)+'%'));}
+    const ticks=log?[1000,10000,100000,200000,500000]:[1000,100000,200000,300000,400000,500000];
+    for(const n of ticks){const xx=x(n);svg.append(svgNode('text',{x:xx,y:axisY+23,'text-anchor':n===1000?'start':n===500000?'end':'middle','font-size':13,fill:'#526678'},n===1000?'1千':n/10000+'万'));}
+    svg.append(svgNode('text',{x:(left+W-right)/2,y:axisY+49,'text-anchor':'middle','font-size':14,fill:'#152c40'},'单一训练作业规模 N（卡） · '+(log?'对数轴':'线性轴')));
+    svg.append(svgNode('text',{transform:`translate(18 ${top+plotH/2}) rotate(-90)`,'text-anchor':'middle','font-size':14,fill:'#152c40'},metric==='uptime'?'运行可用度 A（%）':'有效训练可用度 TOR（%）'));
+    for(const n of scales)svg.append(svgNode('line',{x1:x(n),y1:top,x2:x(n),y2:axisY,stroke:'#c9d9e5','stroke-dasharray':'3 4'}));
+    const points=Array.from({length:250},(_,i)=>log?1000*Math.pow(500,i/249):1000+499000*i/249);
+    for(const s of visible){const values=points.map(n=>[x(n),y(result(n,s.which,s.mode)[metric])]);const path=values.map((p,i)=>(i?'L':'M')+p[0].toFixed(2)+' '+p[1].toFixed(2)).join(' ');svg.append(svgNode('path',{d:path,fill:'none',stroke:s.color,'stroke-width':2.2,'stroke-dasharray':s.id.endsWith('s')?'7 4':s.mode==='dp'?'3 3':'none','data-series':s.id}));for(const n of scales)svg.append(svgNode('circle',{cx:x(n),cy:y(result(n,s.which,s.mode)[metric]),r:3,fill:'white',stroke:s.color,'stroke-width':2,'data-key-marker':n,'data-series-marker':s.id}));}
+    const labelW=128,colW=(W-left-right-labelW)/4;
+    svg.append(svgNode('rect',{x:left,y:bandTop-17,width:plotW,height:30+visible.length*rowH,fill:'#f3f7fa',rx:2}));
+    svg.append(svgNode('text',{x:left+7,y:bandTop+3,'font-size':13,fill:'#526678'},'关键规模数值标注'));
+    scales.forEach((n,j)=>svg.append(svgNode('text',{x:left+labelW+(j+.5)*colW,y:bandTop+3,'text-anchor':'middle','font-size':14,'font-weight':600,fill:'#152c40'},scaleNames[j])));
+    visible.forEach((s,i)=>{const yy=bandTop+28+i*rowH;svg.append(svgNode('text',{x:left+7,y:yy,'font-size':13,fill:s.color},s.name));scales.forEach((n,j)=>{const value=result(n,s.which,s.mode)[metric],text=(metric==='uptime'&&s.mode==='dp'&&value>.999999?'≈':'')+pct(value);svg.append(svgNode('text',{x:left+labelW+(j+.5)*colW,y:yy,'text-anchor':'middle','font-size':14,fill:s.color,'font-variant-numeric':'tabular-nums','data-key-label':n,'data-label-series':s.id,'data-value':value},text));});});
+    const hover=svgNode('g'),guide=svgNode('line',{y1:top,y2:axisY,stroke:'#526678','stroke-width':1,opacity:0});hover.append(guide);svg.append(hover);const markers=svgNode('g');hover.append(markers);let pinned=false;
+    const overlay=svgNode('rect',{x:left,y:top,width:plotW,height:plotH,fill:'transparent','data-chart-hover-overlay':'cross-series'});svg.append(overlay);
+    function show(event){const rect=svg.getBoundingClientRect(),px=Math.max(left,Math.min(W-right,(event.clientX-rect.left)*W/rect.width)),ratio=(px-left)/plotW,n=log?1000*Math.pow(500,ratio):1000+499000*ratio;guide.setAttribute('x1',px);guide.setAttribute('x2',px);guide.setAttribute('opacity',.7);markers.replaceChildren();const tip=$('#tooltip');tip.replaceChildren();const head=document.createElement('div');head.textContent=Math.round(n).toLocaleString()+' 卡';tip.append(head);for(const s of visible){const v=result(n,s.which,s.mode)[metric];markers.append(svgNode('circle',{cx:px,cy:y(v),r:4,fill:s.color,'data-hover-marker':s.id}));const row=document.createElement('div');row.className='row';const name=document.createElement('span'),value=document.createElement('span');name.textContent=s.name;value.textContent=pct(v);row.append(name,value);tip.append(row);}tip.hidden=false;tip.style.left=Math.max(8,Math.min(window.innerWidth-tip.offsetWidth-8,event.clientX+14))+'px';tip.style.top=Math.max(8,Math.min(window.innerHeight-tip.offsetHeight-8,event.clientY+14))+'px';}
+    overlay.addEventListener('pointermove',e=>{if(!pinned)show(e);});overlay.addEventListener('pointerleave',()=>{if(!pinned){$('#tooltip').hidden=true;guide.setAttribute('opacity',0);markers.replaceChildren();}});overlay.addEventListener('click',e=>{pinned=!pinned;show(e);});
+  }
+  function drawCharts(){$('#tooltip').hidden=true;drawChart('#chart-A','uptime','图 3 · 规模—运行可用度 A');drawChart('#chart-TOR','tor','图 4 · 规模—有效训练可用度 TOR');}
+  let appliedInputs='';
+  const inputSnapshot=()=>JSON.stringify([...document.querySelectorAll('.parameter-panel input')].map(e=>[e.id,e.value]));
+  function markPending(){$('#input-error').textContent='';$('#refresh-status').textContent=inputSnapshot()===appliedInputs?'当前结果已应用全部参数。':'参数已修改，点击“刷新建模结果”后生效。下方 FIT / MTBF 摘要仍为已应用值。';}
+  function renderResults(){const key=$('#factor').value;state.single={...state.base};if(key!=='all')state.single[key]=state.target[key];rebuildLegend();updateText();drawCharts();}
+  function update(){if(!read()){$('#refresh-status').textContent='刷新未完成，请修正输入；当前结果保持不变。';return;}renderResults();appliedInputs=inputSnapshot();$('#refresh-status').textContent='建模结果已刷新，当前结果已应用全部参数。';}
+  scales.forEach((n,i)=>$('#topology-table').append(cellRow([scaleNames[i],n/8,Math.ceil(n/64),Math.ceil(n/1024),Math.ceil(n/8192),n/50],true)));
+  document.querySelectorAll('.parameter-panel input').forEach(e=>e.addEventListener('input',markPending));
+  document.querySelectorAll('.results-panel select').forEach(e=>e.addEventListener('input',renderResults));
+  $('#refresh-results').addEventListener('click',update);
+  $('#use-step').addEventListener('click',()=>{$('#t-interval').value=$('#step').value;markPending();});
+  const observer=new ResizeObserver(()=>{const width=$('#chart-A').clientWidth;if(width===lastWidths.A)return;lastWidths.A=width;if(!drawQueued){drawQueued=true;requestAnimationFrame(()=>{drawQueued=false;drawCharts();});}});observer.observe($('#chart-A'));
+  window.addEventListener('scroll',()=>{$('#tooltip').hidden=true;},{passive:true});
+  window.addEventListener('beforeprint',()=>{document.querySelectorAll('details').forEach(d=>{d.dataset.wasOpen=d.open?'1':'0';d.open=true;});});
+  window.addEventListener('afterprint',()=>{document.querySelectorAll('details').forEach(d=>{d.open=d.dataset.wasOpen==='1';});});
+  update();
+})();
+</script>
+</body></html>

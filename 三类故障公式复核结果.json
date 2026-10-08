@@ -1,0 +1,55 @@
+{
+  "result": "passed",
+  "automatic_detection": 0.9462,
+  "eventual_detection": 0.995,
+  "scope": "Simplified no-checkpoint/no-slowdown Markov reward model only; repairs exponential with mean 2h after immediate detection; not a full-system prediction.",
+  "checks": [
+    {
+      "cards": 10000,
+      "all_event_mtbf_hours": 29.279999999999998,
+      "continuous_exposure_silent_factor": 0.9523932584093933,
+      "simple_state_exact_correct_uptime": 0.8957084660545463,
+      "monte_carlo_mean": 0.8941737896789622,
+      "monte_carlo_standard_error": 0.0016190015680031251,
+      "naive_product_without_exposure_correction": 0.8928686797588061,
+      "mean_exposure_product_approximation": 0.8955736635489004
+    },
+    {
+      "cards": 100000,
+      "all_event_mtbf_hours": 2.928,
+      "continuous_exposure_silent_factor": 0.6364740449456243,
+      "simple_state_exact_correct_uptime": 0.453344918903459,
+      "monte_carlo_mean": 0.45250078802287896,
+      "monte_carlo_standard_error": 0.0020137804122443985,
+      "naive_product_without_exposure_correction": 0.38188442696737457,
+      "mean_exposure_product_approximation": 0.4531929741616769
+    },
+    {
+      "cards": 500000,
+      "all_event_mtbf_hours": 0.5856,
+      "continuous_exposure_silent_factor": 0.20184625420180768,
+      "simple_state_exact_correct_uptime": 0.13795192169316858,
+      "monte_carlo_mean": 0.1379902213884065,
+      "monte_carlo_standard_error": 0.0008355176516754016,
+      "naive_product_without_exposure_correction": 0.046579904815801765,
+      "mean_exposure_product_approximation": 0.13797296896207362
+    }
+  ],
+  "rollback_checks": [
+    {
+      "rate_per_hour": 0.03333333333333333,
+      "formula_hours": 0.9902458568768925,
+      "quadrature_hours": 0.99024585688692
+    },
+    {
+      "rate_per_hour": 1.6666666666666667,
+      "formula_hours": 0.5262644059654468,
+      "quadrature_hours": 0.526264405997856
+    },
+    {
+      "rate_per_hour": 0.03333333333333333,
+      "formula_hours": 0.0008334644804587067,
+      "quadrature_hours": 0.0008334644804663776
+    }
+  ]
+}
