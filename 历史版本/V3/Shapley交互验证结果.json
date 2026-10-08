@@ -1,0 +1,33 @@
+{
+  "status": "passed",
+  "offline": true,
+  "checks": [
+    "initial results match CLI",
+    "20 numerical scale labels",
+    "coalition explorer matches computed subset",
+    "silent sweep at 0 and 95",
+    "linear/log axes",
+    "draft state does not change applied snapshot",
+    "invalid step rejected",
+    "worker cancellation",
+    "full 512-trial recalculation",
+    "zero-change silent direction has zero Shapley",
+    "responsive layout",
+    "exports"
+  ],
+  "layouts": [
+    {
+      "client": 1440,
+      "scroll": 1440
+    },
+    {
+      "client": 1000,
+      "scroll": 1000
+    },
+    {
+      "client": 390,
+      "scroll": 390
+    }
+  ],
+  "errors": []
+}
