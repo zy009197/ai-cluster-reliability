@@ -1,0 +1,2694 @@
+{
+  "version": "two-libraries-review-1",
+  "role": "独立故障库，不包含机制映射。停机与计算损失为当前基线30天仿真均值。",
+  "events": [
+    {
+      "id": "CORE-hard",
+      "domain": "AI Core计算单元",
+      "type": "hard",
+      "description": "运行异常/算子中断",
+      "scope": "card",
+      "persistence": "transient",
+      "fit": 466.6666666666666,
+      "eventShare": 0.13524,
+      "withinTypeShare": 0.13999999999999999,
+      "evidence": "经验先验，待审计",
+      "reviewNote": "",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000,
+          "events": 3.3405,
+          "recoveries": 3.3405,
+          "downtime": 0.24555897687330594,
+          "rollback": 0.13966407143177112,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 100000,
+          "events": 32.7155,
+          "recoveries": 32.7155,
+          "downtime": 2.397102984520745,
+          "rollback": 1.3752331353024274,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 200000,
+          "events": 64.035,
+          "recoveries": 64.035,
+          "downtime": 4.694093417786043,
+          "rollback": 2.6709945878669012,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 500000,
+          "events": 149.126,
+          "recoveries": 149.126,
+          "downtime": 10.998117464353937,
+          "rollback": 6.129908766062868,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        }
+      ]
+    },
+    {
+      "id": "CORE-slow",
+      "domain": "AI Core计算单元",
+      "type": "slow",
+      "description": "片内DVFS异常降频",
+      "scope": "card",
+      "persistence": "transient",
+      "fit": 14.163372859025031,
+      "eventShare": 0.0041045454545454545,
+      "withinTypeShare": 0.20522727272727265,
+      "evidence": "经验先验，待审计",
+      "reviewNote": "",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000,
+          "events": 0.1035,
+          "recoveries": 0.1005,
+          "downtime": 0.006506494849684998,
+          "rollback": 0,
+          "slowdown": 0.003956478477309531,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 100000,
+          "events": 1.0005,
+          "recoveries": 0.95225,
+          "downtime": 0.06712232120835948,
+          "rollback": 0,
+          "slowdown": 0.05807875002018295,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 200000,
+          "events": 1.91025,
+          "recoveries": 1.815,
+          "downtime": 0.12807455628523745,
+          "rollback": 0,
+          "slowdown": 0.11123235481102298,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 500000,
+          "events": 4.513,
+          "recoveries": 4.2915,
+          "downtime": 0.2922767429374344,
+          "rollback": 0,
+          "slowdown": 0.24507969644087008,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        }
+      ]
+    },
+    {
+      "id": "CORE-sdc",
+      "domain": "AI Core计算单元",
+      "type": "sdc",
+      "description": "计算结果无告警错误",
+      "scope": "card",
+      "persistence": "transient",
+      "fit": 41.06280193236715,
+      "eventShare": 0.011900000000000003,
+      "withinTypeShare": 0.8499999999999999,
+      "evidence": "用户审计建模假设；非厂商实测故障率",
+      "reviewNote": "固定占静默总预算85%",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000,
+          "events": 0.3,
+          "recoveries": 0.23725,
+          "downtime": 0.017339622055978995,
+          "rollback": 27.999741702956193,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 2.8814797512178187
+        },
+        {
+          "cards": 100000,
+          "events": 2.90325,
+          "recoveries": 1.579,
+          "downtime": 0.11020034279974888,
+          "rollback": 179.92598057206143,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 17.754969042801655
+        },
+        {
+          "cards": 200000,
+          "events": 5.62075,
+          "recoveries": 2.321,
+          "downtime": 0.15265251211719186,
+          "rollback": 254.49731528742342,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 24.047129463114942
+        },
+        {
+          "cards": 500000,
+          "events": 13.18075,
+          "recoveries": 3.2315,
+          "downtime": 0.2138674705173662,
+          "rollback": 316.5535549424519,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 29.14252948046292
+        }
+      ]
+    },
+    {
+      "id": "SRAM-hard",
+      "domain": "片内SRAM/缓存",
+      "type": "hard",
+      "description": "不可纠正缓存异常",
+      "scope": "card",
+      "persistence": "transient",
+      "fit": 166.6666666666666,
+      "eventShare": 0.04829999999999999,
+      "withinTypeShare": 0.04999999999999998,
+      "evidence": "经验先验，待审计",
+      "reviewNote": "",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000,
+          "events": 1.19275,
+          "recoveries": 1.19275,
+          "downtime": 0.08869027777779996,
+          "rollback": 0.04994708117332636,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 100000,
+          "events": 11.71925,
+          "recoveries": 11.71925,
+          "downtime": 0.859486387430733,
+          "rollback": 0.49342273388501057,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 200000,
+          "events": 22.7785,
+          "recoveries": 22.7785,
+          "downtime": 1.6700255803461663,
+          "rollback": 0.953214664325644,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 500000,
+          "events": 53.20275,
+          "recoveries": 53.20275,
+          "downtime": 3.900013135557402,
+          "rollback": 2.1885095598156887,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        }
+      ]
+    },
+    {
+      "id": "SRAM-slow",
+      "domain": "片内SRAM/缓存",
+      "type": "slow",
+      "description": "重试导致性能下降",
+      "scope": "card",
+      "persistence": "transient",
+      "fit": 0.8430579082752995,
+      "eventShare": 0.0002443181818181818,
+      "withinTypeShare": 0.012215909090909086,
+      "evidence": "经验先验，待审计",
+      "reviewNote": "",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000,
+          "events": 0.00575,
+          "recoveries": 0.0055,
+          "downtime": 0.0002749999999999666,
+          "rollback": 0,
+          "slowdown": 0.0003186729369137681,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 100000,
+          "events": 0.06125,
+          "recoveries": 0.05825,
+          "downtime": 0.004387372212900626,
+          "rollback": 0,
+          "slowdown": 0.003653148935295341,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 200000,
+          "events": 0.11825,
+          "recoveries": 0.1115,
+          "downtime": 0.009988094130946597,
+          "rollback": 0,
+          "slowdown": 0.007924241298632593,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 500000,
+          "events": 0.27475,
+          "recoveries": 0.26125,
+          "downtime": 0.019898692765144492,
+          "rollback": 0,
+          "slowdown": 0.015290340832795958,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        }
+      ]
+    },
+    {
+      "id": "SRAM-sdc",
+      "domain": "片内SRAM/缓存",
+      "type": "sdc",
+      "description": "未检出缓存数据错误",
+      "scope": "card",
+      "persistence": "transient",
+      "fit": 0,
+      "eventShare": 0,
+      "withinTypeShare": 0,
+      "evidence": "用户审计建模假设；非厂商实测故障率",
+      "reviewNote": "本情景不分配独立静默预算；不表示物理绝不发生SDC",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000
+        },
+        {
+          "cards": 100000
+        },
+        {
+          "cards": 200000
+        },
+        {
+          "cards": 500000
+        }
+      ]
+    },
+    {
+      "id": "IOD-hard",
+      "domain": "芯片内IO Die/D2D",
+      "type": "hard",
+      "description": "D2D/IO通路失效",
+      "scope": "card",
+      "persistence": "transient",
+      "fit": 199.99999999999997,
+      "eventShare": 0.057960000000000005,
+      "withinTypeShare": 0.06,
+      "evidence": "经验先验，待审计",
+      "reviewNote": "",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000,
+          "events": 1.43525,
+          "recoveries": 1.43525,
+          "downtime": 0.10504372133796233,
+          "rollback": 0.06156340227777867,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 100000,
+          "events": 14.1065,
+          "recoveries": 14.1065,
+          "downtime": 1.0250996473850271,
+          "rollback": 0.5898118111541052,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 200000,
+          "events": 27.482,
+          "recoveries": 27.482,
+          "downtime": 2.007368958378073,
+          "rollback": 1.1481462868073313,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 500000,
+          "events": 64.155,
+          "recoveries": 64.155,
+          "downtime": 4.731776212115945,
+          "rollback": 2.638964405864108,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        }
+      ]
+    },
+    {
+      "id": "IOD-slow",
+      "domain": "芯片内IO Die/D2D",
+      "type": "slow",
+      "description": "重传或通路降带宽",
+      "scope": "card",
+      "persistence": "transient",
+      "fit": 4.046677959721438,
+      "eventShare": 0.001172727272727273,
+      "withinTypeShare": 0.058636363636363625,
+      "evidence": "经验先验，待审计",
+      "reviewNote": "",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000,
+          "events": 0.0305,
+          "recoveries": 0.02875,
+          "downtime": 0.001437499999999669,
+          "rollback": 0,
+          "slowdown": 0.0021860775940237827,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 100000,
+          "events": 0.2855,
+          "recoveries": 0.26975,
+          "downtime": 0.0173477743340097,
+          "rollback": 0,
+          "slowdown": 0.01853175907818681,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 200000,
+          "events": 0.54875,
+          "recoveries": 0.51925,
+          "downtime": 0.035049725318738324,
+          "rollback": 0,
+          "slowdown": 0.035091719166536466,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 500000,
+          "events": 1.28475,
+          "recoveries": 1.21825,
+          "downtime": 0.07793517821916301,
+          "rollback": 0,
+          "slowdown": 0.07318173301768954,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        }
+      ]
+    },
+    {
+      "id": "IOD-sdc",
+      "domain": "芯片内IO Die/D2D",
+      "type": "sdc",
+      "description": "数据通路残余静默错误",
+      "scope": "card",
+      "persistence": "transient",
+      "fit": 1.0305969095676324,
+      "eventShare": 0.0002986669843926999,
+      "withinTypeShare": 0.021333356028049987,
+      "evidence": "用户审计建模假设；非厂商实测故障率",
+      "reviewNote": "静默剩余15%按审计时非零相对权重分配",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000,
+          "events": 0.0055,
+          "recoveries": 0.0045,
+          "downtime": 0.00022499999999993746,
+          "rollback": 0.5305769171116653,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0.0343153187235456
+        },
+        {
+          "cards": 100000,
+          "events": 0.06825,
+          "recoveries": 0.03625,
+          "downtime": 0.0032873432762162624,
+          "rollback": 4.134400197149941,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0.5968648114874212
+        },
+        {
+          "cards": 200000,
+          "events": 0.12775,
+          "recoveries": 0.051,
+          "downtime": 0.0044442109647423395,
+          "rollback": 5.57983017494418,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0.47353812778943477
+        },
+        {
+          "cards": 500000,
+          "events": 0.32275,
+          "recoveries": 0.07675,
+          "downtime": 0.0035276787193285093,
+          "rollback": 7.499155288266724,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0.7053848880521536
+        }
+      ]
+    },
+    {
+      "id": "MODULE-hard",
+      "domain": "HiAM模组/板级连接",
+      "type": "hard",
+      "description": "模组或连接故障",
+      "scope": "card",
+      "persistence": "persistent",
+      "fit": 169.99999999999994,
+      "eventShare": 0.04926599999999999,
+      "withinTypeShare": 0.05099999999999999,
+      "evidence": "经验先验，待审计",
+      "reviewNote": "",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000,
+          "events": 1.22325,
+          "recoveries": 1.22325,
+          "downtime": 0.08636250000002199,
+          "rollback": 0.052116216975474805,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 100000,
+          "events": 11.9635,
+          "recoveries": 11.9635,
+          "downtime": 0.893837378884041,
+          "rollback": 0.5037024806327766,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 200000,
+          "events": 23.33075,
+          "recoveries": 23.33075,
+          "downtime": 1.730750711572323,
+          "rollback": 0.9770447813727644,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 500000,
+          "events": 54.122,
+          "recoveries": 54.122,
+          "downtime": 3.9862911751124495,
+          "rollback": 2.2266994773548507,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        }
+      ]
+    },
+    {
+      "id": "MODULE-slow",
+      "domain": "HiAM模组/板级连接",
+      "type": "slow",
+      "description": "接触/供电边缘问题导致降速",
+      "scope": "card",
+      "persistence": "persistent",
+      "fit": 1.719838132881611,
+      "eventShare": 0.0004984090909090909,
+      "withinTypeShare": 0.024920454545454537,
+      "evidence": "经验先验，待审计",
+      "reviewNote": "",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000,
+          "events": 0.01125,
+          "recoveries": 0.0105,
+          "downtime": 0.000524999999999964,
+          "rollback": 0,
+          "slowdown": 0.0009307033808434825,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 100000,
+          "events": 0.12425,
+          "recoveries": 0.11575,
+          "downtime": 0.007718323957415153,
+          "rollback": 0,
+          "slowdown": 0.009793628703485132,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 200000,
+          "events": 0.232,
+          "recoveries": 0.21925,
+          "downtime": 0.013290227917869366,
+          "rollback": 0,
+          "slowdown": 0.014852296307048008,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 500000,
+          "events": 0.54675,
+          "recoveries": 0.51975,
+          "downtime": 0.03812304979902227,
+          "rollback": 0,
+          "slowdown": 0.030158269919739748,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        }
+      ]
+    },
+    {
+      "id": "MODULE-sdc",
+      "domain": "HiAM模组/板级连接",
+      "type": "sdc",
+      "description": "未定位模组内数据异常",
+      "scope": "card",
+      "persistence": "persistent",
+      "fit": 0,
+      "eventShare": 0,
+      "withinTypeShare": 0,
+      "evidence": "用户审计建模假设；非厂商实测故障率",
+      "reviewNote": "本情景不分配独立静默预算；不表示物理绝不发生SDC",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000
+        },
+        {
+          "cards": 100000
+        },
+        {
+          "cards": 200000
+        },
+        {
+          "cards": 500000
+        }
+      ]
+    },
+    {
+      "id": "MEMT-hard",
+      "domain": "NPU内存可恢复瞬态",
+      "type": "hard",
+      "description": "可恢复UCE候选，须核对错误码",
+      "scope": "card",
+      "persistence": "transient",
+      "fit": 399.99999999999994,
+      "eventShare": 0.11592000000000001,
+      "withinTypeShare": 0.12,
+      "evidence": "经验先验，待审计",
+      "reviewNote": "",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000,
+          "events": 2.8655,
+          "recoveries": 2.8655,
+          "downtime": 0.21027887387508162,
+          "rollback": 0.12117117413741695,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 100000,
+          "events": 28.0035,
+          "recoveries": 28.0035,
+          "downtime": 2.0790406699391317,
+          "rollback": 1.173082077923096,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 200000,
+          "events": 54.761,
+          "recoveries": 54.761,
+          "downtime": 4.005396751039041,
+          "rollback": 2.284061759921321,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 500000,
+          "events": 128.0455,
+          "recoveries": 128.0455,
+          "downtime": 9.427868471947402,
+          "rollback": 5.269805996256172,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        }
+      ]
+    },
+    {
+      "id": "MEMT-slow",
+      "domain": "NPU内存可恢复瞬态",
+      "type": "slow",
+      "description": "纠错/访问重试造成降速",
+      "scope": "card",
+      "persistence": "transient",
+      "fit": 11.145779669968281,
+      "eventShare": 0.0032300469483568083,
+      "withinTypeShare": 0.16150234741784036,
+      "evidence": "经验先验，待审计",
+      "reviewNote": "",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000,
+          "events": 0.0795,
+          "recoveries": 0.074,
+          "downtime": 0.005699999999999289,
+          "rollback": 0,
+          "slowdown": 0.0067518247161753205,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 100000,
+          "events": 0.77125,
+          "recoveries": 0.72675,
+          "downtime": 0.04591796631043466,
+          "rollback": 0,
+          "slowdown": 0.053610829297021774,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 200000,
+          "events": 1.55225,
+          "recoveries": 1.461,
+          "downtime": 0.10268239770357596,
+          "rollback": 0,
+          "slowdown": 0.10800122417975459,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 500000,
+          "events": 3.56575,
+          "recoveries": 3.3785,
+          "downtime": 0.2285377078755618,
+          "rollback": 0,
+          "slowdown": 0.2071474022119325,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        }
+      ]
+    },
+    {
+      "id": "MEMT-sdc",
+      "domain": "NPU内存可恢复瞬态",
+      "type": "sdc",
+      "description": "保护逃逸后的数据污染",
+      "scope": "card",
+      "persistence": "transient",
+      "fit": 0,
+      "eventShare": 0,
+      "withinTypeShare": 0,
+      "evidence": "用户审计建模假设；非厂商实测故障率",
+      "reviewNote": "本情景不分配独立静默预算；不表示物理绝不发生SDC",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000
+        },
+        {
+          "cards": 100000
+        },
+        {
+          "cards": 200000
+        },
+        {
+          "cards": 500000
+        }
+      ]
+    },
+    {
+      "id": "MEMP-hard",
+      "domain": "NPU内存持续失效",
+      "type": "hard",
+      "description": "持续UCE/器件失效",
+      "scope": "card",
+      "persistence": "persistent",
+      "fit": 173.33333333333331,
+      "eventShare": 0.050232000000000006,
+      "withinTypeShare": 0.052,
+      "evidence": "经验先验，待审计",
+      "reviewNote": "",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000,
+          "events": 1.24625,
+          "recoveries": 1.24625,
+          "downtime": 0.08940503611980574,
+          "rollback": 0.05197433547841123,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 100000,
+          "events": 12.17475,
+          "recoveries": 12.17475,
+          "downtime": 0.8741033110820571,
+          "rollback": 0.5105680868762453,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 200000,
+          "events": 23.841,
+          "recoveries": 23.841,
+          "downtime": 1.7051676084109901,
+          "rollback": 0.9931674808440005,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 500000,
+          "events": 55.57775,
+          "recoveries": 55.57775,
+          "downtime": 4.056268847551475,
+          "rollback": 2.28665022729823,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        }
+      ]
+    },
+    {
+      "id": "MEMP-slow",
+      "domain": "NPU内存持续失效",
+      "type": "slow",
+      "description": "容量隔离后性能下降",
+      "scope": "card",
+      "persistence": "persistent",
+      "fit": 0.724475678547938,
+      "eventShare": 0.0002099530516431925,
+      "withinTypeShare": 0.01049765258215962,
+      "evidence": "经验先验，待审计",
+      "reviewNote": "",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000,
+          "events": 0.005,
+          "recoveries": 0.0045,
+          "downtime": 0.00022499999999997723,
+          "rollback": 0,
+          "slowdown": 0.0006099513888888902,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 100000,
+          "events": 0.0485,
+          "recoveries": 0.045,
+          "downtime": 0.0022374999999996846,
+          "rollback": 0,
+          "slowdown": 0.004234367078609211,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 200000,
+          "events": 0.09525,
+          "recoveries": 0.08975,
+          "downtime": 0.006413551077412964,
+          "rollback": 0,
+          "slowdown": 0.006537923514598878,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 500000,
+          "events": 0.22775,
+          "recoveries": 0.2155,
+          "downtime": 0.013676741196448837,
+          "rollback": 0,
+          "slowdown": 0.013282890148273255,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        }
+      ]
+    },
+    {
+      "id": "MEMP-sdc",
+      "domain": "NPU内存持续失效",
+      "type": "sdc",
+      "description": "持续性残余数据污染",
+      "scope": "card",
+      "persistence": "persistent",
+      "fit": 0,
+      "eventShare": 0,
+      "withinTypeShare": 0,
+      "evidence": "用户审计建模假设；非厂商实测故障率",
+      "reviewNote": "本情景不分配独立静默预算；不表示物理绝不发生SDC",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000
+        },
+        {
+          "cards": 100000
+        },
+        {
+          "cards": 200000
+        },
+        {
+          "cards": 500000
+        }
+      ]
+    },
+    {
+      "id": "NIC-hard",
+      "domain": "UB网卡/RoCE接口",
+      "type": "hard",
+      "description": "接口/连接中断",
+      "scope": "server",
+      "persistence": "transient",
+      "fit": 100.00000000000001,
+      "eventShare": 0.02898000000000001,
+      "withinTypeShare": 0.030000000000000006,
+      "evidence": "经验先验，待审计",
+      "reviewNote": "",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000,
+          "events": 0.70975,
+          "recoveries": 0.70975,
+          "downtime": 0.050495062539701666,
+          "rollback": 0.029670081213033328,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 100000,
+          "events": 7.042,
+          "recoveries": 7.042,
+          "downtime": 0.5217787580180442,
+          "rollback": 0.2950832049342419,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 200000,
+          "events": 13.77625,
+          "recoveries": 13.77625,
+          "downtime": 1.0073421098090487,
+          "rollback": 0.5751604788341457,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 500000,
+          "events": 32.05725,
+          "recoveries": 32.05725,
+          "downtime": 2.3361486242031577,
+          "rollback": 1.3175488260700206,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        }
+      ]
+    },
+    {
+      "id": "NIC-slow",
+      "domain": "UB网卡/RoCE接口",
+      "type": "slow",
+      "description": "带宽退化与重传",
+      "scope": "server",
+      "persistence": "transient",
+      "fit": 1.7929179740026897,
+      "eventShare": 0.0005195876288659795,
+      "withinTypeShare": 0.025979381443298966,
+      "evidence": "经验先验，待审计",
+      "reviewNote": "",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000,
+          "events": 0.01325,
+          "recoveries": 0.01275,
+          "downtime": 0.0006374999999999502,
+          "rollback": 0,
+          "slowdown": 0.0006445416580812753,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 100000,
+          "events": 0.1295,
+          "recoveries": 0.1215,
+          "downtime": 0.009532491999935352,
+          "rollback": 0,
+          "slowdown": 0.00888733090893747,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 200000,
+          "events": 0.25175,
+          "recoveries": 0.2405,
+          "downtime": 0.017299512410182724,
+          "rollback": 0,
+          "slowdown": 0.013647918008273158,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 500000,
+          "events": 0.5785,
+          "recoveries": 0.54725,
+          "downtime": 0.042052777873483264,
+          "rollback": 0,
+          "slowdown": 0.035223607650941985,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        }
+      ]
+    },
+    {
+      "id": "NIC-sdc",
+      "domain": "UB网卡/RoCE接口",
+      "type": "sdc",
+      "description": "端到端校验逃逸后数据污染",
+      "scope": "server",
+      "persistence": "transient",
+      "fit": 1.0058431102498928,
+      "eventShare": 0.000291493333350419,
+      "withinTypeShare": 0.020820952382172776,
+      "evidence": "用户审计建模假设；非厂商实测故障率",
+      "reviewNote": "静默剩余15%按审计时非零相对权重分配",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000,
+          "events": 0.009,
+          "recoveries": 0.00725,
+          "downtime": 0.0003624999999998941,
+          "rollback": 0.8557470399003444,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0.09692449464154873
+        },
+        {
+          "cards": 100000,
+          "events": 0.07275,
+          "recoveries": 0.0445,
+          "downtime": 0.002695467734828494,
+          "rollback": 5.0665858716142615,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0.319281472673434
+        },
+        {
+          "cards": 200000,
+          "events": 0.14175,
+          "recoveries": 0.06225,
+          "downtime": 0.003945822386796085,
+          "rollback": 6.824908702689893,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0.3614844952488797
+        },
+        {
+          "cards": 500000,
+          "events": 0.3305,
+          "recoveries": 0.0785,
+          "downtime": 0.005109959074459379,
+          "rollback": 7.6639116017991,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0.47571140972976866
+        }
+      ]
+    },
+    {
+      "id": "OPT-hard",
+      "domain": "光模块/光纤保护组",
+      "type": "hard",
+      "description": "保护失效后的连接中断",
+      "scope": "rack",
+      "persistence": "transient",
+      "fit": 66.66666666666666,
+      "eventShare": 0.01932,
+      "withinTypeShare": 0.02,
+      "evidence": "经验先验，待审计",
+      "reviewNote": "",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000,
+          "events": 0.4885,
+          "recoveries": 0.4885,
+          "downtime": 0.03359444444445298,
+          "rollback": 0.02032583158906744,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 100000,
+          "events": 4.70075,
+          "recoveries": 4.70075,
+          "downtime": 0.3474269441496341,
+          "rollback": 0.19776861442007324,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 200000,
+          "events": 9.14625,
+          "recoveries": 9.14625,
+          "downtime": 0.6755010530181302,
+          "rollback": 0.38319847190399847,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 500000,
+          "events": 21.33825,
+          "recoveries": 21.33825,
+          "downtime": 1.5602467671853162,
+          "rollback": 0.8732267936391211,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        }
+      ]
+    },
+    {
+      "id": "OPT-slow",
+      "domain": "光模块/光纤保护组",
+      "type": "slow",
+      "description": "2+2切换后带宽下降",
+      "scope": "rack",
+      "persistence": "transient",
+      "fit": 2.3905572986702532,
+      "eventShare": 0.0006927835051546395,
+      "withinTypeShare": 0.03463917525773196,
+      "evidence": "经验先验，待审计",
+      "reviewNote": "",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000,
+          "events": 0.01675,
+          "recoveries": 0.01575,
+          "downtime": 0.0012874999999998988,
+          "rollback": 0,
+          "slowdown": 0.001029570590305707,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 100000,
+          "events": 0.15975,
+          "recoveries": 0.14825,
+          "downtime": 0.012340725699588422,
+          "rollback": 0,
+          "slowdown": 0.01369379696620814,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 200000,
+          "events": 0.31775,
+          "recoveries": 0.29575,
+          "downtime": 0.02190649116543376,
+          "rollback": 0,
+          "slowdown": 0.025839303063255714,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 500000,
+          "events": 0.75475,
+          "recoveries": 0.7165,
+          "downtime": 0.04683171754439347,
+          "rollback": 0,
+          "slowdown": 0.041928387849037706,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        }
+      ]
+    },
+    {
+      "id": "OPT-sdc",
+      "domain": "光模块/光纤保护组",
+      "type": "sdc",
+      "description": "物理误码不直接建SDC事件",
+      "scope": "rack",
+      "persistence": "transient",
+      "fit": 0,
+      "eventShare": 0,
+      "withinTypeShare": 0,
+      "evidence": "用户审计建模假设；非厂商实测故障率",
+      "reviewNote": "本情景不分配独立静默预算；不表示物理绝不发生SDC",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000
+        },
+        {
+          "cards": 100000
+        },
+        {
+          "cards": 200000
+        },
+        {
+          "cards": 500000
+        }
+      ]
+    },
+    {
+      "id": "BOXIO-hard",
+      "domain": "框内IO转换/交换板",
+      "type": "hard",
+      "description": "协议转换或交换板失效",
+      "scope": "rack",
+      "persistence": "persistent",
+      "fit": 46.666666666666664,
+      "eventShare": 0.013524000000000001,
+      "withinTypeShare": 0.014,
+      "evidence": "经验先验，待审计",
+      "reviewNote": "",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000,
+          "events": 0.34225,
+          "recoveries": 0.34225,
+          "downtime": 0.025271527777783832,
+          "rollback": 0.014280778240563594,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 100000,
+          "events": 3.255,
+          "recoveries": 3.255,
+          "downtime": 0.2324687500000608,
+          "rollback": 0.1359007652115693,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 200000,
+          "events": 6.39525,
+          "recoveries": 6.39525,
+          "downtime": 0.4705238370748361,
+          "rollback": 0.2669644004016078,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 500000,
+          "events": 14.8785,
+          "recoveries": 14.8785,
+          "downtime": 1.0756120953802504,
+          "rollback": 0.6128944696851449,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        }
+      ]
+    },
+    {
+      "id": "BOXIO-slow",
+      "domain": "框内IO转换/交换板",
+      "type": "slow",
+      "description": "转发能力退化",
+      "scope": "rack",
+      "persistence": "persistent",
+      "fit": 0.4183475272672943,
+      "eventShare": 0.0001212371134020619,
+      "withinTypeShare": 0.0060618556701030925,
+      "evidence": "经验先验，待审计",
+      "reviewNote": "",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000,
+          "events": 0.002,
+          "recoveries": 0.002,
+          "downtime": 0.00009999999999995168,
+          "rollback": 0,
+          "slowdown": 0.000008222222222224245,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 100000,
+          "events": 0.03175,
+          "recoveries": 0.031,
+          "downtime": 0.0030257787512955555,
+          "rollback": 0,
+          "slowdown": 0.0009972726139493673,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 200000,
+          "events": 0.0545,
+          "recoveries": 0.053,
+          "downtime": 0.0051133768249397955,
+          "rollback": 0,
+          "slowdown": 0.0015119837539490813,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 500000,
+          "events": 0.13275,
+          "recoveries": 0.1275,
+          "downtime": 0.010090641244402851,
+          "rollback": 0,
+          "slowdown": 0.005978608182040923,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        }
+      ]
+    },
+    {
+      "id": "BOXIO-sdc",
+      "domain": "框内IO转换/交换板",
+      "type": "sdc",
+      "description": "校验逃逸的数据异常",
+      "scope": "rack",
+      "persistence": "persistent",
+      "fit": 0.46939345144995,
+      "eventShare": 0.00013603022223019552,
+      "withinTypeShare": 0.009716444445013963,
+      "evidence": "用户审计建模假设；非厂商实测故障率",
+      "reviewNote": "静默剩余15%按审计时非零相对权重分配",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000,
+          "events": 0.0025,
+          "recoveries": 0.002,
+          "downtime": 0.00009999999999999431,
+          "rollback": 0.2361963699817638,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0.008553090310059446
+        },
+        {
+          "cards": 100000,
+          "events": 0.02875,
+          "recoveries": 0.013,
+          "downtime": 0.0006358287075700737,
+          "rollback": 1.4757796485518442,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0.24622227702599814
+        },
+        {
+          "cards": 200000,
+          "events": 0.057,
+          "recoveries": 0.02025,
+          "downtime": 0.001481300666704886,
+          "rollback": 2.2185923761808595,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0.20027244656869375
+        },
+        {
+          "cards": 500000,
+          "events": 0.14925,
+          "recoveries": 0.0325,
+          "downtime": 0.0018690918175498475,
+          "rollback": 3.1898376429986355,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0.4623501516137798
+        }
+      ]
+    },
+    {
+      "id": "FABRIC-hard",
+      "domain": "L1/L2互联设备",
+      "type": "hard",
+      "description": "保护后残余平面中断",
+      "scope": "rack",
+      "persistence": "persistent",
+      "fit": 66.66666666666666,
+      "eventShare": 0.01932,
+      "withinTypeShare": 0.02,
+      "evidence": "经验先验，待审计",
+      "reviewNote": "",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000,
+          "events": 0.465,
+          "recoveries": 0.465,
+          "downtime": 0.035329861111119305,
+          "rollback": 0.01983149975986962,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 100000,
+          "events": 4.667,
+          "recoveries": 4.667,
+          "downtime": 0.33811587176412466,
+          "rollback": 0.19847634092785174,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 200000,
+          "events": 9.09975,
+          "recoveries": 9.09975,
+          "downtime": 0.677264494320904,
+          "rollback": 0.378479673607173,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 500000,
+          "events": 21.32175,
+          "recoveries": 21.32175,
+          "downtime": 1.5635355325712421,
+          "rollback": 0.880113140576553,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        }
+      ]
+    },
+    {
+      "id": "FABRIC-slow",
+      "domain": "L1/L2互联设备",
+      "type": "slow",
+      "description": "平面降容/拥塞",
+      "scope": "rack",
+      "persistence": "persistent",
+      "fit": 1.1952786493351266,
+      "eventShare": 0.00034639175257731973,
+      "withinTypeShare": 0.01731958762886598,
+      "evidence": "经验先验，待审计",
+      "reviewNote": "",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000,
+          "events": 0.00825,
+          "recoveries": 0.008,
+          "downtime": 0.00039999999999996126,
+          "rollback": 0,
+          "slowdown": 0.0003283217006801505,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 100000,
+          "events": 0.08475,
+          "recoveries": 0.0795,
+          "downtime": 0.005456583777387544,
+          "rollback": 0,
+          "slowdown": 0.006101509302540657,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 200000,
+          "events": 0.1605,
+          "recoveries": 0.15225,
+          "downtime": 0.011447244823256682,
+          "rollback": 0,
+          "slowdown": 0.010017528778804255,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 500000,
+          "events": 0.3855,
+          "recoveries": 0.36725,
+          "downtime": 0.024098259753054657,
+          "rollback": 0,
+          "slowdown": 0.020389536169991434,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        }
+      ]
+    },
+    {
+      "id": "FABRIC-sdc",
+      "domain": "L1/L2互联设备",
+      "type": "sdc",
+      "description": "交换数据残余污染",
+      "scope": "rack",
+      "persistence": "persistent",
+      "fit": 0.6705620734999285,
+      "eventShare": 0.0001943288889002793,
+      "withinTypeShare": 0.013880634921448518,
+      "evidence": "用户审计建模假设；非厂商实测故障率",
+      "reviewNote": "静默剩余15%按审计时非零相对权重分配",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000,
+          "events": 0.00425,
+          "recoveries": 0.00425,
+          "downtime": 0.00021249999999996304,
+          "rollback": 0.5014521811341863,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 100000,
+          "events": 0.054,
+          "recoveries": 0.0275,
+          "downtime": 0.0013611962447062033,
+          "rollback": 3.1315296773345183,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0.3300372952616252
+        },
+        {
+          "cards": 200000,
+          "events": 0.09475,
+          "recoveries": 0.042,
+          "downtime": 0.002544413372393084,
+          "rollback": 4.597558362771981,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0.44307891921641646
+        },
+        {
+          "cards": 500000,
+          "events": 0.2135,
+          "recoveries": 0.05525,
+          "downtime": 0.002994646422466154,
+          "rollback": 5.410899753778046,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0.39476840797373075
+        }
+      ]
+    },
+    {
+      "id": "CPU-hard",
+      "domain": "CPU计算刀片",
+      "type": "hard",
+      "description": "处理器/主机中断",
+      "scope": "server",
+      "persistence": "persistent",
+      "fit": 166.66666666666666,
+      "eventShare": 0.0483,
+      "withinTypeShare": 0.05,
+      "evidence": "经验先验，待审计",
+      "reviewNote": "",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000,
+          "events": 1.21525,
+          "recoveries": 1.21525,
+          "downtime": 0.08855833333335524,
+          "rollback": 0.051427609756972574,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 100000,
+          "events": 11.7275,
+          "recoveries": 11.7275,
+          "downtime": 0.8477914464841989,
+          "rollback": 0.49295580874524714,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 200000,
+          "events": 22.97975,
+          "recoveries": 22.97975,
+          "downtime": 1.68847771136025,
+          "rollback": 0.961700625230914,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 500000,
+          "events": 53.3595,
+          "recoveries": 53.3595,
+          "downtime": 3.916131261846919,
+          "rollback": 2.1930157038534683,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        }
+      ]
+    },
+    {
+      "id": "CPU-slow",
+      "domain": "CPU计算刀片",
+      "type": "slow",
+      "description": "主机降频/供给不足",
+      "scope": "server",
+      "persistence": "persistent",
+      "fit": 2.445824706694272,
+      "eventShare": 0.0007088000000000001,
+      "withinTypeShare": 0.03543999999999999,
+      "evidence": "经验先验，待审计",
+      "reviewNote": "",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000,
+          "events": 0.02075,
+          "recoveries": 0.02,
+          "downtime": 0.0009999999999998753,
+          "rollback": 0,
+          "slowdown": 0.0009691139539627615,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 100000,
+          "events": 0.167,
+          "recoveries": 0.157,
+          "downtime": 0.01078366474121545,
+          "rollback": 0,
+          "slowdown": 0.012222277745089109,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 200000,
+          "events": 0.3365,
+          "recoveries": 0.31925,
+          "downtime": 0.02565881736278014,
+          "rollback": 0,
+          "slowdown": 0.020374715881843194,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 500000,
+          "events": 0.79,
+          "recoveries": 0.751,
+          "downtime": 0.04875874061733617,
+          "rollback": 0,
+          "slowdown": 0.04325337362999091,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        }
+      ]
+    },
+    {
+      "id": "CPU-sdc",
+      "domain": "CPU计算刀片",
+      "type": "sdc",
+      "description": "主机计算数据污染",
+      "scope": "server",
+      "persistence": "persistent",
+      "fit": 0,
+      "eventShare": 0,
+      "withinTypeShare": 0,
+      "evidence": "用户审计建模假设；非厂商实测故障率",
+      "reviewNote": "本情景不分配独立静默预算；不表示物理绝不发生SDC",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000
+        },
+        {
+          "cards": 100000
+        },
+        {
+          "cards": 200000
+        },
+        {
+          "cards": 500000
+        }
+      ]
+    },
+    {
+      "id": "DDR-hard",
+      "domain": "CPU DDR内存",
+      "type": "hard",
+      "description": "内存UCE导致进程/主机退出",
+      "scope": "server",
+      "persistence": "persistent",
+      "fit": 199.99999999999997,
+      "eventShare": 0.057960000000000005,
+      "withinTypeShare": 0.06,
+      "evidence": "经验先验，待审计",
+      "reviewNote": "",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000,
+          "events": 1.41925,
+          "recoveries": 1.41925,
+          "downtime": 0.10985972222224925,
+          "rollback": 0.05993945277850593,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 100000,
+          "events": 13.97375,
+          "recoveries": 13.97375,
+          "downtime": 1.0213235097189195,
+          "rollback": 0.5869469045950712,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 200000,
+          "events": 27.463,
+          "recoveries": 27.463,
+          "downtime": 2.0171714732629704,
+          "rollback": 1.144803836245914,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 500000,
+          "events": 63.89775,
+          "recoveries": 63.89775,
+          "downtime": 4.708073314990397,
+          "rollback": 2.630782319309783,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        }
+      ]
+    },
+    {
+      "id": "DDR-slow",
+      "domain": "CPU DDR内存",
+      "type": "slow",
+      "description": "纠错/隔离导致降速",
+      "scope": "server",
+      "persistence": "persistent",
+      "fit": 2.9349896480331257,
+      "eventShare": 0.00085056,
+      "withinTypeShare": 0.04252799999999998,
+      "evidence": "经验先验，待审计",
+      "reviewNote": "",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000,
+          "events": 0.02025,
+          "recoveries": 0.01925,
+          "downtime": 0.0009624999999999484,
+          "rollback": 0,
+          "slowdown": 0.0011097472631323663,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 100000,
+          "events": 0.2,
+          "recoveries": 0.1885,
+          "downtime": 0.014344820933748682,
+          "rollback": 0,
+          "slowdown": 0.014059579806958255,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 200000,
+          "events": 0.40775,
+          "recoveries": 0.3845,
+          "downtime": 0.030416116749859362,
+          "rollback": 0,
+          "slowdown": 0.027121290716845624,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 500000,
+          "events": 0.911,
+          "recoveries": 0.8635,
+          "downtime": 0.05862912164233276,
+          "rollback": 0,
+          "slowdown": 0.05204980420360119,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        }
+      ]
+    },
+    {
+      "id": "DDR-sdc",
+      "domain": "CPU DDR内存",
+      "type": "sdc",
+      "description": "内存保护逃逸后污染",
+      "scope": "server",
+      "persistence": "persistent",
+      "fit": 0,
+      "eventShare": 0,
+      "withinTypeShare": 0,
+      "evidence": "用户审计建模假设；非厂商实测故障率",
+      "reviewNote": "本情景不分配独立静默预算；不表示物理绝不发生SDC",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000
+        },
+        {
+          "cards": 100000
+        },
+        {
+          "cards": 200000
+        },
+        {
+          "cards": 500000
+        }
+      ]
+    },
+    {
+      "id": "SSD-hard",
+      "domain": "本地SSD/系统盘",
+      "type": "hard",
+      "description": "盘故障或IO超时",
+      "scope": "server",
+      "persistence": "persistent",
+      "fit": 166.66666666666666,
+      "eventShare": 0.0483,
+      "withinTypeShare": 0.05,
+      "evidence": "经验先验，待审计",
+      "reviewNote": "",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000,
+          "events": 1.192,
+          "recoveries": 1.192,
+          "downtime": 0.07978407493288296,
+          "rollback": 0.050184859047766886,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 100000,
+          "events": 11.80175,
+          "recoveries": 11.80175,
+          "downtime": 0.8396737626018697,
+          "rollback": 0.49653125318508134,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 200000,
+          "events": 22.92525,
+          "recoveries": 22.92525,
+          "downtime": 1.6522963866292497,
+          "rollback": 0.9565369207353867,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 500000,
+          "events": 53.71325,
+          "recoveries": 53.71325,
+          "downtime": 3.9141786851838507,
+          "rollback": 2.2097852490861136,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        }
+      ]
+    },
+    {
+      "id": "SSD-slow",
+      "domain": "本地SSD/系统盘",
+      "type": "slow",
+      "description": "IO延迟上升",
+      "scope": "server",
+      "persistence": "persistent",
+      "fit": 4.891649413388544,
+      "eventShare": 0.0014176000000000002,
+      "withinTypeShare": 0.07087999999999998,
+      "evidence": "经验先验，待审计",
+      "reviewNote": "",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000,
+          "events": 0.04,
+          "recoveries": 0.039,
+          "downtime": 0.0024499999999997818,
+          "rollback": 0,
+          "slowdown": 0.0013439251179618006,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 100000,
+          "events": 0.3465,
+          "recoveries": 0.32975,
+          "downtime": 0.02300033869818982,
+          "rollback": 0,
+          "slowdown": 0.020382546975009533,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 200000,
+          "events": 0.68125,
+          "recoveries": 0.65175,
+          "downtime": 0.04336966640521237,
+          "rollback": 0,
+          "slowdown": 0.03548112712441737,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 500000,
+          "events": 1.5425,
+          "recoveries": 1.469,
+          "downtime": 0.10423206713747821,
+          "rollback": 0,
+          "slowdown": 0.08183757197108071,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        }
+      ]
+    },
+    {
+      "id": "SSD-sdc",
+      "domain": "本地SSD/系统盘",
+      "type": "sdc",
+      "description": "数据校验逃逸",
+      "scope": "server",
+      "persistence": "persistent",
+      "fit": 0,
+      "eventShare": 0,
+      "withinTypeShare": 0,
+      "evidence": "用户审计建模假设；非厂商实测故障率",
+      "reviewNote": "本情景不分配独立静默预算；不表示物理绝不发生SDC",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000
+        },
+        {
+          "cards": 100000
+        },
+        {
+          "cards": 200000
+        },
+        {
+          "cards": 500000
+        }
+      ]
+    },
+    {
+      "id": "POWER-hard",
+      "domain": "柜级供电残余故障",
+      "type": "hard",
+      "description": "保护后掉电",
+      "scope": "rack",
+      "persistence": "persistent",
+      "fit": 166.66666666666666,
+      "eventShare": 0.0483,
+      "withinTypeShare": 0.05,
+      "evidence": "经验先验，待审计",
+      "reviewNote": "",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000,
+          "events": 1.1815,
+          "recoveries": 1.1815,
+          "downtime": 0.08719027777779957,
+          "rollback": 0.04939852660631962,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 100000,
+          "events": 11.6915,
+          "recoveries": 11.6915,
+          "downtime": 0.8571602020259413,
+          "rollback": 0.4911441350797438,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 200000,
+          "events": 22.78975,
+          "recoveries": 22.78975,
+          "downtime": 1.6582476706428637,
+          "rollback": 0.9517751990818535,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 500000,
+          "events": 53.3265,
+          "recoveries": 53.3265,
+          "downtime": 3.9024151365168347,
+          "rollback": 2.198198282520278,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        }
+      ]
+    },
+    {
+      "id": "POWER-slow",
+      "domain": "柜级供电残余故障",
+      "type": "slow",
+      "description": "供电限额导致降功率",
+      "scope": "rack",
+      "persistence": "persistent",
+      "fit": 2.445824706694272,
+      "eventShare": 0.0007088000000000001,
+      "withinTypeShare": 0.03543999999999999,
+      "evidence": "经验先验，待审计",
+      "reviewNote": "",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000,
+          "events": 0.0195,
+          "recoveries": 0.019,
+          "downtime": 0.0014499999999998498,
+          "rollback": 0,
+          "slowdown": 0.0006695502613189315,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 100000,
+          "events": 0.1655,
+          "recoveries": 0.157,
+          "downtime": 0.009350143943220122,
+          "rollback": 0,
+          "slowdown": 0.01021590037286147,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 200000,
+          "events": 0.32975,
+          "recoveries": 0.31425,
+          "downtime": 0.020819306103120088,
+          "rollback": 0,
+          "slowdown": 0.018567493167201063,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 500000,
+          "events": 0.797,
+          "recoveries": 0.75875,
+          "downtime": 0.050805661973723604,
+          "rollback": 0,
+          "slowdown": 0.042364123235927184,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        }
+      ]
+    },
+    {
+      "id": "POWER-sdc",
+      "domain": "柜级供电残余故障",
+      "type": "sdc",
+      "description": "不单列直接SDC",
+      "scope": "rack",
+      "persistence": "persistent",
+      "fit": 0,
+      "eventShare": 0,
+      "withinTypeShare": 0,
+      "evidence": "用户审计建模假设；非厂商实测故障率",
+      "reviewNote": "本情景不分配独立静默预算；不表示物理绝不发生SDC",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000
+        },
+        {
+          "cards": 100000
+        },
+        {
+          "cards": 200000
+        },
+        {
+          "cards": 500000
+        }
+      ]
+    },
+    {
+      "id": "COOL-hard",
+      "domain": "液冷/风扇/热管理",
+      "type": "hard",
+      "description": "过热保护/漏液隔离",
+      "scope": "rack",
+      "persistence": "persistent",
+      "fit": 99.99999999999999,
+      "eventShare": 0.028980000000000002,
+      "withinTypeShare": 0.03,
+      "evidence": "经验先验，待审计",
+      "reviewNote": "",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000,
+          "events": 0.7305,
+          "recoveries": 0.7305,
+          "downtime": 0.05251852747854862,
+          "rollback": 0.031118249269896574,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 100000,
+          "events": 7.03425,
+          "recoveries": 7.03425,
+          "downtime": 0.5150963136744245,
+          "rollback": 0.2950153217029416,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 200000,
+          "events": 13.68975,
+          "recoveries": 13.68975,
+          "downtime": 1.0066994474059525,
+          "rollback": 0.5721437790663345,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 500000,
+          "events": 31.9355,
+          "recoveries": 31.9355,
+          "downtime": 2.341555073970899,
+          "rollback": 1.31392917103937,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        }
+      ]
+    },
+    {
+      "id": "COOL-slow",
+      "domain": "液冷/风扇/热管理",
+      "type": "slow",
+      "description": "温度限制导致降频",
+      "scope": "rack",
+      "persistence": "persistent",
+      "fit": 7.337474120082815,
+      "eventShare": 0.0021264,
+      "withinTypeShare": 0.10631999999999997,
+      "evidence": "经验先验，待审计",
+      "reviewNote": "",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000,
+          "events": 0.052,
+          "recoveries": 0.04925,
+          "downtime": 0.003462499999999571,
+          "rollback": 0,
+          "slowdown": 0.0034507480101586803,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 100000,
+          "events": 0.51675,
+          "recoveries": 0.4905,
+          "downtime": 0.03386987085683863,
+          "rollback": 0,
+          "slowdown": 0.03150398940864476,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 200000,
+          "events": 1.01625,
+          "recoveries": 0.96275,
+          "downtime": 0.06626589433252571,
+          "rollback": 0,
+          "slowdown": 0.06313629745195948,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 500000,
+          "events": 2.34075,
+          "recoveries": 2.211,
+          "downtime": 0.14707246355740314,
+          "rollback": 0,
+          "slowdown": 0.14219411394213544,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        }
+      ]
+    },
+    {
+      "id": "COOL-sdc",
+      "domain": "液冷/风扇/热管理",
+      "type": "sdc",
+      "description": "不单列直接SDC",
+      "scope": "rack",
+      "persistence": "persistent",
+      "fit": 0,
+      "eventShare": 0,
+      "withinTypeShare": 0,
+      "evidence": "用户审计建模假设；非厂商实测故障率",
+      "reviewNote": "本情景不分配独立静默预算；不表示物理绝不发生SDC",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000
+        },
+        {
+          "cards": 100000
+        },
+        {
+          "cards": 200000
+        },
+        {
+          "cards": 500000
+        }
+      ]
+    },
+    {
+      "id": "MGMT-hard",
+      "domain": "管理刀片/BMC/UBM",
+      "type": "hard",
+      "description": "控制异常影响作业",
+      "scope": "rack",
+      "persistence": "transient",
+      "fit": 133.33333333333331,
+      "eventShare": 0.03864,
+      "withinTypeShare": 0.04,
+      "evidence": "经验先验，待审计",
+      "reviewNote": "",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000,
+          "events": 0.949,
+          "recoveries": 0.949,
+          "downtime": 0.07133678718945083,
+          "rollback": 0.03988858446966219,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 100000,
+          "events": 9.30725,
+          "recoveries": 9.30725,
+          "downtime": 0.6887489440434774,
+          "rollback": 0.392946956728941,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 200000,
+          "events": 18.23225,
+          "recoveries": 18.23225,
+          "downtime": 1.3414762924366337,
+          "rollback": 0.7634810444509575,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 500000,
+          "events": 42.75625,
+          "recoveries": 42.75625,
+          "downtime": 3.202745816765428,
+          "rollback": 1.7573179103944663,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        }
+      ]
+    },
+    {
+      "id": "MGMT-slow",
+      "domain": "管理刀片/BMC/UBM",
+      "type": "slow",
+      "description": "管理异常间接阻塞",
+      "scope": "rack",
+      "persistence": "transient",
+      "fit": 0.5869979296066252,
+      "eventShare": 0.00017011200000000001,
+      "withinTypeShare": 0.008505599999999997,
+      "evidence": "经验先验，待审计",
+      "reviewNote": "",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000,
+          "events": 0.0035,
+          "recoveries": 0.0035,
+          "downtime": 0.00017499999999995807,
+          "rollback": 0,
+          "slowdown": 0.00001438888888889038,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 100000,
+          "events": 0.043,
+          "recoveries": 0.04225,
+          "downtime": 0.0025685137445307688,
+          "rollback": 0,
+          "slowdown": 0.0007533973482185945,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 200000,
+          "events": 0.084,
+          "recoveries": 0.0815,
+          "downtime": 0.004449991088379484,
+          "rollback": 0,
+          "slowdown": 0.0031295781702486048,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 500000,
+          "events": 0.19025,
+          "recoveries": 0.18,
+          "downtime": 0.011618895001196063,
+          "rollback": 0,
+          "slowdown": 0.011324001334315869,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        }
+      ]
+    },
+    {
+      "id": "MGMT-sdc",
+      "domain": "管理刀片/BMC/UBM",
+      "type": "sdc",
+      "description": "状态配置残余错误",
+      "scope": "rack",
+      "persistence": "transient",
+      "fit": 0,
+      "eventShare": 0,
+      "withinTypeShare": 0,
+      "evidence": "用户审计建模假设；非厂商实测故障率",
+      "reviewNote": "本情景不分配独立静默预算；不表示物理绝不发生SDC",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000
+        },
+        {
+          "cards": 100000
+        },
+        {
+          "cards": 200000
+        },
+        {
+          "cards": 500000
+        }
+      ]
+    },
+    {
+      "id": "STORAGE-hard",
+      "domain": "共享检查点/存储服务",
+      "type": "hard",
+      "description": "存储不可用影响训练",
+      "scope": "job",
+      "persistence": "persistent",
+      "fit": 133.33333333333331,
+      "eventShare": 0.03864,
+      "withinTypeShare": 0.04,
+      "evidence": "经验先验，待审计",
+      "reviewNote": "",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000,
+          "events": 0.97525,
+          "recoveries": 0.97525,
+          "downtime": 0.07067638888890668,
+          "rollback": 0.041238230703837093,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 100000,
+          "events": 9.31675,
+          "recoveries": 9.31675,
+          "downtime": 0.6791237696789547,
+          "rollback": 0.38966592294042685,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 200000,
+          "events": 18.1545,
+          "recoveries": 18.1545,
+          "downtime": 1.3273297379174778,
+          "rollback": 0.7566228056973818,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 500000,
+          "events": 42.64525,
+          "recoveries": 42.64525,
+          "downtime": 3.105270500881109,
+          "rollback": 1.7504283732851433,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        }
+      ]
+    },
+    {
+      "id": "STORAGE-slow",
+      "domain": "共享检查点/存储服务",
+      "type": "slow",
+      "description": "保存/加载性能退化",
+      "scope": "job",
+      "persistence": "persistent",
+      "fit": 3.913319530710835,
+      "eventShare": 0.0011340800000000002,
+      "withinTypeShare": 0.056703999999999984,
+      "evidence": "经验先验，待审计",
+      "reviewNote": "",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000,
+          "events": 0.03,
+          "recoveries": 0.029,
+          "downtime": 0.0024499999999997653,
+          "rollback": 0,
+          "slowdown": 0.0013008747580637804,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 100000,
+          "events": 0.27125,
+          "recoveries": 0.26125,
+          "downtime": 0.018441062331847523,
+          "rollback": 0,
+          "slowdown": 0.012553783397517736,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 200000,
+          "events": 0.5405,
+          "recoveries": 0.516,
+          "downtime": 0.03282694320746748,
+          "rollback": 0,
+          "slowdown": 0.029116536734242818,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 500000,
+          "events": 1.2435,
+          "recoveries": 1.18975,
+          "downtime": 0.07517942497795801,
+          "rollback": 0,
+          "slowdown": 0.06021204684488778,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        }
+      ]
+    },
+    {
+      "id": "STORAGE-sdc",
+      "domain": "共享检查点/存储服务",
+      "type": "sdc",
+      "description": "检查点校验逃逸",
+      "scope": "job",
+      "persistence": "persistent",
+      "fit": 0,
+      "eventShare": 0,
+      "withinTypeShare": 0,
+      "evidence": "用户审计建模假设；非厂商实测故障率",
+      "reviewNote": "本情景不分配独立静默预算；不表示物理绝不发生SDC",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000
+        },
+        {
+          "cards": 100000
+        },
+        {
+          "cards": 200000
+        },
+        {
+          "cards": 500000
+        }
+      ]
+    },
+    {
+      "id": "UNKNOWN-hard",
+      "domain": "未知/软件/未归因",
+      "type": "hard",
+      "description": "未归因中断",
+      "scope": "job",
+      "persistence": "unknown",
+      "fit": 410.00000000000006,
+      "eventShare": 0.11881800000000003,
+      "withinTypeShare": 0.12300000000000003,
+      "evidence": "经验先验，待审计",
+      "reviewNote": "",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000,
+          "events": 2.9615,
+          "recoveries": 2.9615,
+          "downtime": 0.22585063125311536,
+          "rollback": 0.12481836847750019,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 100000,
+          "events": 28.863,
+          "recoveries": 28.863,
+          "downtime": 2.1335378588514318,
+          "rollback": 1.2108619638292664,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 200000,
+          "events": 56.36025,
+          "recoveries": 56.36025,
+          "downtime": 4.15979487919319,
+          "rollback": 2.3501206234386216,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 500000,
+          "events": 131.2045,
+          "recoveries": 131.2045,
+          "downtime": 9.671415390860933,
+          "rollback": 5.392290239113515,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        }
+      ]
+    },
+    {
+      "id": "UNKNOWN-slow",
+      "domain": "未知/软件/未归因",
+      "type": "slow",
+      "description": "未归因降速",
+      "scope": "job",
+      "persistence": "unknown",
+      "fit": 6.016728778467909,
+      "eventShare": 0.0017436480000000004,
+      "withinTypeShare": 0.08718239999999998,
+      "evidence": "经验先验，待审计",
+      "reviewNote": "",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000,
+          "events": 0.0425,
+          "recoveries": 0.041,
+          "downtime": 0.0035395357374205256,
+          "rollback": 0,
+          "slowdown": 0.0019389803165592919,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 100000,
+          "events": 0.43275,
+          "recoveries": 0.4125,
+          "downtime": 0.031125743770166713,
+          "rollback": 0,
+          "slowdown": 0.02502865015010589,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 200000,
+          "events": 0.82625,
+          "recoveries": 0.79125,
+          "downtime": 0.0566629674911908,
+          "rollback": 0,
+          "slowdown": 0.041728955556698054,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        },
+        {
+          "cards": 500000,
+          "events": 1.92,
+          "recoveries": 1.82475,
+          "downtime": 0.12639775988488414,
+          "rollback": 0,
+          "slowdown": 0.10552611711922787,
+          "localLoss": 0,
+          "terminalInvalid": 0
+        }
+      ]
+    },
+    {
+      "id": "UNKNOWN-sdc",
+      "domain": "未知/软件/未归因",
+      "type": "sdc",
+      "description": "未归因污染",
+      "scope": "job",
+      "persistence": "unknown",
+      "fit": 4.0699812668268,
+      "eventShare": 0.001179480571126407,
+      "withinTypeShare": 0.08424861222331474,
+      "evidence": "用户审计建模假设；非厂商实测故障率",
+      "reviewNote": "静默剩余15%按审计时非零相对权重分配",
+      "rateBasis": "每十亿 NPU 等效运行暴露小时的业务影响事件；非物理器件 FIT",
+      "baseline": [
+        {
+          "cards": 10000,
+          "events": 0.0255,
+          "recoveries": 0.01925,
+          "downtime": 0.0014624999999998459,
+          "rollback": 2.2695532204541946,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 0.31546954485676987
+        },
+        {
+          "cards": 100000,
+          "events": 0.28725,
+          "recoveries": 0.1605,
+          "downtime": 0.012370204847399709,
+          "rollback": 18.282694404541214,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 1.4694061750822398
+        },
+        {
+          "cards": 200000,
+          "events": 0.5625,
+          "recoveries": 0.23025,
+          "downtime": 0.01521726116032632,
+          "rollback": 25.236570088146234,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 2.519082231733732
+        },
+        {
+          "cards": 500000,
+          "events": 1.32875,
+          "recoveries": 0.3195,
+          "downtime": 0.020363860765018338,
+          "rollback": 31.272409458160602,
+          "slowdown": 0,
+          "localLoss": 0,
+          "terminalInvalid": 2.475703773891545
+        }
+      ]
+    }
+  ]
+}

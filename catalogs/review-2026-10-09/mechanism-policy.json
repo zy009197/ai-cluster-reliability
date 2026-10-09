@@ -1,0 +1,10 @@
+{
+  "D-HARD": {"coverage": 0.999, "detectSeconds": 1},
+  "D-SLOW": {"coverage": 0.99, "detectSeconds": 30},
+  "D-SDC": {"coverage": 0.95, "detectSeconds": 1},
+  "R-SDC": {"stepSeconds": 1, "recoverSeconds": 1},
+  "R-REPLAY": {"success": 0.9, "successSeconds": 5, "failureSeconds": 10},
+  "R-PROCESS": {"success": 0.95, "successSeconds": 60, "failureSeconds": 120},
+  "R-ELASTIC": {"domains": 50, "success": 0.98, "recoverSeconds": 180, "failureSeconds": 120, "syncSeconds": 1},
+  "C-FAST": {"computeSeconds": 60, "saveSeconds": 1}
+}

@@ -1,0 +1,1190 @@
+{
+  "target": "30天正确有效产出率，非仅运行可用度",
+  "notes": [
+    "恢复时间扫描仅修改全局CKPT与亚健康恢复尝试；局部180秒、进程60秒、重执行5秒保持原值",
+    "自动恢复成功率99%、失败额外2小时，除明确标记外保持不变",
+    "组合包括60秒计算/1秒保存，不是当前300秒/4秒基线",
+    "0秒恢复为数学上限情景，不是工程承诺",
+    "达到90%的月任务比例为当前随机模型估计，不是生产SLA"
+  ],
+  "rows": [
+    {
+      "name": "组合 SDC0.95 全局180s",
+      "opts": {
+        "sdcDetect": true,
+        "step": true,
+        "replay": true,
+        "process": true,
+        "elastic": true,
+        "fast": true,
+        "sdcCoverage": 0.95
+      },
+      "patch": {
+        "recoveryAttemptSeconds": 180
+      },
+      "trials": 2000,
+      "mean": 0.8270966642548606,
+      "ci95": 0.004885977157455137,
+      "availability": 0.9565988851997623,
+      "pAtLeast90": 0.441,
+      "p10": 0.628261616681144,
+      "ledger": {
+        "downtime": 31.24880265617022,
+        "save": 11.236931603578071,
+        "slowdown": 1.4081638197443935,
+        "rollback": 73.4416334735596,
+        "terminalInvalid": 6.805795701545096,
+        "localLoss": 0.34907448190428064
+      }
+    },
+    {
+      "name": "组合 SDC0.95 全局120s",
+      "opts": {
+        "sdcDetect": true,
+        "step": true,
+        "replay": true,
+        "process": true,
+        "elastic": true,
+        "fast": true,
+        "sdcCoverage": 0.95
+      },
+      "patch": {
+        "recoveryAttemptSeconds": 120
+      },
+      "trials": 2000,
+      "mean": 0.8323857838653274,
+      "ci95": 0.0050392397942802414,
+      "availability": 0.9652918807321961,
+      "pAtLeast90": 0.442,
+      "p10": 0.633124095338294,
+      "ledger": {
+        "downtime": 24.989845872819284,
+        "save": 11.33898473155462,
+        "slowdown": 1.4374100217271608,
+        "rollback": 75.68542951694033,
+        "terminalInvalid": 6.877868533638375,
+        "localLoss": 0.35269694028408877
+      }
+    },
+    {
+      "name": "组合 SDC0.95 全局60s",
+      "opts": {
+        "sdcDetect": true,
+        "step": true,
+        "replay": true,
+        "process": true,
+        "elastic": true,
+        "fast": true,
+        "sdcCoverage": 0.95
+      },
+      "patch": {
+        "recoveryAttemptSeconds": 60
+      },
+      "trials": 2000,
+      "mean": 0.8395593496233038,
+      "ci95": 0.005073492637116411,
+      "availability": 0.9741474376676506,
+      "pAtLeast90": 0.442,
+      "p10": 0.6389838346802319,
+      "ledger": {
+        "downtime": 18.613844879290266,
+        "save": 11.443000047257922,
+        "slowdown": 1.4703445085762077,
+        "rollback": 76.492783834333,
+        "terminalInvalid": 7.1398437874406255,
+        "localLoss": 0.3574512143241822
+      }
+    },
+    {
+      "name": "组合 SDC0.95 全局0s",
+      "opts": {
+        "sdcDetect": true,
+        "step": true,
+        "replay": true,
+        "process": true,
+        "elastic": true,
+        "fast": true,
+        "sdcCoverage": 0.95
+      },
+      "patch": {
+        "recoveryAttemptSeconds": 0
+      },
+      "trials": 2000,
+      "mean": 0.8468162811549235,
+      "ci95": 0.0051009835057412075,
+      "availability": 0.9831783350679569,
+      "pAtLeast90": 0.4405,
+      "p10": 0.6441528495436417,
+      "ledger": {
+        "downtime": 12.111598751070833,
+        "save": 11.549061669316275,
+        "slowdown": 1.5056818342302418,
+        "rollback": 77.43898912911362,
+        "terminalInvalid": 7.32348721056844,
+        "localLoss": 0.363458974155499
+      }
+    },
+    {
+      "name": "组合 SDC0.98 全局180s",
+      "opts": {
+        "sdcDetect": true,
+        "step": true,
+        "replay": true,
+        "process": true,
+        "elastic": true,
+        "fast": true,
+        "sdcCoverage": 0.98
+      },
+      "patch": {
+        "recoveryAttemptSeconds": 180
+      },
+      "trials": 2000,
+      "mean": 0.8904850186561648,
+      "ci95": 0.0034556443890955643,
+      "availability": 0.9565890589570569,
+      "pAtLeast90": 0.737,
+      "p10": 0.7768340643463512,
+      "ledger": {
+        "downtime": 31.25587755091827,
+        "save": 11.236839184322829,
+        "slowdown": 1.414483592643257,
+        "rollback": 31.341120688218584,
+        "terminalInvalid": 3.25338523606944,
+        "localLoss": 0.3490803153905343
+      }
+    },
+    {
+      "name": "组合 SDC0.98 全局120s",
+      "opts": {
+        "sdcDetect": true,
+        "step": true,
+        "replay": true,
+        "process": true,
+        "elastic": true,
+        "fast": true,
+        "sdcCoverage": 0.98
+      },
+      "patch": {
+        "recoveryAttemptSeconds": 120
+      },
+      "trials": 2000,
+      "mean": 0.8986275618043198,
+      "ci95": 0.0034441420420999016,
+      "availability": 0.9652780752177992,
+      "pAtLeast90": 0.737,
+      "p10": 0.7837245764334123,
+      "ledger": {
+        "downtime": 24.99978584318396,
+        "save": 11.338854427525577,
+        "slowdown": 1.4433466179340764,
+        "rollback": 31.39760630052096,
+        "terminalInvalid": 3.455867930313212,
+        "localLoss": 0.3526943814129361
+      }
+    },
+    {
+      "name": "组合 SDC0.98 全局60s",
+      "opts": {
+        "sdcDetect": true,
+        "step": true,
+        "replay": true,
+        "process": true,
+        "elastic": true,
+        "fast": true,
+        "sdcCoverage": 0.98
+      },
+      "patch": {
+        "recoveryAttemptSeconds": 60
+      },
+      "trials": 2000,
+      "mean": 0.9063600647703585,
+      "ci95": 0.0034783653599091977,
+      "availability": 0.9741418369386758,
+      "pAtLeast90": 0.7355,
+      "p10": 0.7910677849854965,
+      "ledger": {
+        "downtime": 18.61787740415209,
+        "save": 11.44295898066759,
+        "slowdown": 1.477675361333468,
+        "rollback": 32.02807328459163,
+        "terminalInvalid": 3.4967369249925113,
+        "localLoss": 0.3574314096054092
+      }
+    },
+    {
+      "name": "组合 SDC0.98 全局0s",
+      "opts": {
+        "sdcDetect": true,
+        "step": true,
+        "replay": true,
+        "process": true,
+        "elastic": true,
+        "fast": true,
+        "sdcCoverage": 0.98
+      },
+      "patch": {
+        "recoveryAttemptSeconds": 0
+      },
+      "trials": 2000,
+      "mean": 0.9139478859188191,
+      "ci95": 0.0035231928809042645,
+      "availability": 0.983122388922252,
+      "pAtLeast90": 0.7335,
+      "p10": 0.7982175483441929,
+      "ledger": {
+        "downtime": 12.151879975979845,
+        "save": 11.548416967387446,
+        "slowdown": 1.511342773310004,
+        "rollback": 32.96625226021541,
+        "terminalInvalid": 3.4162696627869304,
+        "localLoss": 0.3633604987700477
+      }
+    },
+    {
+      "name": "组合 SDC0.99 全局180s",
+      "opts": {
+        "sdcDetect": true,
+        "step": true,
+        "replay": true,
+        "process": true,
+        "elastic": true,
+        "fast": true,
+        "sdcCoverage": 0.99
+      },
+      "patch": {
+        "recoveryAttemptSeconds": 180
+      },
+      "trials": 2000,
+      "mean": 0.9119108013932022,
+      "ci95": 0.002521494285808985,
+      "availability": 0.9566318457819826,
+      "pAtLeast90": 0.859,
+      "p10": 0.7838211182871152,
+      "ledger": {
+        "downtime": 31.22507103697203,
+        "save": 11.237361230767428,
+        "slowdown": 1.4151208884373017,
+        "rollback": 17.37875181432739,
+        "terminalInvalid": 1.818894648844957,
+        "localLoss": 0.34902337754697926
+      }
+    },
+    {
+      "name": "组合 SDC0.99 全局120s",
+      "opts": {
+        "sdcDetect": true,
+        "step": true,
+        "replay": true,
+        "process": true,
+        "elastic": true,
+        "fast": true,
+        "sdcCoverage": 0.99
+      },
+      "patch": {
+        "recoveryAttemptSeconds": 120
+      },
+      "trials": 2000,
+      "mean": 0.9198921676632035,
+      "ci95": 0.0025529715533993283,
+      "availability": 0.9653102417550801,
+      "pAtLeast90": 0.859,
+      "p10": 0.7901248972962375,
+      "ledger": {
+        "downtime": 24.976625936342103,
+        "save": 11.3392685052627,
+        "slowdown": 1.442530274962181,
+        "rollback": 17.704570509195367,
+        "terminalInvalid": 1.8619739349140882,
+        "localLoss": 0.35267012181796514
+      }
+    },
+    {
+      "name": "组合 SDC0.99 全局60s",
+      "opts": {
+        "sdcDetect": true,
+        "step": true,
+        "replay": true,
+        "process": true,
+        "elastic": true,
+        "fast": true,
+        "sdcCoverage": 0.99
+      },
+      "patch": {
+        "recoveryAttemptSeconds": 60
+      },
+      "trials": 2000,
+      "mean": 0.9285732096329125,
+      "ci95": 0.002495741120505942,
+      "availability": 0.9741465791877721,
+      "pAtLeast90": 0.8585,
+      "p10": 0.7976233118442102,
+      "ledger": {
+        "downtime": 18.614462984803062,
+        "save": 11.4430340495268,
+        "slowdown": 1.4698430999650585,
+        "rollback": 17.752132784328033,
+        "terminalInvalid": 1.7903683430143191,
+        "localLoss": 0.357447802666007
+      }
+    },
+    {
+      "name": "组合 SDC0.99 全局0s",
+      "opts": {
+        "sdcDetect": true,
+        "step": true,
+        "replay": true,
+        "process": true,
+        "elastic": true,
+        "fast": true,
+        "sdcCoverage": 0.99
+      },
+      "patch": {
+        "recoveryAttemptSeconds": 0
+      },
+      "trials": 2000,
+      "mean": 0.9366041945917802,
+      "ci95": 0.002570485157030761,
+      "availability": 0.9831451611253228,
+      "pAtLeast90": 0.858,
+      "p10": 0.8048268025700757,
+      "ledger": {
+        "downtime": 12.135483989768925,
+        "save": 11.548707809477355,
+        "slowdown": 1.5068826947639256,
+        "rollback": 18.494058311665707,
+        "terminalInvalid": 1.5964662714110345,
+        "localLoss": 0.363380816830762
+      }
+    },
+    {
+      "name": "组合 SDC0.995 全局180s",
+      "opts": {
+        "sdcDetect": true,
+        "step": true,
+        "replay": true,
+        "process": true,
+        "elastic": true,
+        "fast": true,
+        "sdcCoverage": 0.995
+      },
+      "patch": {
+        "recoveryAttemptSeconds": 180
+      },
+      "trials": 2000,
+      "mean": 0.9224748695891906,
+      "ci95": 0.0018658619827867625,
+      "availability": 0.9566535893306318,
+      "pAtLeast90": 0.925,
+      "p10": 0.9220899938693454,
+      "ledger": {
+        "downtime": 31.20941568194421,
+        "save": 11.237643190624125,
+        "slowdown": 1.408297674217174,
+        "rollback": 10.810384476871771,
+        "terminalInvalid": 0.8033500939679995,
+        "localLoss": 0.3490027781589978
+      }
+    },
+    {
+      "name": "组合 SDC0.995 全局120s",
+      "opts": {
+        "sdcDetect": true,
+        "step": true,
+        "replay": true,
+        "process": true,
+        "elastic": true,
+        "fast": true,
+        "sdcCoverage": 0.995
+      },
+      "patch": {
+        "recoveryAttemptSeconds": 120
+      },
+      "trials": 2000,
+      "mean": 0.9309113214215156,
+      "ci95": 0.0018429782771838842,
+      "availability": 0.9653296347319076,
+      "pAtLeast90": 0.925,
+      "p10": 0.9305429323485456,
+      "ledger": {
+        "downtime": 24.962662993026566,
+        "save": 11.339531225182428,
+        "slowdown": 1.4395524319137571,
+        "rollback": 10.795904283605886,
+        "terminalInvalid": 0.85355987745175,
+        "localLoss": 0.3526377653293157
+      }
+    },
+    {
+      "name": "组合 SDC0.995 全局60s",
+      "opts": {
+        "sdcDetect": true,
+        "step": true,
+        "replay": true,
+        "process": true,
+        "elastic": true,
+        "fast": true,
+        "sdcCoverage": 0.995
+      },
+      "patch": {
+        "recoveryAttemptSeconds": 60
+      },
+      "trials": 2000,
+      "mean": 0.9393119718786643,
+      "ci95": 0.0018474360370207864,
+      "availability": 0.9741384411013554,
+      "pAtLeast90": 0.9245,
+      "p10": 0.9388322289625342,
+      "ledger": {
+        "downtime": 18.620322407023398,
+        "save": 11.442968097928018,
+        "slowdown": 1.4648031310096497,
+        "rollback": 10.896579383538471,
+        "terminalInvalid": 0.9132696314678491,
+        "localLoss": 0.3574375963946202
+      }
+    },
+    {
+      "name": "组合 SDC0.995 全局0s",
+      "opts": {
+        "sdcDetect": true,
+        "step": true,
+        "replay": true,
+        "process": true,
+        "elastic": true,
+        "fast": true,
+        "sdcCoverage": 0.995
+      },
+      "patch": {
+        "recoveryAttemptSeconds": 0
+      },
+      "trials": 2000,
+      "mean": 0.9476971550893736,
+      "ci95": 0.001893606179639709,
+      "availability": 0.9831437766375166,
+      "pAtLeast90": 0.924,
+      "p10": 0.9476728826715808,
+      "ledger": {
+        "downtime": 12.136480820989153,
+        "save": 11.548711826285327,
+        "slowdown": 1.5034417967101765,
+        "rollback": 11.345140106471572,
+        "terminalInvalid": 0.7609096220690211,
+        "localLoss": 0.3633641631254079
+      }
+    },
+    {
+      "name": "组合 SDC1 全局180s",
+      "opts": {
+        "sdcDetect": true,
+        "step": true,
+        "replay": true,
+        "process": true,
+        "elastic": true,
+        "fast": true,
+        "sdcCoverage": 1
+      },
+      "patch": {
+        "recoveryAttemptSeconds": 180
+      },
+      "trials": 2000,
+      "mean": 0.9342136064250562,
+      "ci95": 0.0002510447625293702,
+      "availability": 0.9566403158114819,
+      "pAtLeast90": 1,
+      "p10": 0.9266040719434958,
+      "ledger": {
+        "downtime": 31.21897261573249,
+        "save": 11.237486521119049,
+        "slowdown": 1.4091845848191842,
+        "rollback": 3.151593027856953,
+        "terminalInvalid": 0,
+        "localLoss": 0.34896662443351206
+      }
+    },
+    {
+      "name": "组合 SDC1 全局120s",
+      "opts": {
+        "sdcDetect": true,
+        "step": true,
+        "replay": true,
+        "process": true,
+        "elastic": true,
+        "fast": true,
+        "sdcCoverage": 1
+      },
+      "patch": {
+        "recoveryAttemptSeconds": 120
+      },
+      "trials": 2000,
+      "mean": 0.942665178765011,
+      "ci95": 0.0002484965789543586,
+      "availability": 0.9653183003741816,
+      "pAtLeast90": 1,
+      "p10": 0.9351562881539427,
+      "ledger": {
+        "downtime": 24.970823730588673,
+        "save": 11.3393914863212,
+        "slowdown": 1.4377942425470165,
+        "rollback": 3.1804470248520684,
+        "terminalInvalid": 0,
+        "localLoss": 0.3526148048843198
+      }
+    },
+    {
+      "name": "组合 SDC1 全局60s",
+      "opts": {
+        "sdcDetect": true,
+        "step": true,
+        "replay": true,
+        "process": true,
+        "elastic": true,
+        "fast": true,
+        "sdcCoverage": 1
+      },
+      "patch": {
+        "recoveryAttemptSeconds": 60
+      },
+      "trials": 2000,
+      "mean": 0.9512563091235736,
+      "ci95": 0.00024757657595830395,
+      "availability": 0.9741427374189839,
+      "pAtLeast90": 1,
+      "p10": 0.9437753161544357,
+      "ledger": {
+        "downtime": 18.617229058330338,
+        "save": 11.44301485689541,
+        "slowdown": 1.4678756429240294,
+        "rollback": 3.2099338150861287,
+        "terminalInvalid": 0,
+        "localLoss": 0.35740405779193957
+      }
+    },
+    {
+      "name": "组合 SDC1 全局0s",
+      "opts": {
+        "sdcDetect": true,
+        "step": true,
+        "replay": true,
+        "process": true,
+        "elastic": true,
+        "fast": true,
+        "sdcCoverage": 1
+      },
+      "patch": {
+        "recoveryAttemptSeconds": 0
+      },
+      "trials": 2000,
+      "mean": 0.9600096596561438,
+      "ci95": 0.00024717155581111336,
+      "availability": 0.9831373880669041,
+      "pAtLeast90": 1,
+      "p10": 0.9524251485325858,
+      "ledger": {
+        "downtime": 12.141080591829516,
+        "save": 11.548650057751187,
+        "slowdown": 1.5009030805014332,
+        "rollback": 3.239059143730795,
+        "terminalInvalid": 0,
+        "localLoss": 0.36335217376335965
+      }
+    },
+    {
+      "name": "全局 5min/4s SDC100% 180s",
+      "opts": {
+        "sdcDetect": true,
+        "step": true,
+        "sdcCoverage": 1
+      },
+      "patch": {
+        "recoveryAttemptSeconds": 180
+      },
+      "trials": 2000,
+      "mean": 0.8157838297576437,
+      "ci95": 0.0003865316066089393,
+      "availability": 0.8895009895336976,
+      "pAtLeast90": 0,
+      "p10": 0.8042140338932369,
+      "ledger": {
+        "downtime": 79.55928753573919,
+        "save": 7.844277380699648,
+        "slowdown": 1.278559865723075,
+        "rollback": 43.95351779233753,
+        "terminalInvalid": 0,
+        "localLoss": 0
+      }
+    },
+    {
+      "name": "全局 5min/4s SDC100% 120s",
+      "opts": {
+        "sdcDetect": true,
+        "step": true,
+        "sdcCoverage": 1
+      },
+      "patch": {
+        "recoveryAttemptSeconds": 120
+      },
+      "trials": 2000,
+      "mean": 0.8367599191082095,
+      "ci95": 0.0003869051207413438,
+      "availability": 0.9124294709573136,
+      "pAtLeast90": 0,
+      "p10": 0.8250739472758888,
+      "ledger": {
+        "downtime": 63.05078091073482,
+        "save": 8.046074776902426,
+        "slowdown": 1.3420665695365048,
+        "rollback": 45.09393598491692,
+        "terminalInvalid": 0,
+        "localLoss": 0
+      }
+    },
+    {
+      "name": "全局 5min/4s SDC100% 60s",
+      "opts": {
+        "sdcDetect": true,
+        "step": true,
+        "sdcCoverage": 1
+      },
+      "patch": {
+        "recoveryAttemptSeconds": 60
+      },
+      "trials": 2000,
+      "mean": 0.8588967023118326,
+      "ci95": 0.0003891620210312881,
+      "availability": 0.936616916388817,
+      "pAtLeast90": 0,
+      "p10": 0.8471933690720189,
+      "ledger": {
+        "downtime": 45.63582020005286,
+        "save": 8.259038672595906,
+        "slowdown": 1.4181704999976423,
+        "rollback": 46.281344962836414,
+        "terminalInvalid": 0,
+        "localLoss": 0
+      }
+    },
+    {
+      "name": "全局 5min/4s SDC100% 30s",
+      "opts": {
+        "sdcDetect": true,
+        "step": true,
+        "sdcCoverage": 1
+      },
+      "patch": {
+        "recoveryAttemptSeconds": 30
+      },
+      "trials": 2000,
+      "mean": 0.8704553950135143,
+      "ci95": 0.00039081778413936727,
+      "availability": 0.9492471115480189,
+      "pAtLeast90": 0,
+      "p10": 0.858533856864573,
+      "ledger": {
+        "downtime": 36.542079685425776,
+        "save": 8.370229990284225,
+        "slowdown": 1.4605484236962585,
+        "rollback": 46.89925749086565,
+        "terminalInvalid": 0,
+        "localLoss": 0
+      }
+    },
+    {
+      "name": "全局 5min/4s SDC100% 0s",
+      "opts": {
+        "sdcDetect": true,
+        "step": true,
+        "sdcCoverage": 1
+      },
+      "patch": {
+        "recoveryAttemptSeconds": 0
+      },
+      "trials": 2000,
+      "mean": 0.8822477768170232,
+      "ci95": 0.00039431338039601024,
+      "availability": 0.9621336018274502,
+      "pAtLeast90": 0.019,
+      "p10": 0.8699876431191904,
+      "ledger": {
+        "downtime": 27.263806684236606,
+        "save": 8.483594867849822,
+        "slowdown": 1.503725407302414,
+        "rollback": 47.530473732357365,
+        "terminalInvalid": 0,
+        "localLoss": 0
+      }
+    },
+    {
+      "name": "全局 60s/1s SDC99% 成功0.99 180s",
+      "opts": {
+        "sdcDetect": true,
+        "step": true,
+        "sdcCoverage": 0.99,
+        "fast": true
+      },
+      "patch": {
+        "recoveryAttemptSeconds": 180,
+        "recoverySuccess": 0.99
+      },
+      "trials": 2000,
+      "mean": 0.8414825015981007,
+      "ci95": 0.002248576840141367,
+      "availability": 0.8894359329851266,
+      "pAtLeast90": 0,
+      "p10": 0.7254932301572579,
+      "ledger": {
+        "downtime": 79.60612825071101,
+        "save": 10.350237974723939,
+        "slowdown": 1.2692042021148986,
+        "rollback": 21.566532289621655,
+        "terminalInvalid": 1.3404961321951177,
+        "localLoss": 0
+      }
+    },
+    {
+      "name": "全局 60s/1s SDC99% 成功0.99 120s",
+      "opts": {
+        "sdcDetect": true,
+        "step": true,
+        "sdcCoverage": 0.99,
+        "fast": true
+      },
+      "patch": {
+        "recoveryAttemptSeconds": 120,
+        "recoverySuccess": 0.99
+      },
+      "trials": 2000,
+      "mean": 0.8626177157574941,
+      "ci95": 0.002319263879648172,
+      "availability": 0.9123751365645889,
+      "pAtLeast90": 0.0175,
+      "p10": 0.7433586403245191,
+      "ledger": {
+        "downtime": 63.08990167349734,
+        "save": 10.617105230545427,
+        "slowdown": 1.33373694331514,
+        "rollback": 22.331110548221726,
+        "terminalInvalid": 1.5433902590257653,
+        "localLoss": 0
+      }
+    },
+    {
+      "name": "全局 60s/1s SDC99% 成功0.99 90s",
+      "opts": {
+        "sdcDetect": true,
+        "step": true,
+        "sdcCoverage": 0.99,
+        "fast": true
+      },
+      "patch": {
+        "recoveryAttemptSeconds": 90,
+        "recoverySuccess": 0.99
+      },
+      "trials": 2000,
+      "mean": 0.8735631192072416,
+      "ci95": 0.002364623394789545,
+      "availability": 0.924304807287054,
+      "pAtLeast90": 0.2315,
+      "p10": 0.7531254190407662,
+      "ledger": {
+        "downtime": 54.500538753320846,
+        "save": 10.755890501466295,
+        "slowdown": 1.3705838356135012,
+        "rollback": 22.77429820236287,
+        "terminalInvalid": 1.6332428780223767,
+        "localLoss": 0
+      }
+    },
+    {
+      "name": "全局 60s/1s SDC99% 成功0.99 60s",
+      "opts": {
+        "sdcDetect": true,
+        "step": true,
+        "sdcCoverage": 0.99,
+        "fast": true
+      },
+      "patch": {
+        "recoveryAttemptSeconds": 60,
+        "recoverySuccess": 0.99
+      },
+      "trials": 2000,
+      "mean": 0.8849417868347422,
+      "ci95": 0.0023863328704113052,
+      "availability": 0.9365477659048859,
+      "pAtLeast90": 0.652,
+      "p10": 0.7625840162615938,
+      "ledger": {
+        "downtime": 45.685608548483565,
+        "save": 10.898310462159987,
+        "slowdown": 1.4115924483969111,
+        "rollback": 23.18005791701291,
+        "terminalInvalid": 1.6663441029304473,
+        "localLoss": 0
+      }
+    },
+    {
+      "name": "全局 60s/1s SDC99% 成功0.99 30s",
+      "opts": {
+        "sdcDetect": true,
+        "step": true,
+        "sdcCoverage": 0.99,
+        "fast": true
+      },
+      "patch": {
+        "recoveryAttemptSeconds": 30,
+        "recoverySuccess": 0.99
+      },
+      "trials": 2000,
+      "mean": 0.8965084139292291,
+      "ci95": 0.0024373077380849734,
+      "availability": 0.9491658698819985,
+      "pAtLeast90": 0.831,
+      "p10": 0.7727704313961278,
+      "ledger": {
+        "downtime": 36.6005736849604,
+        "save": 11.045103529252053,
+        "slowdown": 1.453783250027644,
+        "rollback": 23.765567883473878,
+        "terminalInvalid": 1.6489136232407497,
+        "localLoss": 0
+      }
+    },
+    {
+      "name": "全局 60s/1s SDC99% 成功0.999 180s",
+      "opts": {
+        "sdcDetect": true,
+        "step": true,
+        "sdcCoverage": 0.99,
+        "fast": true
+      },
+      "patch": {
+        "recoveryAttemptSeconds": 180,
+        "recoverySuccess": 0.999
+      },
+      "trials": 2000,
+      "mean": 0.8641384881468792,
+      "ci95": 0.002290594567018679,
+      "availability": 0.9139065493521061,
+      "pAtLeast90": 0,
+      "p10": 0.74027808582043,
+      "ledger": {
+        "downtime": 61.98728446648424,
+        "save": 10.635000026817698,
+        "slowdown": 1.3318415766126641,
+        "rollback": 22.349167639954434,
+        "terminalInvalid": 1.516994824377156,
+        "localLoss": 0
+      }
+    },
+    {
+      "name": "全局 60s/1s SDC99% 成功0.999 120s",
+      "opts": {
+        "sdcDetect": true,
+        "step": true,
+        "sdcCoverage": 0.99,
+        "fast": true
+      },
+      "patch": {
+        "recoveryAttemptSeconds": 120,
+        "recoverySuccess": 0.999
+      },
+      "trials": 2000,
+      "mean": 0.8864487409153785,
+      "ci95": 0.002369617387276839,
+      "availability": 0.9381759212482527,
+      "pAtLeast90": 0.822,
+      "p10": 0.7594811537035873,
+      "ledger": {
+        "downtime": 44.513336701258304,
+        "save": 10.917332443417864,
+        "slowdown": 1.4116106646211004,
+        "rollback": 23.15670304484114,
+        "terminalInvalid": 1.7579236867890442,
+        "localLoss": 0
+      }
+    },
+    {
+      "name": "全局 60s/1s SDC99% 成功0.999 90s",
+      "opts": {
+        "sdcDetect": true,
+        "step": true,
+        "sdcCoverage": 0.99,
+        "fast": true
+      },
+      "patch": {
+        "recoveryAttemptSeconds": 90,
+        "recoverySuccess": 0.999
+      },
+      "trials": 2000,
+      "mean": 0.8980337125683373,
+      "ci95": 0.0024186139372258304,
+      "availability": 0.9508165468791879,
+      "pAtLeast90": 0.8505,
+      "p10": 0.7695425448449,
+      "ledger": {
+        "downtime": 35.4120862469855,
+        "save": 11.064396448276051,
+        "slowdown": 1.4552061767677222,
+        "rollback": 23.68587868274302,
+        "terminalInvalid": 1.798159396024947,
+        "localLoss": 0
+      }
+    },
+    {
+      "name": "全局 60s/1s SDC99% 成功0.999 60s",
+      "opts": {
+        "sdcDetect": true,
+        "step": true,
+        "sdcCoverage": 0.99,
+        "fast": true
+      },
+      "patch": {
+        "recoveryAttemptSeconds": 60,
+        "recoverySuccess": 0.999
+      },
+      "trials": 2000,
+      "mean": 0.9099361626166613,
+      "ci95": 0.0024681582222429543,
+      "availability": 0.9637957830002798,
+      "pAtLeast90": 0.8505,
+      "p10": 0.7797994401622351,
+      "ledger": {
+        "downtime": 26.06703623979809,
+        "save": 11.21541375160167,
+        "slowdown": 1.496007625537627,
+        "rollback": 24.342550159683658,
+        "terminalInvalid": 1.7249551393821656,
+        "localLoss": 0
+      }
+    },
+    {
+      "name": "全局 60s/1s SDC99% 成功0.999 30s",
+      "opts": {
+        "sdcDetect": true,
+        "step": true,
+        "sdcCoverage": 0.99,
+        "fast": true
+      },
+      "patch": {
+        "recoveryAttemptSeconds": 30,
+        "recoverySuccess": 0.999
+      },
+      "trials": 2000,
+      "mean": 0.9221604369230387,
+      "ci95": 0.002519774921775622,
+      "availability": 0.9771278954196818,
+      "pAtLeast90": 0.8505,
+      "p10": 0.7904090620897244,
+      "ledger": {
+        "downtime": 16.467915297829684,
+        "save": 11.370499462859355,
+        "slowdown": 1.5371383284924047,
+        "rollback": 24.848832114855423,
+        "terminalInvalid": 1.8201002113753648,
+        "localLoss": 0
+      }
+    },
+    {
+      "name": "组合 SDC95% 兜底120h",
+      "opts": {
+        "sdcDetect": true,
+        "step": true,
+        "replay": true,
+        "process": true,
+        "elastic": true,
+        "fast": true,
+        "sdcCoverage": 0.95
+      },
+      "patch": {
+        "sdcDelayHours": 120
+      },
+      "trials": 2000,
+      "mean": 0.8270966642548606,
+      "ci95": 0.004885977157455137,
+      "availability": 0.9565988851997623,
+      "pAtLeast90": 0.441,
+      "p10": 0.628261616681144,
+      "ledger": {
+        "downtime": 31.24880265617022,
+        "save": 11.236931603578071,
+        "slowdown": 1.4081638197443935,
+        "rollback": 73.4416334735596,
+        "terminalInvalid": 6.805795701545096,
+        "localLoss": 0.34907448190428064
+      }
+    },
+    {
+      "name": "组合 SDC95% 兜底24h",
+      "opts": {
+        "sdcDetect": true,
+        "step": true,
+        "replay": true,
+        "process": true,
+        "elastic": true,
+        "fast": true,
+        "sdcCoverage": 0.95
+      },
+      "patch": {
+        "sdcDelayHours": 24
+      },
+      "trials": 2000,
+      "mean": 0.9091753955363979,
+      "ci95": 0.0011913432412649578,
+      "availability": 0.956607997569824,
+      "pAtLeast90": 0.7075,
+      "p10": 0.8716255809225997,
+      "ledger": {
+        "downtime": 31.24224174972577,
+        "save": 11.236988423394681,
+        "slowdown": 1.4027642928874733,
+        "rollback": 20.856681764223335,
+        "terminalInvalid": 0.3062249012905099,
+        "localLoss": 0.3488140822731091
+      }
+    },
+    {
+      "name": "组合 SDC95% 兜底6h",
+      "opts": {
+        "sdcDetect": true,
+        "step": true,
+        "replay": true,
+        "process": true,
+        "elastic": true,
+        "fast": true,
+        "sdcCoverage": 0.95
+      },
+      "patch": {
+        "sdcDelayHours": 6
+      },
+      "trials": 2000,
+      "mean": 0.9276008091173371,
+      "ci95": 0.0003950995664826539,
+      "availability": 0.9565928442434813,
+      "pAtLeast90": 0.9945,
+      "p10": 0.9159118738675323,
+      "ledger": {
+        "downtime": 31.253152144692272,
+        "save": 11.236803699811796,
+        "slowdown": 1.4117187062253906,
+        "rollback": 7.855821267847785,
+        "terminalInvalid": 0.020943136806233498,
+        "localLoss": 0.3489784801354253
+      }
+    },
+    {
+      "name": "组合 SDC95% 兜底1h",
+      "opts": {
+        "sdcDetect": true,
+        "step": true,
+        "replay": true,
+        "process": true,
+        "elastic": true,
+        "fast": true,
+        "sdcCoverage": 0.95
+      },
+      "patch": {
+        "sdcDelayHours": 1
+      },
+      "trials": 2000,
+      "mean": 0.9330957270194074,
+      "ci95": 0.000251063788469202,
+      "availability": 0.9566440078616997,
+      "pAtLeast90": 1,
+      "p10": 0.9255229710630947,
+      "ledger": {
+        "downtime": 31.216314339576158,
+        "save": 11.23740063428328,
+        "slowdown": 1.4081414910861392,
+        "rollback": 3.9594449124131526,
+        "terminalInvalid": 0.0008719344056122509,
+        "localLoss": 0.3489032342632696
+      }
+    },
+    {
+      "name": "推荐复核 SDC0.99 全局120s",
+      "opts": {
+        "sdcDetect": true,
+        "step": true,
+        "replay": true,
+        "process": true,
+        "elastic": true,
+        "fast": true,
+        "sdcCoverage": 0.99
+      },
+      "patch": {
+        "recoveryAttemptSeconds": 120
+      },
+      "trials": 10000,
+      "mean": 0.919128655563119,
+      "ci95": 0.0011533990160751896,
+      "availability": 0.9653442531244707,
+      "pAtLeast90": 0.8524,
+      "p10": 0.7891889344792419,
+      "ledger": {
+        "downtime": 24.952137750381862,
+        "save": 11.339651243995123,
+        "slowdown": 1.4360879360473282,
+        "rollback": 18.640553854652264,
+        "terminalInvalid": 1.505877098131739,
+        "localLoss": 0.35306011134695714
+      }
+    },
+    {
+      "name": "推荐复核 SDC0.995 全局120s",
+      "opts": {
+        "sdcDetect": true,
+        "step": true,
+        "replay": true,
+        "process": true,
+        "elastic": true,
+        "fast": true,
+        "sdcCoverage": 0.995
+      },
+      "patch": {
+        "recoveryAttemptSeconds": 120
+      },
+      "trials": 10000,
+      "mean": 0.930402263549738,
+      "ci95": 0.0008422756126025068,
+      "availability": 0.9653516166313185,
+      "pAtLeast90": 0.9206,
+      "p10": 0.9297885621720364,
+      "ledger": {
+        "downtime": 24.946836025451965,
+        "save": 11.339753772141833,
+        "slowdown": 1.4360843796277787,
+        "rollback": 11.262976329679505,
+        "terminalInvalid": 0.771663442474102,
+        "localLoss": 0.35305629481313244
+      }
+    },
+    {
+      "name": "推荐复核 SDC0.999 全局120s",
+      "opts": {
+        "sdcDetect": true,
+        "step": true,
+        "replay": true,
+        "process": true,
+        "elastic": true,
+        "fast": true,
+        "sdcCoverage": 0.999
+      },
+      "patch": {
+        "recoveryAttemptSeconds": 120
+      },
+      "trials": 10000,
+      "mean": 0.9401272955213832,
+      "ci95": 0.0004058873615958425,
+      "availability": 0.9653608547424659,
+      "pAtLeast90": 0.9827,
+      "p10": 0.9345771585744966,
+      "ledger": {
+        "downtime": 24.940184585424642,
+        "save": 11.339871120851427,
+        "slowdown": 1.433917025989511,
+        "rollback": 4.854710517390072,
+        "terminalInvalid": 0.18657895043318454,
+        "localLoss": 0.35308502451487195
+      }
+    }
+  ]
+}
